@@ -1,0 +1,230 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>DataScience | ZedChou&#39;s Blog</title>
+<link rel="shortcut icon" href="https://CNZedChou.github.io/favicon.ico?v=1676222959031">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://CNZedChou.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="DataScience | ZedChou&#39;s Blog - Atom Feed" href="https://CNZedChou.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="@Description:   用于NCUT 2022 Fall 数据科学
+@Author:    Zed Chou
+@LastModified:    Fri 16 Sept 2022
+
+Chapter 1 数据科学与工程概论
+大数据特征..." />
+    <meta name="keywords" content="DataScience" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://CNZedChou.github.io">
+  <img class="avatar" src="https://CNZedChou.github.io/images/avatar.png?v=1676222959031" alt="">
+  </a>
+  <h1 class="site-title">
+    ZedChou&#39;s Blog
+  </h1>
+  <p class="site-description">
+    温故而知新
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              DataScience
+            </h2>
+            <div class="post-info">
+              <span>
+                2022-09-16
+              </span>
+              <span>
+                2 min read
+              </span>
+              
+                <a href="https://CNZedChou.github.io/tag/R0BdsQT81/" class="post-tag">
+                  # DataScience
+                </a>
+              
+            </div>
+            
+              <img class="post-feature-image" src="https://raw.githubusercontent.com/CNZedChou/ForPicGo/master/202209161632190.png" alt="">
+            
+            <div class="post-content-wrapper">
+              <div class="post-content" v-pre>
+                <p>@Description:   用于NCUT 2022 Fall 数据科学<br>
+@Author:    Zed Chou<br>
+@LastModified:    Fri 16 Sept 2022</p>
+<!-- more -->
+<h1 id="chapter-1-数据科学与工程概论">Chapter 1 数据科学与工程概论</h1>
+<h2 id="大数据特征">大数据特征</h2>
+<ul>
+<li>Volume：数据量大</li>
+<li>Variety
+<ul>
+<li>数据来源多</li>
+<li>数据类型多</li>
+<li>关联性强</li>
+</ul>
+</li>
+<li>Value：合理运用大数据，低成本创造高价值</li>
+<li>Velocity
+<ul>
+<li>大数据增长速度快</li>
+<li>大数据处理速度快</li>
+</ul>
+</li>
+</ul>
+<h1 id="chapter-2-数据统计方法">Chapter 2 数据统计方法</h1>
+<h2 id="数据抽样方法">数据抽样方法</h2>
+<h3 id="简单随机抽样">简单随机抽样</h3>
+<p>从 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span> 个 总体中，抽出 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>m</mi></mrow><annotation encoding="application/x-tex">m</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">m</span></span></span></span> 个样本</p>
+<ul>
+<li>完全随机、等概率、独立性</li>
+<li>（抓弹珠，抽奖）总体个数较少</li>
+</ul>
+<h3 id="系统抽样等距抽样">系统抽样（等距抽样）</h3>
+<ul>
+<li>
+<p>统计学生成绩，总体个数较多</p>
+</li>
+<li>
+<p><strong>随机起点等距抽样</strong></p>
+<p>即在总体分成K段(K=N／n)的前提下，首先从第一段的1至k号总体单位中随机抽选一个样本单位，然后每隔k个单位抽取一个样本单位，直到抽足n个单位为止。这n个单位就构成了一个随机起点的等距样本。</p>
+</li>
+<li>
+<p>例子：有职工5000名，现要随机抽取100人进行家庭收入水平调查。</p>
+<ul>
+<li>抽取方法：按与研究目的无直接关系的姓名笔划对总体进行排列，把总体划分为K=5000/100=50个相等的间隔，在第1至第50人中随机抽取一名，如抽到第10名，后面间隔依次抽取第60，110，160，210，…直到4960为止，总共抽取50同名职工组成一个抽样总体。</li>
+</ul>
+</li>
+</ul>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li><a href="#chapter-1-%E6%95%B0%E6%8D%AE%E7%A7%91%E5%AD%A6%E4%B8%8E%E5%B7%A5%E7%A8%8B%E6%A6%82%E8%AE%BA">Chapter 1 数据科学与工程概论</a>
+<ul>
+<li><a href="#%E5%A4%A7%E6%95%B0%E6%8D%AE%E7%89%B9%E5%BE%81">大数据特征</a></li>
+</ul>
+</li>
+<li><a href="#chapter-2-%E6%95%B0%E6%8D%AE%E7%BB%9F%E8%AE%A1%E6%96%B9%E6%B3%95">Chapter 2 数据统计方法</a>
+<ul>
+<li><a href="#%E6%95%B0%E6%8D%AE%E6%8A%BD%E6%A0%B7%E6%96%B9%E6%B3%95">数据抽样方法</a>
+<ul>
+<li><a href="#%E7%AE%80%E5%8D%95%E9%9A%8F%E6%9C%BA%E6%8A%BD%E6%A0%B7">简单随机抽样</a></li>
+<li><a href="#%E7%B3%BB%E7%BB%9F%E6%8A%BD%E6%A0%B7%E7%AD%89%E8%B7%9D%E6%8A%BD%E6%A0%B7">系统抽样（等距抽样）</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank"> Gridea </a>
+  <a class="rss" href="https://CNZedChou.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

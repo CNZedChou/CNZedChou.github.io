@@ -1,0 +1,202 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Tricks in Colab | ZedChou&#39;s Blog</title>
+<link rel="shortcut icon" href="https://CNZedChou.github.io/favicon.ico?v=1676222959031">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://CNZedChou.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="Tricks in Colab | ZedChou&#39;s Blog - Atom Feed" href="https://CNZedChou.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="@Description:   用于记录在Colab中常用的技巧等
+@Author:    Zed Chou
+@LastModified:    Mon 10 Oct 2022
+
+Colab 挂载 Google Drive
+from goo..." />
+    <meta name="keywords" content="MachineLearning,Python,DataScience" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://CNZedChou.github.io">
+  <img class="avatar" src="https://CNZedChou.github.io/images/avatar.png?v=1676222959031" alt="">
+  </a>
+  <h1 class="site-title">
+    ZedChou&#39;s Blog
+  </h1>
+  <p class="site-description">
+    温故而知新
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              Tricks in Colab
+            </h2>
+            <div class="post-info">
+              <span>
+                2022-09-18
+              </span>
+              <span>
+                1 min read
+              </span>
+              
+                <a href="https://CNZedChou.github.io/tag/-nORD6-w2/" class="post-tag">
+                  # MachineLearning
+                </a>
+              
+                <a href="https://CNZedChou.github.io/tag/w0Ef51Gm9/" class="post-tag">
+                  # Python
+                </a>
+              
+                <a href="https://CNZedChou.github.io/tag/R0BdsQT81/" class="post-tag">
+                  # DataScience
+                </a>
+              
+            </div>
+            
+              <img class="post-feature-image" src="https://raw.githubusercontent.com/CNZedChou/ForPicGo/master/202209181531087.png" alt="">
+            
+            <div class="post-content-wrapper">
+              <div class="post-content" v-pre>
+                <p>@Description:   用于记录在Colab中常用的技巧等<br>
+@Author:    Zed Chou<br>
+@LastModified:    Mon 10 Oct 2022</p>
+<!-- more -->
+<h1 id="colab-挂载-google-drive">Colab 挂载 Google Drive</h1>
+<pre><code class="language-python">from google.colab import drive
+drive.mount('/content/gdrive')
+</code></pre>
+<h1 id="避免colab因为长时间不点击而忙碌掉线">避免colab因为长时间不点击而“忙碌”掉线</h1>
+<pre><code class="language-javascript">function ConnectButton(){
+    console.log(&quot;Connect pushed&quot;); 
+    document.querySelector(&quot;#top-toolbar &gt; colab-connect-button&quot;).shadowRoot.querySelector(&quot;#connect&quot;).click() 
+}
+setInterval(ConnectButton,60000);
+</code></pre>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li><a href="#colab-%E6%8C%82%E8%BD%BD-google-drive">Colab 挂载 Google Drive</a></li>
+<li><a href="#%E9%81%BF%E5%85%8Dcolab%E5%9B%A0%E4%B8%BA%E9%95%BF%E6%97%B6%E9%97%B4%E4%B8%8D%E7%82%B9%E5%87%BB%E8%80%8C%E5%BF%99%E7%A2%8C%E6%8E%89%E7%BA%BF">避免colab因为长时间不点击而“忙碌”掉线</a></li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://CNZedChou.github.io/post/tricks-in-python/">
+              <h3 class="post-title">
+                Tricks in Python
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank"> Gridea </a>
+  <a class="rss" href="https://CNZedChou.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

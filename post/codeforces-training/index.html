@@ -1,0 +1,844 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>CodeForces Training | ZedChou&#39;s Blog</title>
+<link rel="shortcut icon" href="https://CNZedChou.github.io/favicon.ico?v=1676222959031">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://CNZedChou.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="CodeForces Training | ZedChou&#39;s Blog - Atom Feed" href="https://CNZedChou.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="@Description:   用于CodeForces上的学习过程
+@Author:    Zed Chou
+@LastModified:    Fri 3 Feb 2023
+
+800
+4A Watermelon
+4A Watermelo..." />
+    <meta name="keywords" content="Coding" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://CNZedChou.github.io">
+  <img class="avatar" src="https://CNZedChou.github.io/images/avatar.png?v=1676222959031" alt="">
+  </a>
+  <h1 class="site-title">
+    ZedChou&#39;s Blog
+  </h1>
+  <p class="site-description">
+    温故而知新
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              CodeForces Training
+            </h2>
+            <div class="post-info">
+              <span>
+                2023-02-01
+              </span>
+              <span>
+                17 min read
+              </span>
+              
+                <a href="https://CNZedChou.github.io/tag/yx9d52T4r/" class="post-tag">
+                  # Coding
+                </a>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content" v-pre>
+                <p>@Description:   用于CodeForces上的学习过程<br>
+@Author:    Zed Chou<br>
+@LastModified:    Fri 3 Feb 2023</p>
+<!-- more -->
+<h1 id="800">800</h1>
+<h2 id="4a-watermelon">4A Watermelon</h2>
+<p><a href="https://codeforces.com/problemset/problem/4/A">4A Watermelon</a></p>
+<blockquote>
+<p>Date: Feb/01/2023</p>
+</blockquote>
+<p>One hot summer day Pete and his friend Billy decided to buy a watermelon. They chose the biggest and the ripest one, in their opinion. After that the watermelon was weighed, and the scales showed <em>w</em> kilos. They rushed home, dying of thirst, and decided to divide the berry, however they faced a hard problem.</p>
+<p>Pete and Billy are great fans of even numbers, that's why they want to divide the watermelon in such a way that each of the two parts weighs even number of kilos, at the same time it is not obligatory that the parts are equal. The boys are extremely tired and want to start their meal as soon as possible, that's why you should help them and find out, if they can divide the watermelon in the way they want. For sure, each of them should get a part of positive weight.</p>
+<p>Input</p>
+<p>The first (and the only) input line contains integer number <em>w</em> (1 ≤ <em>w</em> ≤ 100) — the weight of the watermelon bought by the boys.</p>
+<p>Output</p>
+<p>Print YES, if the boys can divide the watermelon into two parts, each of them weighing even number of kilos; and NO in the opposite case.</p>
+<p>Sample 1</p>
+<table>
+<thead>
+<tr>
+<th>Inputcopy</th>
+<th>Outputcopy</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>8 </code></td>
+<td><code>YES </code></td>
+</tr>
+</tbody>
+</table>
+<p>Note</p>
+<p>For example, the boys can divide the watermelon into two parts of 2 and 6 kilos respectively (another variant — two parts of 4 and 4 kilos).</p>
+<pre><code class="language-c++">#include &lt;iostream&gt;
+#include &lt;cstdio&gt;
+
+using namespace std;
+
+int main() {
+	int w;
+	scanf(&quot;%d&quot;, &amp;w);
+
+	if (w % 2 == 0 &amp;&amp; w != 2) {
+		// 偶数
+		printf(&quot;YES&quot;);
+	} else {
+		printf(&quot;NO&quot;);
+	}
+
+	return 0;
+}
+</code></pre>
+<h2 id="9a-die-roll">9A Die Roll</h2>
+<p><a href="https://codeforces.com/problemset/problem/9/A">9A Die Roll</a></p>
+<blockquote>
+<p>Date: Feb/02/2023</p>
+</blockquote>
+<p>Yakko, Wakko and Dot, world-famous animaniacs, decided to rest from acting in cartoons, and take a leave to travel a bit. Yakko dreamt to go to Pennsylvania, his Motherland and the Motherland of his ancestors. Wakko thought about Tasmania, its beaches, sun and sea. Dot chose Transylvania as the most mysterious and unpredictable place.</p>
+<p>But to their great regret, the leave turned to be very short, so it will be enough to visit one of the three above named places. That's why Yakko, as the cleverest, came up with a truly genius idea: let each of the three roll an ordinary six-sided die, and the one with the highest amount of points will be the winner, and will take the other two to the place of his/her dreams.</p>
+<p>Yakko thrown a die and got Y points, Wakko — W points. It was Dot's turn. But she didn't hurry. Dot wanted to know for sure what were her chances to visit Transylvania.</p>
+<p>It is known that Yakko and Wakko are true gentlemen, that's why if they have the same amount of points with Dot, they will let Dot win.</p>
+<p>Input</p>
+<p>The only line of the input file contains two natural numbers Y and W — the results of Yakko's and Wakko's die rolls.</p>
+<p>Output</p>
+<p>Output the required probability in the form of irreducible fraction in format «A/B», where A — the numerator, and B — the denominator. If the required probability equals to zero, output «0/1». If the required probability equals to 1, output «1/1».</p>
+<p>Sample 1</p>
+<table>
+<thead>
+<tr>
+<th>Inputcopy</th>
+<th>Outputcopy</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>4 2 </code></td>
+<td><code>1/2 </code></td>
+</tr>
+</tbody>
+</table>
+<p>Note</p>
+<p>Dot will go to Transylvania, if she is lucky to roll 4, 5 or 6 points.</p>
+<pre><code class="language-c++">#include &lt;iostream&gt;
+#include &lt;cstdio&gt;
+
+using namespace std;
+
+
+int y, w;
+int main() {
+	scanf(&quot;%d%d&quot;, &amp;y, &amp;w);
+
+	int res;
+	res = 7 - max(y, w);
+
+	int denominator = 6;
+	for (int i = 2; i &lt;= 3; i ++) {
+		if (res % i == 0 &amp;&amp; denominator % i == 0) res /= i, denominator /= i;
+	}
+	printf(&quot;%d/%d\n&quot;, res, denominator);
+
+	return 0;
+}
+</code></pre>
+<h2 id="12a-super-agent">12A Super Agent</h2>
+<p><a href="https://codeforces.com/problemset/problem/12/A">Super Agent</a></p>
+<blockquote>
+<p>Date: Feb/02/2023</p>
+</blockquote>
+<p>There is a very secret base in Potatoland where potato mash is made according to a special recipe. The neighbours from Porridgia decided to seize this recipe and to sell it to Pilauland. For this mission they have been preparing special agent Pearlo for many years. When, finally, Pearlo learned all secrets of espionage, he penetrated into the Potatoland territory and reached the secret base.</p>
+<p>Now he is standing at the entrance, but to get inside he need to pass combination lock. Minute ago one of the workers entered the password on the terminal and opened the door. The terminal is a square digital keyboard 3 × 3 with digits from 1 to 9.</p>
+<p>Pearlo knows that the password consists from distinct digits and is probably symmetric with respect to the central button of the terminal. He has heat sensor which allowed him to detect the digits which the worker pressed. Now he wants to check whether the password entered by the worker is symmetric with respect to the central button of the terminal. This fact can Help Pearlo to reduce the number of different possible password combinations.</p>
+<p>Input</p>
+<p>Input contains the matrix of three rows of three symbols each. Symbol «X» means that the corresponding button was pressed, and «.» means that is was not pressed. The matrix may contain no «X», also it may contain no «.».</p>
+<p>Output</p>
+<p>Print YES if the password is symmetric with respect to the central button of the terminal and NO otherwise.</p>
+<p>Sample 1</p>
+<table>
+<thead>
+<tr>
+<th>Inputcopy</th>
+<th>Outputcopy</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>XX. ... .XX </code></td>
+<td><code>YES </code></td>
+</tr>
+</tbody>
+</table>
+<p>Sample 2</p>
+<table>
+<thead>
+<tr>
+<th>Inputcopy</th>
+<th>Outputcopy</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>X.X X.. ... </code></td>
+<td><code>NO </code></td>
+</tr>
+</tbody>
+</table>
+<p>Note</p>
+<p>If you are not familiar with the term «central symmetry», you may look into http://en.wikipedia.org/wiki/Central_symmetry</p>
+<pre><code class="language-c++">#include &lt;iostream&gt;
+#include &lt;cstdio&gt;
+
+using namespace std;
+
+bool q[9];
+
+
+int main() {
+	string line;
+	int cnt = 0;
+	int flag = true;
+	for (int i = 0; i &lt; 3; i ++) {
+		getline(cin, line);
+		for (int j = 0; j &lt; 3; j ++, cnt ++) {
+			if (cnt &lt;= 4) {
+				if (line[cnt % 3] == 'X') {
+					q[cnt] = true;
+				}
+			} else {
+				if (line[cnt % 3] == 'X' &amp;&amp; !q[8 - cnt] || line[cnt % 3] == '.' &amp;&amp; q[8 - cnt]) {
+					flag = false;
+					break;
+				}
+			}
+		}
+		
+	}
+	if (flag) printf(&quot;YES\n&quot;); 
+	else printf(&quot;NO\n&quot;);
+		
+	return 0;
+}
+</code></pre>
+<h2 id="14a-letter">14A Letter</h2>
+<p><a href="https://codeforces.com/problemset/problem/14/A">Letter</a></p>
+<blockquote>
+<p>Date: Feb/03/2023</p>
+</blockquote>
+<p>A boy Bob likes to draw. Not long ago he bought a rectangular graph (checked) sheet with <em>n</em> rows and <em>m</em> columns. Bob shaded some of the squares on the sheet. Having seen his masterpiece, he decided to share it with his elder brother, who lives in Flatland. Now Bob has to send his picture by post, but because of the world economic crisis and high oil prices, he wants to send his creation, but to spend as little money as possible. For each sent square of paper (no matter whether it is shaded or not) Bob has to pay 3.14 burles. Please, help Bob cut out of his masterpiece a rectangle of the minimum cost, that will contain all the shaded squares. The rectangle's sides should be parallel to the sheet's sides.</p>
+<p>Input</p>
+<p>The first line of the input data contains numbers <em>n</em> and <em>m</em> (1 ≤ <em>n</em>, <em>m</em> ≤ 50), <em>n</em> — amount of lines, and <em>m</em> — amount of columns on Bob's sheet. The following <em>n</em> lines contain <em>m</em> characters each. Character «.» stands for a non-shaded square on the sheet, and «*» — for a shaded square. It is guaranteed that Bob has shaded at least one square.</p>
+<p>Output</p>
+<p>Output the required rectangle of the minimum cost. Study the output data in the sample tests to understand the output format better.</p>
+<p>Sample 1</p>
+<table>
+<thead>
+<tr>
+<th>Inputcopy</th>
+<th>Outputcopy</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>6 7 ....... ..***.. ..*.... ..***.. ..*.... ..***.. </code></td>
+<td><code>*** *.. *** *.. *** </code></td>
+</tr>
+</tbody>
+</table>
+<p>Sample 2</p>
+<table>
+<thead>
+<tr>
+<th>Inputcopy</th>
+<th>Outputcopy</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>3 3 *** *.* *** </code></td>
+<td><code>*** *.* *** </code></td>
+</tr>
+</tbody>
+</table>
+<pre><code class="language-c++">#include &lt;iostream&gt;
+#include &lt;cstdio&gt;
+
+using namespace std;
+
+int n, m;
+
+int main() {
+	scanf(&quot;%d%d&quot;, &amp;n, &amp;m);
+	string line;
+	getline(cin, line); // 读取 n, m 后的换行，否则无法读取完整
+	string strs[n];
+	int rmin = n, rmax = 0, cmin = m, cmax = 0;
+	for (int i = 0; i &lt; n; i ++) {
+		getline(cin, strs[i]); // 读入每一行
+		for (int j = 0; j &lt; m; j ++) {
+			if (strs[i][j] == '*') {
+				rmin = min(rmin, i);
+				rmax = max(rmax, i);
+				cmin = min(cmin, j);
+				cmax = max(cmax, j);
+			}
+		}
+	}
+
+	for (int i = rmin; i &lt;= rmax; i ++) {
+		for (int j = cmin; j &lt;= cmax; j ++) {
+			cout &lt;&lt; strs[i][j];
+		}
+		cout &lt;&lt; endl;
+	}
+
+	return 0;
+}
+</code></pre>
+<h2 id="16a-flag">16A Flag</h2>
+<p><a href="https://codeforces.com/problemset/problem/16/A">Flag</a></p>
+<blockquote>
+<p>Date: Feb/03/2023</p>
+</blockquote>
+<p>According to a new ISO standard, a flag of every country should have a chequered field <em>n</em> × <em>m</em>, each square should be of one of 10 colours, and the flag should be «striped»: each horizontal row of the flag should contain squares of the same colour, and the colours of adjacent horizontal rows should be different. Berland's government asked you to find out whether their flag meets the new ISO standard.</p>
+<p>Input</p>
+<p>The first line of the input contains numbers <em>n</em> and <em>m</em> (1 ≤ <em>n</em>, <em>m</em> ≤ 100), <em>n</em> — the amount of rows, <em>m</em> — the amount of columns on the flag of Berland. Then there follows the description of the flag: each of the following <em>n</em> lines contain <em>m</em> characters. Each character is a digit between 0 and 9, and stands for the colour of the corresponding square.</p>
+<p>Output</p>
+<p>Output YES, if the flag meets the new ISO standard, and NO otherwise.</p>
+<p>Sample 1</p>
+<table>
+<thead>
+<tr>
+<th>Inputcopy</th>
+<th>Outputcopy</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>3 3 000 111 222 </code></td>
+<td><code>YES </code></td>
+</tr>
+</tbody>
+</table>
+<p>Sample 2</p>
+<table>
+<thead>
+<tr>
+<th>Inputcopy</th>
+<th>Outputcopy</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>3 3 000 000 111 </code></td>
+<td><code>NO </code></td>
+</tr>
+</tbody>
+</table>
+<p>Sample 3</p>
+<table>
+<thead>
+<tr>
+<th>Inputcopy</th>
+<th>Outputcopy</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>3 3 000 111 002 </code></td>
+<td><code>NO</code></td>
+</tr>
+</tbody>
+</table>
+<pre><code class="language-c++">#include &lt;iostream&gt;
+#include &lt;cstdio&gt;
+
+using namespace std;
+
+const int N = 110;
+
+int n, m;
+string strs[N];
+
+
+int main() {
+	scanf(&quot;%d%d&quot;, &amp;n, &amp;m);
+	char cur;
+	string line;
+	getline(cin, line);
+	bool flag = true;
+	bool inflag = false;
+	for (int i = 0; i &lt; n; i ++) {
+		getline(cin, strs[i]);
+		for (int j = 1; j &lt; m; j ++) {
+			if (strs[i][j] != strs[i][j - 1] || i &gt;= 1 &amp;&amp; strs[i][j] == strs[i - 1][j]) {
+				flag = false;
+				inflag = true;
+				break;
+			}
+		} 
+		if (inflag) break;
+	}
+
+	if (flag) cout &lt;&lt; &quot;YES&quot; &lt;&lt; endl;
+	else cout &lt;&lt; &quot;NO&quot; &lt;&lt; endl;
+	
+	return 0;
+}
+</code></pre>
+<h2 id="22a-second-order-statistics">22A Second Order Statistics</h2>
+<p><a href="https://codeforces.com/problemset/problem/22/A">Second Order Statistics</a></p>
+<blockquote>
+<p>Date: Feb/04/2023</p>
+</blockquote>
+<p>Once Bob needed to find the second order statistics of a sequence of integer numbers. Lets choose each number from the sequence exactly once and sort them. The value on the second position is the second order statistics of the given sequence. In other words it is the smallest element strictly greater than the minimum. Help Bob solve this problem.</p>
+<p>Input</p>
+<p>The first input line contains integer <em>n</em> (1 ≤ <em>n</em> ≤ 100) — amount of numbers in the sequence. The second line contains <em>n</em> space-separated integer numbers — elements of the sequence. These numbers don't exceed 100 in absolute value.</p>
+<p>Output</p>
+<p>If the given sequence has the second order statistics, output this order statistics, otherwise output NO.</p>
+<p>Sample 1</p>
+<table>
+<thead>
+<tr>
+<th>Inputcopy</th>
+<th>Outputcopy</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>4 1 2 2 -4 </code></td>
+<td><code>1 </code></td>
+</tr>
+</tbody>
+</table>
+<p>Sample 2</p>
+<table>
+<thead>
+<tr>
+<th>Inputcopy</th>
+<th>Outputcopy</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>5 1 2 3 1 1 </code></td>
+<td><code>2 </code></td>
+</tr>
+</tbody>
+</table>
+<pre><code class="language-c++">#include &lt;iostream&gt;
+#include &lt;cstdio&gt;
+#include &lt;algorithm&gt;
+
+using namespace std;
+
+const int N = 105;
+
+int n;
+int q[N];
+
+
+int main() {
+	scanf(&quot;%d&quot;, &amp;n);
+
+	for (int i = 0; i &lt; n; i ++) scanf(&quot;%d&quot;, &amp;q[i]);
+
+	sort(q, q + n);
+	
+	int res;
+	bool flag = false;
+	for (int i = 0; i &lt; n; i ++) {
+		if (q[i] &gt; q[0]) {
+			res = q[i];
+			flag = true;
+			break;
+		}
+	}
+
+	if (flag) {
+		printf(&quot;%d\n&quot;, res);
+	} else printf(&quot;NO&quot;);
+
+	return 0;
+}
+</code></pre>
+<h2 id="32a-reconnaissance">32A Reconnaissance</h2>
+<p><a href="https://codeforces.com/problemset/problem/32/A">Reconnaissance</a></p>
+<blockquote>
+<p>Date: Feb/04/2023</p>
+</blockquote>
+<p>According to the regulations of Berland's army, a reconnaissance unit should consist of exactly two soldiers. Since these two soldiers shouldn't differ much, their heights can differ by at most <em>d</em> centimeters. Captain Bob has <em>n</em> soldiers in his detachment. Their heights are <em>a</em>1, <em>a</em>2, ..., <em>a**n</em> centimeters. Some soldiers are of the same height. Bob wants to know, how many ways exist to form a reconnaissance unit of two soldiers from his detachment.</p>
+<p>Ways (1, 2) and (2, 1) should be regarded as different.</p>
+<p>Input</p>
+<p>The first line contains two integers <em>n</em> and <em>d</em> (1 ≤ <em>n</em> ≤ 1000, 1 ≤ <em>d</em> ≤ 109) — amount of soldiers in Bob's detachment and the maximum allowed height difference respectively. The second line contains <em>n</em> space-separated integers — heights of all the soldiers in Bob's detachment. These numbers don't exceed 109.</p>
+<p>Output</p>
+<p>Output one number — amount of ways to form a reconnaissance unit of two soldiers, whose height difference doesn't exceed <em>d</em>.</p>
+<p>Sample 1</p>
+<table>
+<thead>
+<tr>
+<th>Inputcopy</th>
+<th>Outputcopy</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>5 10 10 20 50 60 65 </code></td>
+<td><code>6 </code></td>
+</tr>
+</tbody>
+</table>
+<p>Sample 2</p>
+<table>
+<thead>
+<tr>
+<th>Inputcopy</th>
+<th>Outputcopy</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>5 1 55 30 29 31 55 </code></td>
+<td><code>6 </code></td>
+</tr>
+</tbody>
+</table>
+<pre><code class="language-c++">#include &lt;iostream&gt;
+#include &lt;cstdio&gt;
+#include &lt;algorithm&gt;
+
+using namespace std;
+
+const int N = 105;
+
+int n, d;
+int q[N];
+
+
+int main() {
+	scanf(&quot;%d%d&quot;, &amp;n, &amp;d);
+
+	for (int i = 0; i &lt; n; i ++) scanf(&quot;%d&quot;, &amp;q[i]);
+
+	sort(q, q + n);
+	
+	int res = 0;
+	for (int i = 0; i &lt; n; i ++) {
+		for (int j = i + 1; j &lt; n; j ++) {
+			if (abs(q[i] - q[j]) &lt;= d) res ++;
+		}
+	}
+
+	printf(&quot;%d\n&quot;, res * 2);
+
+	return 0;
+}
+</code></pre>
+<h2 id="32b-borze">32B Borze</h2>
+<p><a href="https://codeforces.com/problemset/problem/32/B">Borze</a></p>
+<blockquote>
+<p>Date: Feb/05/2023</p>
+</blockquote>
+<p>Ternary numeric notation is quite popular in Berland. To telegraph the ternary number the Borze alphabet is used. Digit 0 is transmitted as «.», 1 as «-.» and 2 as «--». You are to decode the Borze code, i.e. to find out the ternary number given its representation in Borze alphabet.</p>
+<p>Input</p>
+<p>The first line contains a number in Borze code. The length of the string is between 1 and 200 characters. It's guaranteed that the given string is a valid Borze code of some ternary number (this number can have leading zeroes).</p>
+<p>Output</p>
+<p>Output the decoded ternary number. It can have leading zeroes.</p>
+<p>Sample 1</p>
+<table>
+<thead>
+<tr>
+<th>Inputcopy</th>
+<th>Outputcopy</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>.-.-- </code></td>
+<td><code>012</code></td>
+</tr>
+</tbody>
+</table>
+<p>Sample 2</p>
+<table>
+<thead>
+<tr>
+<th>Inputcopy</th>
+<th>Outputcopy</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--. </code></td>
+<td><code>20</code></td>
+</tr>
+</tbody>
+</table>
+<p>Sample 3</p>
+<table>
+<thead>
+<tr>
+<th>Inputcopy</th>
+<th>Outputcopy</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-..-.-- </code></td>
+<td><code>1012</code></td>
+</tr>
+</tbody>
+</table>
+<pre><code class="language-c++">#include &lt;iostream&gt;
+#include &lt;cstdio&gt;
+#include &lt;cstring&gt;
+#include &lt;algorithm&gt;
+
+using namespace std;
+
+
+int main() {
+	string line;
+	getline(cin, line);
+	int n = line.size();
+
+	for (int i = 0; i &lt; n;) {
+		if (line[i] == '.') {
+			printf(&quot;0&quot;);
+			i ++;
+		}
+		else {
+			if (line[++i] == '.') printf(&quot;1&quot;);
+			else printf(&quot;2&quot;);
+			i ++;
+		}
+	}
+
+	return 0;
+}
+</code></pre>
+<h2 id="34a-reconnaissance-2">34A Reconnaissance 2</h2>
+<p><a href="https://codeforces.com/problemset/problem/34/A">Reconnaissance 2</a></p>
+<blockquote>
+<p>Date: Feb/05/2023</p>
+</blockquote>
+<p><em>n</em> soldiers stand in a circle. For each soldier his height <em>a**i</em> is known. A reconnaissance unit can be made of such two <strong>neighbouring</strong> soldiers, whose heights difference is minimal, i.e. |<em>a**i</em> - <em>a**j</em>| is minimal. So each of them will be less noticeable with the other. Output any pair of soldiers that can form a reconnaissance unit.</p>
+<p>Input</p>
+<p>The first line contains integer <em>n</em> (2 ≤ <em>n</em> ≤ 100) — amount of soldiers. Then follow the heights of the soldiers in their order in the circle — <em>n</em> space-separated integers <em>a</em>1, <em>a</em>2, ..., <em>a**n</em> (1 ≤ <em>a**i</em> ≤ 1000). The soldier heights are given in clockwise or counterclockwise direction.</p>
+<p>Output</p>
+<p>Output two integers — indexes of <strong>neighbouring</strong> soldiers, who should form a reconnaissance unit. If there are many optimum solutions, output any of them. Remember, that the soldiers stand in a circle.</p>
+<p>Sample 1</p>
+<table>
+<thead>
+<tr>
+<th>Inputcopy</th>
+<th>Outputcopy</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>5 10 12 13 15 10 </code></td>
+<td><code>5 1 </code></td>
+</tr>
+</tbody>
+</table>
+<p>Sample 2</p>
+<table>
+<thead>
+<tr>
+<th>Inputcopy</th>
+<th>Outputcopy</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>4 10 20 30 40 </code></td>
+<td><code>1 2 </code></td>
+</tr>
+</tbody>
+</table>
+<pre><code class="language-c++">#include &lt;iostream&gt;
+#include &lt;cstdio&gt;
+#include &lt;cstring&gt;
+#include &lt;algorithm&gt;
+#include &lt;cmath&gt;
+
+using namespace std;
+
+const int N = 110;
+
+int n;
+int h[N];
+
+int main() {
+	scanf(&quot;%d&quot;, &amp;n);
+	for (int i = 1; i &lt;= n; i ++) scanf(&quot;%d&quot;, &amp;h[i]);
+
+	int minv = 1100, min1, min2;
+	for (int i = 2; i &lt;= n; i ++) {
+		int cur = abs(h[i] - h[i - 1]);
+		if (cur &lt; minv) {
+			minv = cur;
+			min1 = i;
+			min2 = i - 1;
+		}
+	}
+	if (abs(h[n] - h[1]) &lt; minv) {
+		min1 = n;
+		min2 = 1;
+	}
+
+	printf(&quot;%d %d&quot;, min1, min2);
+
+	return 0;
+}
+</code></pre>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li><a href="#800">800</a>
+<ul>
+<li><a href="#4a-watermelon">4A Watermelon</a></li>
+<li><a href="#9a-die-roll">9A Die Roll</a></li>
+<li><a href="#12a-super-agent">12A Super Agent</a></li>
+<li><a href="#14a-letter">14A Letter</a></li>
+<li><a href="#16a-flag">16A Flag</a></li>
+<li><a href="#22a-second-order-statistics">22A Second Order Statistics</a></li>
+<li><a href="#32a-reconnaissance">32A Reconnaissance</a></li>
+<li><a href="#32b-borze">32B Borze</a></li>
+<li><a href="#34a-reconnaissance-2">34A Reconnaissance 2</a></li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://CNZedChou.github.io/post/leetcode-ultimate/">
+              <h3 class="post-title">
+                Leetcode Ultimate
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank"> Gridea </a>
+  <a class="rss" href="https://CNZedChou.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

@@ -1,0 +1,367 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Tricks in Python | ZedChou&#39;s Blog</title>
+<link rel="shortcut icon" href="https://CNZedChou.github.io/favicon.ico?v=1676222959031">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://CNZedChou.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="Tricks in Python | ZedChou&#39;s Blog - Atom Feed" href="https://CNZedChou.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="@Description:   用于记录在Python中常用的技巧/表达式等
+@Author:    Zed Chou
+@LastModified:    Sun 18 Sept 2022
+
+随机在list中删除一个元素
+import ra..." />
+    <meta name="keywords" content="Python" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://CNZedChou.github.io">
+  <img class="avatar" src="https://CNZedChou.github.io/images/avatar.png?v=1676222959031" alt="">
+  </a>
+  <h1 class="site-title">
+    ZedChou&#39;s Blog
+  </h1>
+  <p class="site-description">
+    温故而知新
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              Tricks in Python
+            </h2>
+            <div class="post-info">
+              <span>
+                2022-09-18
+              </span>
+              <span>
+                5 min read
+              </span>
+              
+                <a href="https://CNZedChou.github.io/tag/w0Ef51Gm9/" class="post-tag">
+                  # Python
+                </a>
+              
+            </div>
+            
+              <img class="post-feature-image" src="https://raw.githubusercontent.com/CNZedChou/ForPicGo/master/202209180942977.png" alt="">
+            
+            <div class="post-content-wrapper">
+              <div class="post-content" v-pre>
+                <p>@Description:   用于记录在Python中常用的技巧/表达式等<br>
+@Author:    Zed Chou<br>
+@LastModified:    Sun 18 Sept 2022</p>
+<!-- more -->
+<h1 id="随机在list中删除一个元素">随机在list中删除一个元素</h1>
+<pre><code class="language-python">import random
+lst.pop(random.randint(0, len(lst) - 1))
+</code></pre>
+<h1 id="随机在list中抽取若干个元素无重复">随机在list中抽取若干个元素（无重复）</h1>
+<pre><code class="language-python">import random
+lst = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] 
+print(random.sample(lst, 5))
+# [8, 3, 4, 9, 10]
+</code></pre>
+<h1 id="嵌套的list合并为一个list">嵌套的list合并为一个list</h1>
+<pre><code class="language-python"># 巧用 sum 函数
+a=[[1],[2],[3],[4],[5]]
+merge=sum(a,[])
+# [1, 2, 3, 4, 5]
+</code></pre>
+<h1 id="pandas将list转化为dataframe">pandas将list转化为dataframe</h1>
+<pre><code class="language-python">import pandas as pd
+my_list = [ 'Tom', 'Mark', 'Tony' ]
+df = pd.DataFrame(my_list)
+print(df)
+# 输出
+#     0
+# 0   Tom
+# 1   Mark
+# 2   Tony
+</code></pre>
+<h1 id="numpy中flatten-函数的作用">numpy中flatten() 函数的作用</h1>
+<p>flatten是numpy.ndarray.flatten的一个函数，即<strong>返回一个一维数组。<strong>函数的作用对象是</strong>数组array、矩阵mat</strong>，不能直接用于列表list。</p>
+<pre><code class="language-python">from numpy import *
+a=array([[1,2],[3,4],[5,6]])
+a.flatten() #默认按行的方向降维
+# array([1, 2, 3, 4, 5, 6])
+a.flatten('F') #按列降维
+# array([1, 3, 5, 2, 4, 6]) 
+a.flatten('A') #按行降维
+# array([1, 2, 3, 4, 5, 6])
+</code></pre>
+<h1 id="numpy中运算符-mutiply-dot的用法">numpy中运算符* @ mutiply dot的用法</h1>
+<p>首先先给一个比较简单的用法解释：<br>
+<code>*</code>：        根据数据类型的不同，可能是做<strong>点乘</strong>运算，也可能做<strong>矩阵乘法</strong>运算<br>
+<code>@</code>：        只做<strong>矩阵乘法</strong>运算<br>
+<code>.dot</code>：     只做<strong>矩阵乘法</strong>运算<br>
+<code>np.mutiply</code>：只做<strong>点乘</strong>运算</p>
+<hr>
+<p>针对ndarray而言：<br>
+<code>*</code> 和 <code>np.multiply</code> 只能做<strong>点乘</strong>运算，当运算符两边的数据维度无法满足点乘运算结果时，就会报错<br>
+<code>@</code>和<code>.dot</code> 只能做<strong>矩阵乘法</strong>运算</p>
+<hr>
+<p>针对matrix而言：<br>
+<code>*</code> 会做<strong>矩阵乘法</strong>运算<br>
+而 <code>np.multiply</code> 依然只能做<strong>点乘</strong>运算，当运算符两边的数据维度无法满足点乘运算结果时，就会报错。<br>
+<code>@</code>和<code>.dot</code> 依旧保持只做<strong>矩阵乘法</strong>运算</p>
+<h1 id="numpymatmul-用法">numpy.matmul 用法</h1>
+<p>原型: <code>numpy.matmul(a, b, out=None)</code><br>
+两个numpy数组的矩阵相乘</p>
+<p>(1). 如果两个参数a , b都是2维的，做普通的矩阵相乘。</p>
+<pre><code class="language-python">import numpy as np
+a = [[1, 0], [0, 1]]
+b = [[4, 1], [2, 2]]
+np.matmul(a, b)
+# array([[4, 1],
+#       [2, 2]])
+</code></pre>
+<p>(2)如果某一个参数是N ( N&gt;2)维的，该参数被理解为一些矩阵(参数的最后两个维数为矩阵维数)的stack，而且计算时会相应的广播</p>
+<pre><code class="language-python">a = np.arange(2*2*4).reshape((2,2,4))
+b = np.arange(2*2*4).reshape((2,4,2))
+c = np.arange(1*2*4).reshape((1,4,2))
+np.matmul(a,b)
+np.matmul(a,c)
+# out:
+# [[[ 28  34]
+#   [ 76  98]]
+#  [[428 466]
+#   [604 658]]]
+  
+#  [[[ 28  34]
+#   [ 76  98]]
+#  [[124 162]
+#   [172 226]]]
+</code></pre>
+<p>(3)如果第一个参数或者第二个参数是1 维的，它会提升该参数为矩阵（根据另一个参数维数，给该参数增加一个为1的维数）。矩阵相乘之后会将为1的维数去掉。</p>
+<pre><code class="language-python">import numpy as np
+a = [[1, 0], [0, 1]]
+b = [1, 2]
+np.matmul(a, b)
+np.matmul(b, a)
+# array([1, 2])
+# array([1, 2])
+</code></pre>
+<p>(4)乘一个标量是不被允许的，用*代替。</p>
+<pre><code class="language-python">np.matmul([1,2], 3)
+# ValueError: Scalar operands are not allowed, use '*' instead
+</code></pre>
+<h1 id="pandas中describe函数的用法">pandas中describe()函数的用法</h1>
+<pre><code class="language-python">DataFrame.describe(percentiles=None, include=None, exclude=None)
+# return: Series or DataFrame.  Summary statistics of the Series or Dataframe provided.
+</code></pre>
+<p><strong>统计值变量说明</strong></p>
+<p>count：数量统计，此列共有多少有效值<br>
+unipue：不同的值有多少个<br>
+std：标准差<br>
+min：最小值<br>
+25%：四分之一分位数<br>
+50%：二分之一分位数<br>
+75%：四分之三分位数<br>
+max：最大值<br>
+mean：均值</p>
+<ul>
+<li>统计列值为数字的信息</li>
+</ul>
+<pre><code class="language-python">import pandas as pd
+s = pd.Series([1, 2, 3, 4])
+print(s.describe())
+&quot;&quot;&quot;
+count    4.000000
+mean     2.500000
+std      1.290994
+min      1.000000
+25%      1.750000
+50%      2.500000
+75%      3.250000
+max      4.000000
+dtype: float64
+&quot;&quot;&quot;
+</code></pre>
+<ul>
+<li>列值为非数字的信息</li>
+</ul>
+<pre><code class="language-python">a = pd.Series(['a', 'd', 'r', 't'])
+print(a.describe())
+&quot;&quot;&quot;
+count     4
+unique    4
+top       a
+freq      1
+dtype: object
+&quot;&quot;&quot;
+</code></pre>
+<h1 id="seaborn绘制直方图histogram">Seaborn绘制直方图（histogram）</h1>
+<h1 id="itertools"><a href="https://docs.python.org/zh-cn/3/library/itertools.html#module-itertools"><code>itertools</code></a> --- 为高效循环而创建迭代器的函数</h1>
+<h2 id="无穷迭代器">无穷迭代器</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">迭代器</th>
+<th style="text-align:left">实参</th>
+<th style="text-align:left">结果</th>
+<th style="text-align:left">示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><a href="https://docs.python.org/zh-cn/3/library/itertools.html#itertools.count"><code>count()</code></a></td>
+<td style="text-align:left">start, [step]</td>
+<td style="text-align:left">start, start+step, start+2*step, ...</td>
+<td style="text-align:left"><code>count(10) --&gt; 10 11 12 13 14 ...</code></td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="https://docs.python.org/zh-cn/3/library/itertools.html#itertools.cycle"><code>cycle()</code></a></td>
+<td style="text-align:left">p</td>
+<td style="text-align:left">p0, p1, ... plast, p0, p1, ...</td>
+<td style="text-align:left"><code>cycle('ABCD') --&gt; A B C D A B C D ...</code></td>
+</tr>
+<tr>
+<td style="text-align:left"><a href="https://docs.python.org/zh-cn/3/library/itertools.html#itertools.repeat"><code>repeat()</code></a></td>
+<td style="text-align:left">elem [,n]</td>
+<td style="text-align:left">elem, elem, elem, ... 重复无限次或n次</td>
+<td style="text-align:left"><code>repeat(10, 3) --&gt; 10 10 10</code></td>
+</tr>
+</tbody>
+</table>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li><a href="#%E9%9A%8F%E6%9C%BA%E5%9C%A8list%E4%B8%AD%E5%88%A0%E9%99%A4%E4%B8%80%E4%B8%AA%E5%85%83%E7%B4%A0">随机在list中删除一个元素</a></li>
+<li><a href="#%E9%9A%8F%E6%9C%BA%E5%9C%A8list%E4%B8%AD%E6%8A%BD%E5%8F%96%E8%8B%A5%E5%B9%B2%E4%B8%AA%E5%85%83%E7%B4%A0%E6%97%A0%E9%87%8D%E5%A4%8D">随机在list中抽取若干个元素（无重复）</a></li>
+<li><a href="#%E5%B5%8C%E5%A5%97%E7%9A%84list%E5%90%88%E5%B9%B6%E4%B8%BA%E4%B8%80%E4%B8%AAlist">嵌套的list合并为一个list</a></li>
+<li><a href="#pandas%E5%B0%86list%E8%BD%AC%E5%8C%96%E4%B8%BAdataframe">pandas将list转化为dataframe</a></li>
+<li><a href="#numpy%E4%B8%ADflatten-%E5%87%BD%E6%95%B0%E7%9A%84%E4%BD%9C%E7%94%A8">numpy中flatten() 函数的作用</a></li>
+<li><a href="#numpy%E4%B8%AD%E8%BF%90%E7%AE%97%E7%AC%A6-mutiply-dot%E7%9A%84%E7%94%A8%E6%B3%95">numpy中运算符* @ mutiply dot的用法</a></li>
+<li><a href="#numpymatmul-%E7%94%A8%E6%B3%95">numpy.matmul 用法</a></li>
+<li><a href="#pandas%E4%B8%ADdescribe%E5%87%BD%E6%95%B0%E7%9A%84%E7%94%A8%E6%B3%95">pandas中describe()函数的用法</a></li>
+<li><a href="#seaborn%E7%BB%98%E5%88%B6%E7%9B%B4%E6%96%B9%E5%9B%BEhistogram">Seaborn绘制直方图（histogram）</a></li>
+<li><a href="#itertools">itertools</a>
+<ul>
+<li><a href="#%E6%97%A0%E7%A9%B7%E8%BF%AD%E4%BB%A3%E5%99%A8">无穷迭代器</a></li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://CNZedChou.github.io/post/tricks-in-visio/">
+              <h3 class="post-title">
+                Tricks in Visio
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank"> Gridea </a>
+  <a class="rss" href="https://CNZedChou.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

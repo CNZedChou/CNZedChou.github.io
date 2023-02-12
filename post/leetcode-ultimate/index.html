@@ -1,0 +1,405 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Leetcode Ultimate | ZedChou&#39;s Blog</title>
+<link rel="shortcut icon" href="https://CNZedChou.github.io/favicon.ico?v=1676222959031">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://CNZedChou.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="Leetcode Ultimate | ZedChou&#39;s Blog - Atom Feed" href="https://CNZedChou.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="@Description:   用于记录AcWing上学习leetcode究极班的过程
+@Author:    Zed Chou
+@LastModified:    Thu 19 Jan 2023
+
+34. 在排序数组中查找元素的第一个和最..." />
+    <meta name="keywords" content="Coding" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://CNZedChou.github.io">
+  <img class="avatar" src="https://CNZedChou.github.io/images/avatar.png?v=1676222959031" alt="">
+  </a>
+  <h1 class="site-title">
+    ZedChou&#39;s Blog
+  </h1>
+  <p class="site-description">
+    温故而知新
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              Leetcode Ultimate
+            </h2>
+            <div class="post-info">
+              <span>
+                2023-01-19
+              </span>
+              <span>
+                6 min read
+              </span>
+              
+                <a href="https://CNZedChou.github.io/tag/yx9d52T4r/" class="post-tag">
+                  # Coding
+                </a>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content" v-pre>
+                <p>@Description:   用于记录AcWing上学习leetcode究极班的过程<br>
+@Author:    Zed Chou<br>
+@LastModified:    Thu 19 Jan 2023</p>
+<!-- more -->
+<h1 id="34-在排序数组中查找元素的第一个和最后一个位置">34. 在排序数组中查找元素的第一个和最后一个位置</h1>
+<p><a href="https://leetcode.cn/problems/find-first-and-last-position-of-element-in-sorted-array">34. 在排序数组中查找元素的第一个和最后一个位置</a></p>
+<figure data-type="image" tabindex="1"><img src="https://raw.githubusercontent.com/CNZedChou/ForPicGo/master/image-20230128150058175.png" alt="image-20230128150058175" loading="lazy"></figure>
+<pre><code class="language-c++">class Solution {
+public:
+    vector&lt;int&gt; searchRange(vector&lt;int&gt;&amp; nums, int target) {
+        vector&lt;int&gt; res;
+        if (nums.empty()) return {-1, -1};
+        int l = 0, r = nums.size() - 1;
+        while (l &lt; r) {
+            int mid = (l + r) &gt;&gt; 1;
+            if (nums[mid] &gt;= target) r = mid;
+            else l = mid + 1;
+        }
+        if (nums[l] != target) return {-1, -1};
+        res.push_back(l);
+        l = 0, r = nums.size() - 1;
+        while (l &lt; r) {
+            int mid = (l + r + 1) &gt;&gt; 1;
+            if (nums[mid] &lt;= target) l = mid;
+            else r = mid - 1;
+        }
+        res.push_back(l);
+        return res;
+    }
+};
+</code></pre>
+<h1 id="35-搜索插入位置">35. 搜索插入位置</h1>
+<p><a href="https://leetcode.cn/problems/search-insert-position/?envType=study-plan&amp;id=binary-search-beginner&amp;plan=binary-search&amp;plan_progress=b5ethhc">35. 搜索插入位置</a></p>
+<figure data-type="image" tabindex="2"><img src="https://raw.githubusercontent.com/CNZedChou/ForPicGo/master/image-20230120141638246.png" alt="image-20230120141638246" loading="lazy"></figure>
+<pre><code class="language-c++">class Solution {
+public:
+    int searchInsert(vector&lt;int&gt;&amp; nums, int target) {
+        int l = 0, r = nums.size() - 1;
+        while (l &lt; r) {
+            int mid = (l + r) &gt;&gt; 1;
+            if (nums[mid] &gt;= target) r = mid;
+            else l = mid + 1;
+        }
+        if (nums[l] &gt;= target) return l;
+        else return nums.size();
+    }
+};
+</code></pre>
+<h1 id="69-x-的平方根">69. x 的平方根</h1>
+<p><a href="https://leetcode.cn/problems/sqrtx">69. x 的平方根</a></p>
+<figure data-type="image" tabindex="3"><img src="https://raw.githubusercontent.com/CNZedChou/ForPicGo/master/image-20230128144259169.png" alt="image-20230128144259169" loading="lazy"></figure>
+<pre><code class="language-c++">class Solution {
+public:
+    int mySqrt(int x) {
+        int l = 0, r = x;
+        while (l &lt; r) {
+            int mid = (l + 1ll + r) &gt;&gt; 1;
+            if (mid &lt;= x / mid) l = mid;
+            else r = mid - 1;
+        }
+        return l;
+    }
+};
+</code></pre>
+<h1 id="167-两数之和-ii-输入有序数组">167. 两数之和 II - 输入有序数组</h1>
+<p><a href="https://leetcode.cn/problems/two-sum-ii-input-array-is-sorted">167. 两数之和 II - 输入有序数组</a></p>
+<h1 id="278-第一个错误的版本">278. 第一个错误的版本</h1>
+<p><a href="https://leetcode.cn/problems/first-bad-version/description/">278. 第一个错误的版本</a></p>
+<figure data-type="image" tabindex="4"><img src="https://raw.githubusercontent.com/CNZedChou/ForPicGo/master/image-20230128145426577.png" alt="image-20230128145426577" loading="lazy"></figure>
+<pre><code class="language-c++">// The API isBadVersion is defined for you.
+// bool isBadVersion(int version);
+
+class Solution {
+public:
+    int firstBadVersion(int n) {
+        long long l = 1, r = n;
+        while (l &lt; r) {
+            long long mid = (l + r) &gt;&gt; 1;
+            if (isBadVersion(mid)) r = mid;
+            else l = mid + 1;
+        }
+        return (int)l;
+    }
+};
+</code></pre>
+<h1 id="367-有效的完全平方数">367. 有效的完全平方数</h1>
+<p><a href="https://leetcode.cn/problems/valid-perfect-square/?envType=study-plan&amp;id=binary-search-beginner&amp;plan=binary-search">367. 有效的完全平方数</a></p>
+<figure data-type="image" tabindex="5"><img src="https://raw.githubusercontent.com/CNZedChou/ForPicGo/master/image-20230128140223714.png" alt="image-20230128140223714" loading="lazy"></figure>
+<pre><code class="language-c++">class Solution {
+public:
+    bool isPerfectSquare(int num) {
+        int l = 1, r = num;
+        while (l &lt; r) {
+            int mid = (l + 1ll + r) &gt;&gt; 1;  // 防止爆int
+            if (mid &lt;= num / mid) l = mid;
+            else r = mid - 1;
+        }
+        return r * r == num;
+    }
+};
+</code></pre>
+<h1 id="374-猜数字大小">374. 猜数字大小</h1>
+<p><a href="https://leetcode.cn/problems/guess-number-higher-or-lower/?envType=study-plan&amp;id=binary-search-beginner&amp;plan=binary-search&amp;plan_progress=b5ethhc">374. 猜数字大小</a></p>
+<figure data-type="image" tabindex="6"><img src="https://raw.githubusercontent.com/CNZedChou/ForPicGo/master/image-20230119231836443.png" alt="image-20230119231836443" loading="lazy"></figure>
+<pre><code class="language-c++">/** 
+ * Forward declaration of guess API.
+ * @param  num   your guess
+ * @return 	     -1 if num is higher than the picked number
+ *			      1 if num is lower than the picked number
+ *               otherwise return 0
+ * int guess(int num);
+ */
+
+class Solution {
+public:
+    int guessNumber(int n) {
+        int l = 1, r = n;
+        while (l &lt; r) {
+            int mid = (long long) l + r &gt;&gt; 1;
+            if (guess(mid) &lt;= 0) r = mid;
+            else l = mid + 1;
+        }
+
+        return l;
+    }
+};
+</code></pre>
+<h1 id="441-排列硬币">441. 排列硬币</h1>
+<p><a href="https://leetcode.cn/problems/arranging-coins">441. 排列硬币</a></p>
+<figure data-type="image" tabindex="7"><img src="https://raw.githubusercontent.com/CNZedChou/ForPicGo/master/image-20230128151155808.png" alt="image-20230128151155808" loading="lazy"></figure>
+<pre><code class="language-c++">class Solution {
+public:
+    int arrangeCoins(int n) {
+        long long  l = 1, r = n;
+        while (l &lt; r) {
+            long long  mid = (l + r + 1) &gt;&gt; 1;
+            if (mid * (mid + 1) &lt;= (long long) 2 * n) l = mid;
+            else r = mid - 1;
+        }
+        return (int) l;
+    }
+};
+</code></pre>
+<h1 id="704-二分查找">704. 二分查找</h1>
+<p><a href="https://leetcode.cn/problems/binary-search/description/">704. 二分查找</a></p>
+<figure data-type="image" tabindex="8"><img src="https://raw.githubusercontent.com/CNZedChou/ForPicGo/master/image-20230119231633704.png" alt="image-20230119231633704" loading="lazy"></figure>
+<pre><code class="language-c++">class Solution {
+public:
+    int search(vector&lt;int&gt;&amp; nums, int target) {
+        int l = 0, r = nums.size() - 1;
+        while (l &lt; r) {
+            int mid = (l + r) &gt;&gt; 1;
+            if (nums[mid] &gt;= target) r = mid;
+            else l = mid + 1;
+        }
+        if (nums[l] == target) return l;
+        else return -1;
+    }
+};
+</code></pre>
+<h1 id="744-寻找比目标字母大的最小字母">744. 寻找比目标字母大的最小字母</h1>
+<p><a href="https://leetcode.cn/problems/find-smallest-letter-greater-than-target">744. 寻找比目标字母大的最小字母</a></p>
+<figure data-type="image" tabindex="9"><img src="https://raw.githubusercontent.com/CNZedChou/ForPicGo/master/image-20230128144828367.png" alt="image-20230128144828367" loading="lazy"></figure>
+<p>在比较时，字母是依序循环出现的。举个例子：<br>
+如果目标字母 target = 'z' 并且字符列表为 letters = ['a', 'b']，则答案返回 'a'</p>
+<p>就是说,如果没有找到合适的,就返回letters的第一字符</p>
+<pre><code class="language-c++">class Solution {
+public:
+    char nextGreatestLetter(vector&lt;char&gt;&amp; letters, char target) {
+        int l = 0, r = letters.size() - 1;
+        while (l &lt; r) {
+            int mid = (l + r) &gt;&gt; 1;
+            if (letters[mid] &gt; target) r = mid;
+            else l = mid + 1;
+        }
+        if (letters[l] &lt;= target) return letters[0];
+        else return letters[l];
+    }
+};
+</code></pre>
+<h1 id="852-山脉数组的峰顶索引">852. 山脉数组的峰顶索引</h1>
+<p><a href="https://leetcode.cn/problems/peak-index-in-a-mountain-array/?envType=study-plan&amp;id=binary-search-beginner&amp;plan=binary-search&amp;plan_progress=b5ethhc">852. 山脉数组的峰顶索引</a></p>
+<figure data-type="image" tabindex="10"><img src="https://raw.githubusercontent.com/CNZedChou/ForPicGo/master/image-20230120142227927.png" alt="image-20230120142227927" loading="lazy"></figure>
+<pre><code class="language-c++">class Solution {
+public:
+    int peakIndexInMountainArray(vector&lt;int&gt;&amp; arr) {
+        int l = 1, r = arr.size() - 2;
+        while (l &lt; r) {
+            int mid = (l + r + 1) &gt;&gt; 1;
+            if (arr[mid] &gt; arr[mid - 1]) l = mid;
+            else r = mid - 1;
+        }
+        return l;
+    }
+};
+</code></pre>
+<h1 id="1385-两个数组间的距离值">1385. 两个数组间的距离值</h1>
+<p><a href="https://leetcode.cn/problems/find-the-distance-value-between-two-arrays">1385. 两个数组间的距离值</a></p>
+<figure data-type="image" tabindex="11"><img src="https://raw.githubusercontent.com/CNZedChou/ForPicGo/master/image-20230128143836717.png" alt="image-20230128143836717" loading="lazy"></figure>
+<pre><code class="language-c++">class Solution {
+public:
+    int findTheDistanceValue(vector&lt;int&gt;&amp; arr1, vector&lt;int&gt;&amp; arr2, int d) {
+        int n = arr1.size(), m = arr2.size();
+        int res = 0;
+        for (int i = 0; i &lt; n; i ++) {
+            bool flag = true;
+            for (int j = 0; j &lt; m; j ++) {
+                if (arr1[i] - arr2[j] &lt;= d &amp;&amp; arr1[i] - arr2[j] &gt;= -d) {
+                    flag = false;
+                    break;
+                }
+                
+            }
+            if (flag) res ++;
+        }
+        return res;
+    }
+};
+</code></pre>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li><a href="#34-%E5%9C%A8%E6%8E%92%E5%BA%8F%E6%95%B0%E7%BB%84%E4%B8%AD%E6%9F%A5%E6%89%BE%E5%85%83%E7%B4%A0%E7%9A%84%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%92%8C%E6%9C%80%E5%90%8E%E4%B8%80%E4%B8%AA%E4%BD%8D%E7%BD%AE">34. 在排序数组中查找元素的第一个和最后一个位置</a></li>
+<li><a href="#35-%E6%90%9C%E7%B4%A2%E6%8F%92%E5%85%A5%E4%BD%8D%E7%BD%AE">35. 搜索插入位置</a></li>
+<li><a href="#69-x-%E7%9A%84%E5%B9%B3%E6%96%B9%E6%A0%B9">69. x 的平方根</a></li>
+<li><a href="#167-%E4%B8%A4%E6%95%B0%E4%B9%8B%E5%92%8C-ii-%E8%BE%93%E5%85%A5%E6%9C%89%E5%BA%8F%E6%95%B0%E7%BB%84">167. 两数之和 II - 输入有序数组</a></li>
+<li><a href="#278-%E7%AC%AC%E4%B8%80%E4%B8%AA%E9%94%99%E8%AF%AF%E7%9A%84%E7%89%88%E6%9C%AC">278. 第一个错误的版本</a></li>
+<li><a href="#367-%E6%9C%89%E6%95%88%E7%9A%84%E5%AE%8C%E5%85%A8%E5%B9%B3%E6%96%B9%E6%95%B0">367. 有效的完全平方数</a></li>
+<li><a href="#374-%E7%8C%9C%E6%95%B0%E5%AD%97%E5%A4%A7%E5%B0%8F">374. 猜数字大小</a></li>
+<li><a href="#441-%E6%8E%92%E5%88%97%E7%A1%AC%E5%B8%81">441. 排列硬币</a></li>
+<li><a href="#704-%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE">704. 二分查找</a></li>
+<li><a href="#744-%E5%AF%BB%E6%89%BE%E6%AF%94%E7%9B%AE%E6%A0%87%E5%AD%97%E6%AF%8D%E5%A4%A7%E7%9A%84%E6%9C%80%E5%B0%8F%E5%AD%97%E6%AF%8D">744. 寻找比目标字母大的最小字母</a></li>
+<li><a href="#852-%E5%B1%B1%E8%84%89%E6%95%B0%E7%BB%84%E7%9A%84%E5%B3%B0%E9%A1%B6%E7%B4%A2%E5%BC%95">852. 山脉数组的峰顶索引</a></li>
+<li><a href="#1385-%E4%B8%A4%E4%B8%AA%E6%95%B0%E7%BB%84%E9%97%B4%E7%9A%84%E8%B7%9D%E7%A6%BB%E5%80%BC">1385. 两个数组间的距离值</a></li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://CNZedChou.github.io/post/tricks-in-cpp/">
+              <h3 class="post-title">
+                Tricks in Cpp
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank"> Gridea </a>
+  <a class="rss" href="https://CNZedChou.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

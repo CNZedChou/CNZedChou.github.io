@@ -1,0 +1,435 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Machine Learning and Deep Learning | ZedChou&#39;s Blog</title>
+<link rel="shortcut icon" href="https://CNZedChou.github.io/favicon.ico?v=1676222959031">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://CNZedChou.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="Machine Learning and Deep Learning | ZedChou&#39;s Blog - Atom Feed" href="https://CNZedChou.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="@Description:   用于记录机器学习与深度学习中的python代码
+@Author:    Zed Chou
+@LastModified:    Thu 6 Oct 2022
+
+Machine Learning
+常见的激活函数
+..." />
+    <meta name="keywords" content="" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://CNZedChou.github.io">
+  <img class="avatar" src="https://CNZedChou.github.io/images/avatar.png?v=1676222959031" alt="">
+  </a>
+  <h1 class="site-title">
+    ZedChou&#39;s Blog
+  </h1>
+  <p class="site-description">
+    温故而知新
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              Machine Learning and Deep Learning
+            </h2>
+            <div class="post-info">
+              <span>
+                2022-10-06
+              </span>
+              <span>
+                8 min read
+              </span>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content" v-pre>
+                <p>@Description:   用于记录机器学习与深度学习中的python代码<br>
+@Author:    Zed Chou<br>
+@LastModified:    Thu 6 Oct 2022</p>
+<!-- more -->
+<h1 id="machine-learning">Machine Learning</h1>
+<h2 id="常见的激活函数">常见的激活函数</h2>
+<h3 id="sigmoid">sigmoid</h3>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi><mo>=</mo><mi>g</mi><mo>(</mo><mi>z</mi><mo>)</mo><mo>=</mo><mfrac><mn>1</mn><mrow><mn>1</mn><mo>+</mo><msup><mi>e</mi><mrow><mo>−</mo><mi>z</mi></mrow></msup></mrow></mfrac></mrow><annotation encoding="application/x-tex">a=g(z)=\frac{1}{1+e^{-z}}
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">a</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.04398em;">z</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:2.09077em;vertical-align:-0.7693300000000001em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.32144em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord"><span class="mord mathdefault">e</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.697331em;"><span style="top:-2.989em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">−</span><span class="mord mathdefault mtight" style="margin-right:0.04398em;">z</span></span></span></span></span></span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.7693300000000001em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></p>
+<pre><code class="language-python">#导入相关库
+import matplotlib.pyplot as plt
+import numpy as np 
+
+#函数
+g=lambda z:1/(1+np.exp(-x))
+
+start=-10 #输入需要绘制的起始值（从左到右）
+stop=10 #输入需要绘制的终点值
+step=0.01#输入步长
+num=int((stop-start)/step) #计算点的个数
+x = np.linspace(start,stop,num)
+y = g(x)
+
+fig=plt.figure(1)
+plt.plot(x, y,label='sigmoid')
+plt.grid(True)#显示网格
+
+plt.legend()#显示旁注#注意：不会显示后来再定义的旁注
+plt.show(fig)
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://raw.githubusercontent.com/CNZedChou/ForPicGo/master/202210062002844.png" alt="sigmoid" loading="lazy"></figure>
+<ul>
+<li>
+<p>sigmoid函数的值域为（0，1）</p>
+</li>
+<li>
+<p>导数<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">：</mi><msup><mi>g</mi><mo mathvariant="normal">′</mo></msup><mo>(</mo><mi>z</mi><mo>)</mo><mo>=</mo><mi>g</mi><mo>(</mo><mi>z</mi><mo>)</mo><mo>∗</mo><mo>(</mo><mn>1</mn><mo>−</mo><mi>g</mi><mo>(</mo><mi>z</mi><mo>)</mo><mo>)</mo></mrow><annotation encoding="application/x-tex">：g^{\prime}(z)=g(z) *(1-g(z))</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.001892em;vertical-align:-0.25em;"></span><span class="mord cjk_fallback">：</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.751892em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.04398em;">z</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.04398em;">z</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.04398em;">z</span><span class="mclose">)</span><span class="mclose">)</span></span></span></span></p>
+</li>
+</ul>
+<h3 id="tanh">tanh</h3>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi><mo>=</mo><mi>g</mi><mo>(</mo><mi>z</mi><mo>)</mo><mo>=</mo><mfrac><mrow><msup><mi>e</mi><mi>z</mi></msup><mo>−</mo><msup><mi>e</mi><mrow><mo>−</mo><mi>z</mi></mrow></msup></mrow><mrow><msup><mi>e</mi><mi>z</mi></msup><mo>+</mo><msup><mi>e</mi><mrow><mo>−</mo><mi>z</mi></mrow></msup></mrow></mfrac></mrow><annotation encoding="application/x-tex">a=g(z)=\frac{e^{z}-e^{-z}}{e^{z}+e^{-z}}
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">a</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.04398em;">z</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:2.217661em;vertical-align:-0.7693300000000001em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.448331em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"><span class="mord mathdefault">e</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.590392em;"><span style="top:-2.9890000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.04398em;">z</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord"><span class="mord mathdefault">e</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.697331em;"><span style="top:-2.989em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">−</span><span class="mord mathdefault mtight" style="margin-right:0.04398em;">z</span></span></span></span></span></span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"><span class="mord mathdefault">e</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.664392em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.04398em;">z</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord"><span class="mord mathdefault">e</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.771331em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">−</span><span class="mord mathdefault mtight" style="margin-right:0.04398em;">z</span></span></span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.7693300000000001em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></p>
+<pre><code class="language-python">#导入相关库
+import matplotlib.pyplot as plt
+import numpy as np 
+
+#函数
+g=lambda z:(np.exp(z)-np.exp(-z))/(np.exp(z)+np.exp(-z))
+
+start=-10 #输入需要绘制的起始值（从左到右）
+stop=10 #输入需要绘制的终点值
+step=0.01#输入步长
+num=int((stop-start)/step) #计算点的个数
+x = np.linspace(start,stop,num)
+y = g(x)
+
+fig=plt.figure(1)
+plt.plot(x, y,label='tanh')
+plt.grid(True)#显示网格
+
+plt.legend()#显示旁注
+plt.show(fig)
+</code></pre>
+<figure data-type="image" tabindex="2"><img src="https://raw.githubusercontent.com/CNZedChou/ForPicGo/master/202210062003558.png" alt="tanh" loading="lazy"></figure>
+<ul>
+<li>tanh函数是sigmoid函数向下平移和收缩后的结果。</li>
+<li>sigmoid和tanh激活函数有共同的缺点：即在z很大或很小时，梯度几乎为零，因此使用梯度下降优化算法更新网络很慢。</li>
+<li>导数：<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi>g</mi><mo mathvariant="normal">′</mo></msup><mo>(</mo><mi>z</mi><mo>)</mo><mo>=</mo><mn>1</mn><mo>−</mo><mo>(</mo><mi>g</mi><mo>(</mo><mi>z</mi><mo>)</mo><msup><mo>)</mo><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">g^{\prime}(z)=1-(g(z))^{2}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.001892em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.751892em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.04398em;">z</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1.064108em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.04398em;">z</span><span class="mclose">)</span><span class="mclose"><span class="mclose">)</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span></span></li>
+</ul>
+<h3 id="relu">relu</h3>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi><mo>=</mo><mi>g</mi><mo>(</mo><mi>z</mi><mo>)</mo><mo>=</mo><mi>max</mi><mo>⁡</mo><mo>(</mo><mn>0</mn><mo separator="true">,</mo><mi>z</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">a=g(z)=\max (0, z)
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">a</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.04398em;">z</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mop">max</span><span class="mopen">(</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.04398em;">z</span><span class="mclose">)</span></span></span></span></span></p>
+<pre><code class="language-python">#导入相关库
+import matplotlib.pyplot as plt
+import numpy as np 
+
+#函数
+g=lambda z:np.maximum(0,z)
+
+start=-10 #输入需要绘制的起始值（从左到右）
+stop=10 #输入需要绘制的终点值
+step=0.01#输入步长
+num=int((stop-start)/step) #计算点的个数
+x = np.linspace(start,stop,num)
+y = g(x)
+
+fig=plt.figure(1)
+plt.plot(x, y,label='relu')
+plt.grid(True)#显示网格
+
+plt.legend()#显示旁注
+plt.show(fig)
+</code></pre>
+<figure data-type="image" tabindex="3"><img src="https://raw.githubusercontent.com/CNZedChou/ForPicGo/master/202210062006354.png" alt="relu" loading="lazy"></figure>
+<ul>
+<li>
+<p>导数：</p>
+<ul>
+<li>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi>g</mi><mo mathvariant="normal">′</mo></msup><mo>(</mo><mi>z</mi><mo>)</mo><mo>=</mo><mrow><mo fence="true">{</mo><mtable><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mn>1</mn></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><mtext> if </mtext><mi mathvariant="normal">z</mi><mo>&gt;</mo><mn>0</mn></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mtext> undefined </mtext></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><mtext> if </mtext><mi mathvariant="normal">z</mi><mo>=</mo><mn>0</mn></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mn>0</mn></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><mtext> if </mtext><mi mathvariant="normal">z</mi><mo>&lt;</mo><mn>0</mn></mrow></mstyle></mtd></mtr></mtable></mrow></mrow><annotation encoding="application/x-tex">g^{\prime}(z)=\left\{\begin{array}{ll}
+1 &amp; \text { if } \mathrm{z}&gt;0 \\
+\text { undefined } &amp; \text { if } \mathrm{z}=0 \\
+0 &amp; \text { if } \mathrm{z}&lt;0
+\end{array}\right.
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.051892em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.801892em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.04398em;">z</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:3.60004em;vertical-align:-1.55002em;"></span><span class="minner"><span class="mopen"><span class="delimsizing mult"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:2.05002em;"><span style="top:-2.49999em;"><span class="pstrut" style="height:3.15em;"></span><span class="delimsizinginner delim-size4"><span>⎩</span></span></span><span style="top:-3.15001em;"><span class="pstrut" style="height:3.15em;"></span><span class="delimsizinginner delim-size4"><span>⎨</span></span></span><span style="top:-4.30002em;"><span class="pstrut" style="height:3.15em;"></span><span class="delimsizinginner delim-size4"><span>⎧</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.55002em;"><span></span></span></span></span></span></span><span class="mord"><span class="mtable"><span class="arraycolsep" style="width:0.5em;"></span><span class="col-align-l"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:2.05em;"><span style="top:-4.21em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span></span></span><span style="top:-3.0099999999999993em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord text"><span class="mord"> undefined </span></span></span></span><span style="top:-1.8099999999999994em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.5500000000000007em;"><span></span></span></span></span></span><span class="arraycolsep" style="width:0.5em;"></span><span class="arraycolsep" style="width:0.5em;"></span><span class="col-align-l"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:2.05em;"><span style="top:-4.21em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord text"><span class="mord"> if </span></span><span class="mord"><span class="mord mathrm">z</span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&gt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mord">0</span></span></span><span style="top:-3.0099999999999993em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord text"><span class="mord"> if </span></span><span class="mord"><span class="mord mathrm">z</span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mord">0</span></span></span><span style="top:-1.8099999999999994em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord text"><span class="mord"> if </span></span><span class="mord"><span class="mord mathrm">z</span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&lt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mord">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.5500000000000007em;"><span></span></span></span></span></span><span class="arraycolsep" style="width:0.5em;"></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></p>
+</li>
+</ul>
+</li>
+<li>
+<p>由于sigmoid和tanh存在上述的缺点，因此relu激活函数成为了大多数神经网络的默认选择。</p>
+</li>
+<li>
+<p>但是relu也存在缺点：即在<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>z</mi></mrow><annotation encoding="application/x-tex">z</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.04398em;">z</span></span></span></span>小于0时，斜率即导数为0，因此引申出下面的leaky relu函数，但是实际上leaky relu使用的并不多。</p>
+</li>
+</ul>
+<h3 id="leaky-relu">leaky relu</h3>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi><mo>=</mo><mi>g</mi><mo>(</mo><mi>z</mi><mo>)</mo><mo>=</mo><mi>max</mi><mo>⁡</mo><mo>(</mo><mn>0.01</mn><mi>z</mi><mo separator="true">,</mo><mi>z</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">a=g(z)=\max (0.01 z, z)
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">a</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.04398em;">z</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mop">max</span><span class="mopen">(</span><span class="mord">0</span><span class="mord">.</span><span class="mord">0</span><span class="mord">1</span><span class="mord mathdefault" style="margin-right:0.04398em;">z</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.04398em;">z</span><span class="mclose">)</span></span></span></span></span></p>
+<pre><code class="language-python">#导入相关库
+import matplotlib.pyplot as plt
+import numpy as np 
+
+#函数
+g=lambda z:np.maximum(0.01*z,z)
+
+start=-100 #输入需要绘制的起始值（从左到右）
+stop=50 #输入需要绘制的终点值
+step=0.01#输入步长
+num=int((stop-start)/step) #计算点的个数
+x = np.linspace(start,stop,num)
+y = g(x)
+
+fig=plt.figure(1)
+plt.plot(x, y,label='relu')
+plt.grid(True)#显示网格
+
+plt.legend()#显示旁注
+plt.show(fig)
+</code></pre>
+<figure data-type="image" tabindex="4"><img src="https://raw.githubusercontent.com/CNZedChou/ForPicGo/master/202210062009105.png" alt="leaky relu" loading="lazy"></figure>
+<ul>
+<li>
+<p>导数：</p>
+<ul>
+<li>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi>g</mi><mo mathvariant="normal">′</mo></msup><mo>(</mo><mi>z</mi><mo>)</mo><mo>=</mo><mrow><mo fence="true">{</mo><mtable><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mn>1</mn></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><mtext> if </mtext><mi mathvariant="normal">z</mi><mo>&gt;</mo><mn>0</mn></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mtext> undefined </mtext></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><mtext> if </mtext><mi mathvariant="normal">z</mi><mo>=</mo><mn>0</mn></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mn>0.01</mn></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><mtext> if </mtext><mi mathvariant="normal">z</mi><mo>&lt;</mo><mn>0</mn></mrow></mstyle></mtd></mtr></mtable></mrow></mrow><annotation encoding="application/x-tex">g^{\prime}(z)=\left\{\begin{array}{ll}
+1 &amp; \text { if } \mathrm{z}&gt;0 \\
+\text { undefined } &amp; \text { if } \mathrm{z}=0 \\
+0.01 &amp; \text { if } \mathrm{z}&lt;0
+\end{array}\right.
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.051892em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.801892em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.04398em;">z</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:3.60004em;vertical-align:-1.55002em;"></span><span class="minner"><span class="mopen"><span class="delimsizing mult"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:2.05002em;"><span style="top:-2.49999em;"><span class="pstrut" style="height:3.15em;"></span><span class="delimsizinginner delim-size4"><span>⎩</span></span></span><span style="top:-3.15001em;"><span class="pstrut" style="height:3.15em;"></span><span class="delimsizinginner delim-size4"><span>⎨</span></span></span><span style="top:-4.30002em;"><span class="pstrut" style="height:3.15em;"></span><span class="delimsizinginner delim-size4"><span>⎧</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.55002em;"><span></span></span></span></span></span></span><span class="mord"><span class="mtable"><span class="arraycolsep" style="width:0.5em;"></span><span class="col-align-l"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:2.05em;"><span style="top:-4.21em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span></span></span><span style="top:-3.0099999999999993em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord text"><span class="mord"> undefined </span></span></span></span><span style="top:-1.8099999999999994em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">0</span><span class="mord">.</span><span class="mord">0</span><span class="mord">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.5500000000000007em;"><span></span></span></span></span></span><span class="arraycolsep" style="width:0.5em;"></span><span class="arraycolsep" style="width:0.5em;"></span><span class="col-align-l"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:2.05em;"><span style="top:-4.21em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord text"><span class="mord"> if </span></span><span class="mord"><span class="mord mathrm">z</span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&gt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mord">0</span></span></span><span style="top:-3.0099999999999993em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord text"><span class="mord"> if </span></span><span class="mord"><span class="mord mathrm">z</span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mord">0</span></span></span><span style="top:-1.8099999999999994em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord text"><span class="mord"> if </span></span><span class="mord"><span class="mord mathrm">z</span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&lt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mord">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.5500000000000007em;"><span></span></span></span></span></span><span class="arraycolsep" style="width:0.5em;"></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="pytorch-的张量操作">PyTorch 的张量操作</h2>
+<h2 id="torchrandn和torchrand有什么区别">torch.randn和torch.rand有什么区别</h2>
+<h3 id="均匀分布-torchrand">均匀分布 <strong>torch.rand</strong></h3>
+<p>torch.rand(*sizes, out=None) → Tensor</p>
+<p>返回一个张量，包含了从<strong>区间[0, 1)的均匀分布中抽取的一组随机数</strong>。张量的形状由参数sizes定义。</p>
+<p>参数:</p>
+<ul>
+<li>sizes (int...) - 整数序列，定义了输出张量的形状</li>
+<li>out (Tensor, optinal) - 结果张量</li>
+</ul>
+<pre><code class="language-python">torch.rand(2, 3)
+# 0.0836 0.6151 0.6958
+# 0.6998 0.2560 0.0139
+# [torch.FloatTensor of size 2x3]
+</code></pre>
+<h3 id="标准正态分布">标准正态分布</h3>
+<p>torch.randn(*sizes, out=None) → Tensor</p>
+<p>返回一个张量，包含了从<strong>标准正态分布（均值为0，方差为1，即高斯白噪声）中抽取的一组随机数</strong>。张量的形状由参数sizes定义。</p>
+<p>参数:</p>
+<ul>
+<li>sizes (int...) - 整数序列，定义了输出张量的形状</li>
+<li>out (Tensor, optinal) - 结果张量</li>
+</ul>
+<pre><code class="language-python">torch.randn(2, 3)
+# 0.5419 0.1594 -0.0413
+# -2.7937 0.9534 0.4561
+# [torch.FloatTensor of size 2x3]
+</code></pre>
+<h2 id="pytorch的torchmax-用法">PyTorch的torch.max() 用法</h2>
+<ol>
+<li>
+<p>如果只输入一个张量作为参数，那么不管输入的张量是几维的，返回的都是一个数字张量，它是输入张量的最大值。</p>
+<p><code>torch.max(input) → Tensor</code>返回输入tensor中所有元素的最大值</p>
+<pre><code class="language-python">a = torch.randn(1, 3)
+&gt;&gt;0.4729 -0.2266 -0.2085
+ 
+torch.max(a)
+&gt;&gt;0.4729
+</code></pre>
+</li>
+<li>
+<p>如果输入是多维张量，可以多一个&quot;维度”参数。例如，max(tensor1,0)表示想在第0维找最大值，max(tensor1,1)表示想在第1维找最大值。这时就会返回两个tensor，分别表示值和位置。</p>
+<p><code>torch.max(input, dim, keepdim=False, out=None) -&gt; (Tensor, LongTensor)</code>按维度dim 返回最大值<code>torch.max(a,0) </code>返回每一列中最大值的那个元素，且返回索引（返回最大元素在这一列的行索引）</p>
+<ul>
+<li>dim=0，生成个数为列数，即每列最大值</li>
+<li>dim=1，生成个数为行数，即每行最大值</li>
+</ul>
+<pre><code class="language-python">a = torch.randn(2,3)
+&gt;&gt;
+tensor([[0.5109, 0.1682, 0.2337],
+        [0.6164, 0.6178, 0.1696]])
+ 
+torch.max(a,0)
+&gt;&gt;
+torch.return_types.max(
+values=tensor([0.6164, 0.6178, 0.2337]),
+indices=tensor([1, 1, 0]))
+
+torch.max(a,1)
+&gt;&gt;
+torch.return_types.max(
+values=tensor([0.5109, 0.6178]),
+indices=tensor([0, 1]))
+</code></pre>
+</li>
+</ol>
+<h2 id="pytorch的torchrandperm-函数">PyTorch的torch.randperm() 函数</h2>
+<p>randperm功能是随机打乱一个数字序列。<br>
+语法格式：<br>
+y = torch.randperm(n)<br>
+y是把1到n这些数随机打乱得到的一个数字序列。</p>
+<h2 id="pytorch的nnlinear详解">PyTorch的nn.Linear()详解</h2>
+<ul>
+<li>
+<p>nn.Linear()：用于设置网络中的<strong>全连接层</strong>，需要注意的是全连接层的输入与输出都是二维张量</p>
+</li>
+<li>
+<p>一般形状为[batch_size, size]，不同于卷积层要求输入输出是四维张量。其用法与形参说明如下：</p>
+</li>
+</ul>
+<img src="https://raw.githubusercontent.com/CNZedChou/ForPicGo/master/202210061740672.png" alt="nn.Linear()" style="zoom: 80%;" />
+<ul>
+<li><code>in_features</code>指的是输入的二维张量的大小，即输入的<code>[batch_size, size]</code>中的size。</li>
+<li><code>out_features</code>指的是输出的二维张量的大小，即输出的二维张量的形状为<code>[batch_size，output_size]</code>，当然，它也代表了该全连接层的神经元个数。</li>
+<li>从输入输出的张量的shape角度来理解，相当于一个输入为<code>[batch_size, in_features]</code>的张量变换成了<code>[batch_size, out_features]</code>的输出张量。</li>
+</ul>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li><a href="#machine-learning">Machine Learning</a>
+<ul>
+<li><a href="#%E5%B8%B8%E8%A7%81%E7%9A%84%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0">常见的激活函数</a>
+<ul>
+<li><a href="#sigmoid">sigmoid</a></li>
+<li><a href="#tanh">tanh</a></li>
+<li><a href="#relu">relu</a></li>
+<li><a href="#leaky-relu">leaky relu</a></li>
+</ul>
+</li>
+<li><a href="#pytorch-%E7%9A%84%E5%BC%A0%E9%87%8F%E6%93%8D%E4%BD%9C">PyTorch 的张量操作</a></li>
+<li><a href="#torchrandn%E5%92%8Ctorchrand%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB">torch.randn和torch.rand有什么区别</a>
+<ul>
+<li><a href="#%E5%9D%87%E5%8C%80%E5%88%86%E5%B8%83-torchrand">均匀分布 <strong>torch.rand</strong></a></li>
+<li><a href="#%E6%A0%87%E5%87%86%E6%AD%A3%E6%80%81%E5%88%86%E5%B8%83">标准正态分布</a></li>
+</ul>
+</li>
+<li><a href="#pytorch%E7%9A%84torchmax-%E7%94%A8%E6%B3%95">PyTorch的torch.max() 用法</a></li>
+<li><a href="#pytorch%E7%9A%84torchrandperm-%E5%87%BD%E6%95%B0">PyTorch的torch.randperm() 函数</a></li>
+<li><a href="#pytorch%E7%9A%84nnlinear%E8%AF%A6%E8%A7%A3">PyTorch的nn.Linear()详解</a></li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://CNZedChou.github.io/post/assembly-programming/">
+              <h3 class="post-title">
+                Assembly Programming
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank"> Gridea </a>
+  <a class="rss" href="https://CNZedChou.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

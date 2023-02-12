@@ -1,0 +1,258 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Tricks in Linux | ZedChou&#39;s Blog</title>
+<link rel="shortcut icon" href="https://CNZedChou.github.io/favicon.ico?v=1676222959031">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://CNZedChou.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="Tricks in Linux | ZedChou&#39;s Blog - Atom Feed" href="https://CNZedChou.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="@Description:   用于记录在Linux使用过程中遇到的各种问题、配置环境等
+@Author:    Zed Chou
+@LastModified:    Fri 7 Oct 2022
+
+MySql in Linux
+安装 My..." />
+    <meta name="keywords" content="" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://CNZedChou.github.io">
+  <img class="avatar" src="https://CNZedChou.github.io/images/avatar.png?v=1676222959031" alt="">
+  </a>
+  <h1 class="site-title">
+    ZedChou&#39;s Blog
+  </h1>
+  <p class="site-description">
+    温故而知新
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              Tricks in Linux
+            </h2>
+            <div class="post-info">
+              <span>
+                2022-10-07
+              </span>
+              <span>
+                3 min read
+              </span>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content" v-pre>
+                <p>@Description:   用于记录在Linux使用过程中遇到的各种问题、配置环境等<br>
+@Author:    Zed Chou<br>
+@LastModified:    Fri 7 Oct 2022</p>
+<!-- more -->
+<h1 id="mysql-in-linux">MySql in Linux</h1>
+<h2 id="安装-mysql">安装 MySQL</h2>
+<pre><code class="language-bash"># 更新你的 ubuntu 依赖库索引
+sudo apt update
+# 查看 mysql-server 的可用版本 (可选)
+apt-cache policy mysql-server
+
+# 应该输出类似如下
+kala@58baab1b577c:~$ apt-cache policy mysql-server
+mysql-server:
+  Installed: (none)
+  Candidate: 8.0.20-0ubuntu0.20.04.1
+  Version table:
+     8.0.20-0ubuntu0.20.04.1 500
+        500 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 Packages
+        500 http://security.ubuntu.com/ubuntu focal-security/main amd64 Packages
+     8.0.19-0ubuntu5 500
+        500 http://archive.ubuntu.com/ubuntu focal/main amd64 Packages
+</code></pre>
+<p>开始安装</p>
+<pre><code class="language-bash">sudo apt install mysql-server
+</code></pre>
+<p>输入Y以继续</p>
+<pre><code class="language-bash"># 重启 MySQL 服务以保证 MySQL 已经启动
+sudo service mysql restart
+
+# 输出为
+root@58e152781375:/home/kala# sudo service mysql restart
+ * Stopping MySQL database server mysqld                                          [ OK ]
+ * Starting MySQL database server mysqld    
+</code></pre>
+<h2 id="设置mysql">设置mysql</h2>
+<p>第一次安装好 MySQL 之后，我们需要运行 MySQL 自带的安全脚本来确保数据库系统的安全。这个脚本会把一些默认选项，比如允许远程 root 登录之类的设置改掉。</p>
+<pre><code class="language-bash"># 我们以 root 权限运行以下安全脚本
+sudo mysql_secure_installation
+</code></pre>
+<h2 id="遇到的坑">遇到的坑</h2>
+<p>把mysql安装好以后准备连接， 却遇到了这样的问题。</p>
+<pre><code class="language-bash">ERROR 1698 (28000): Access denied for user 'root'@'localhost'
+</code></pre>
+<h2 id="被禁止访问的原因">被禁止访问的原因</h2>
+<ol>
+<li>mysql默认<code>auth_socket</code>登录鉴权</li>
+<li>未初始化数据库、设置默认密码</li>
+</ol>
+<h2 id="解决办法">解决办法</h2>
+<p><strong>1.mysql默认<code>auth_socket</code>登录鉴权</strong></p>
+<p><code>auth_socket</code> 是免密码登录的方式。</p>
+<p>因此密码登录需要把它改成<code>mysql_native_password</code></p>
+<pre><code class="language-bash">$ sudo mysql -u root -p # 需要使用“sudo”，因为是新安装的
+
+mysql&gt; USE mysql;
+mysql&gt; SELECT User, Host, plugin FROM `user`;
+
++------------------+-----------------------+
+| User             | plugin                |
++------------------+-----------------------+
+| root             | auth_socket           |
+| mysql.sys        | mysql_native_password |
+| debian-sys-maint | mysql_native_password |
++------------------+-----------------------+
+
+
+mysql&gt; UPDATE user SET plugin='mysql_native_password' WHERE User='root';
+mysql&gt; FLUSH PRIVILEGES;  # 刷新权限
+</code></pre>
+<p><strong>2.未初始化数据库、设置默认密码</strong></p>
+<p>新安装的mysql是没有密码的， 可以通过命令初始化设置密码和配置远程登录等</p>
+<pre><code class="language-bash">$ sudo mysql_secure_installation # 需要使用“sudo”，因为是新安装的
+</code></pre>
+<h1 id="linux-查看mac地址">Linux 查看MAC地址</h1>
+<p>打开终端，输入<code>ifconig</code>，ether字符就是MAC地址</p>
+<figure data-type="image" tabindex="1"><img src="https://raw.githubusercontent.com/CNZedChou/ForPicGo/master/image-20221116193728101.png" alt="ifconfig" loading="lazy"></figure>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li><a href="#mysql-in-linux">MySql in Linux</a>
+<ul>
+<li><a href="#%E5%AE%89%E8%A3%85-mysql">安装 MySQL</a></li>
+<li><a href="#%E8%AE%BE%E7%BD%AEmysql">设置mysql</a></li>
+<li><a href="#%E9%81%87%E5%88%B0%E7%9A%84%E5%9D%91">遇到的坑</a></li>
+<li><a href="#%E8%A2%AB%E7%A6%81%E6%AD%A2%E8%AE%BF%E9%97%AE%E7%9A%84%E5%8E%9F%E5%9B%A0">被禁止访问的原因</a></li>
+<li><a href="#%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95">解决办法</a></li>
+</ul>
+</li>
+<li><a href="#linux-%E6%9F%A5%E7%9C%8Bmac%E5%9C%B0%E5%9D%80">Linux 查看MAC地址</a></li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://CNZedChou.github.io/post/machine-learning-and-deep-learning/">
+              <h3 class="post-title">
+                Machine Learning and Deep Learning
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank"> Gridea </a>
+  <a class="rss" href="https://CNZedChou.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

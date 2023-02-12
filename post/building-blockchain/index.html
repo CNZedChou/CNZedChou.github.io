@@ -1,0 +1,1700 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Building Blockchain | ZedChou&#39;s Blog</title>
+<link rel="shortcut icon" href="https://CNZedChou.github.io/favicon.ico?v=1676222959031">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://CNZedChou.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="Building Blockchain | ZedChou&#39;s Blog - Atom Feed" href="https://CNZedChou.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="@Description:   用于记录在Fisco Bcos上搭建区块链的过程
+@Author:    Zed Chou
+@LastModified:    Thu 6 Oct 2022
+
+FISCO BCOS
+快速开始-搭建第一条区块链..." />
+    <meta name="keywords" content="" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://CNZedChou.github.io">
+  <img class="avatar" src="https://CNZedChou.github.io/images/avatar.png?v=1676222959031" alt="">
+  </a>
+  <h1 class="site-title">
+    ZedChou&#39;s Blog
+  </h1>
+  <p class="site-description">
+    温故而知新
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              Building Blockchain
+            </h2>
+            <div class="post-info">
+              <span>
+                2022-10-06
+              </span>
+              <span>
+                47 min read
+              </span>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content" v-pre>
+                <p>@Description:   用于记录在Fisco Bcos上搭建区块链的过程<br>
+@Author:    Zed Chou<br>
+@LastModified:    Thu 6 Oct 2022</p>
+<!-- more -->
+<h1 id="fisco-bcos">FISCO BCOS</h1>
+<p><a href="https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/installation.html">快速开始-搭建第一条区块链</a></p>
+<p>http://101.35.28.20:5000/</p>
+<h2 id="1-搭建单群组fisco-bcos联盟链">1. 搭建单群组FISCO BCOS联盟链</h2>
+<h3 id="第一步-安装依赖">第一步. 安装依赖</h3>
+<p><strong>安装ubuntu依赖</strong></p>
+<pre><code class="language-bash">sudo apt install -y openssl curl
+</code></pre>
+<h3 id="第二步-创建操作目录-下载安装脚本">第二步. 创建操作目录, 下载安装脚本</h3>
+<pre><code class="language-bash">## 创建操作目录
+cd ~ &amp;&amp; mkdir -p fisco &amp;&amp; cd fisco
+
+## 下载脚本
+curl -#LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.9.1/build_chain.sh &amp;&amp; chmod u+x build_chain.sh
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://raw.githubusercontent.com/CNZedChou/ForPicGo/master/202210061055128.png" alt="下载安装脚本" loading="lazy"></figure>
+<h3 id="第三步-搭建单群组4节点联盟链">第三步. 搭建单群组4节点联盟链</h3>
+<p>在fisco目录下执行下面的指令，生成一条单群组4节点的FISCO链。 请确保机器的<code>30300~30303，20200~20203，8545~8548</code>端口没有被占用</p>
+<ul>
+<li>国密版本请执行 <code>bash build_chain.sh -l 127.0.0.1:4 -p 30300,20200,8545 -g -G</code></li>
+<li>其中-g表示生成国密配置，-G表示使用国密SSL连接</li>
+</ul>
+<pre><code class="language-bash">bash build_chain.sh -l 127.0.0.1:4 -p 30300,20200,8545
+</code></pre>
+<ul>
+<li>其中-p选项指定起始端口，分别是p2p_port,channel_port,jsonrpc_port</li>
+<li>出于安全性和易用性考虑，v2.3.0版本最新配置将listen_ip拆分成jsonrpc_listen_ip和channel_listen_ip，但仍保留对listen_ip的解析功能，详细请参考 <a href="https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/manual/configuration.html#rpc">这里</a></li>
+<li>为便于开发和体验，channel_listen_ip参考配置是 0.0.0.0 ，出于安全考虑，请根据实际业务网络情况，修改为安全的监听地址，如：内网IP或特定的外网IP</li>
+</ul>
+<figure data-type="image" tabindex="2"><img src="https://raw.githubusercontent.com/CNZedChou/ForPicGo/master/202210061058517.png" alt="执行成功" loading="lazy"></figure>
+<h3 id="第四步-启动fisco-bcos链">第四步. 启动FISCO BCOS链</h3>
+<ul>
+<li>启动所有节点</li>
+</ul>
+<pre><code class="language-bash">bash nodes/127.0.0.1/start_all.sh
+</code></pre>
+<p>启动成功会输出类似下面内容的响应。否则请使用<code>netstat -an | grep tcp</code>检查机器的<code>30300~30303，20200~20203，8545~8548</code>端口是否被占用。</p>
+<pre><code class="language-bash">try to start node0
+try to start node1
+try to start node2
+try to start node3
+ node1 start successfully
+ node2 start successfully
+ node0 start successfully
+ node3 start successfully
+</code></pre>
+<figure data-type="image" tabindex="3"><img src="https://raw.githubusercontent.com/CNZedChou/ForPicGo/master/202210061100159.png" alt="启动成功" loading="lazy"></figure>
+<h3 id="第五步-检查进程">第五步. 检查进程</h3>
+<ul>
+<li>检查进程是否启动</li>
+</ul>
+<pre><code class="language-bash">ps -ef | grep -v grep | grep fisco-bcos
+</code></pre>
+<p>正常情况会有类似下面的输出； 如果进程数不为4，则进程没有启动（一般是端口被占用导致的）</p>
+<pre><code class="language-bash">fisco       5453     1  1 17:11 pts/0    00:00:02 /home/ubuntu/fisco/nodes/127.0.0.1/node0/../fisco-bcos -c config.ini
+fisco       5459     1  1 17:11 pts/0    00:00:02 /home/ubuntu/fisco/nodes/127.0.0.1/node1/../fisco-bcos -c config.ini
+fisco       5464     1  1 17:11 pts/0    00:00:02 /home/ubuntu/fisco/nodes/127.0.0.1/node2/../fisco-bcos -c config.ini
+fisco       5476     1  1 17:11 pts/0    00:00:02 /home/ubuntu/fisco/nodes/127.0.0.1/node3/../fisco-bcos -c config.ini
+</code></pre>
+<figure data-type="image" tabindex="4"><img src="https://raw.githubusercontent.com/CNZedChou/ForPicGo/master/202210061101517.png" alt="进程启动成功" loading="lazy"></figure>
+<h3 id="第六步-检查日志输出">第六步. 检查日志输出</h3>
+<ul>
+<li>如下，查看节点node0链接的节点数</li>
+</ul>
+<pre><code class="language-bash">tail -f nodes/127.0.0.1/node0/log/log*  | grep connected
+</code></pre>
+<p>正常情况会不停地输出连接信息，从输出可以看出node0与另外3个节点有连接。</p>
+<pre><code class="language-bash">info|2019-01-21 17:30:58.316769| [P2P][Service] heartBeat,connected count=3
+info|2019-01-21 17:31:08.316922| [P2P][Service] heartBeat,connected count=3
+info|2019-01-21 17:31:18.317105| [P2P][Service] heartBeat,connected count=3
+</code></pre>
+<figure data-type="image" tabindex="5"><img src="https://raw.githubusercontent.com/CNZedChou/ForPicGo/master/202210061103850.png" alt="检查日志输出" loading="lazy"></figure>
+<ul>
+<li>执行下面指令，检查是否在共识</li>
+</ul>
+<pre><code class="language-bash">tail -f nodes/127.0.0.1/node0/log/log*  | grep +++
+</code></pre>
+<p>正常情况会不停输出<code>++++Generating seal</code>，表示共识正常。</p>
+<pre><code class="language-bash">info|2020-12-22 17:24:43.729402|[g:1][CONSENSUS][SEALER]++++++++++++++++ Generating seal on,blkNum=1,tx=0,nodeIdx=1,hash=2e133146...
+info|2020-12-22 17:24:47.740603|[g:1][CONSENSUS][SEALER]++++++++++++++++ Generating seal on,blkNum=1,tx=0,nodeIdx=1,hash=eb199760...
+</code></pre>
+<figure data-type="image" tabindex="6"><img src="https://raw.githubusercontent.com/CNZedChou/ForPicGo/master/202210061104911.png" alt="共识正常" loading="lazy"></figure>
+<h2 id="2-配置及使用控制台">2. 配置及使用控制台</h2>
+<p>在控制台链接FISCO BCOS节点，实现<strong>查询区块链状态、部署调用合约</strong>等功能，能够快速获取到所需要的信息。2.6版本控制台指令详细介绍<a href="https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/console/console_of_java_sdk.html">参考这里</a>，1.x版本控制台指令详细介绍<a href="https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/console/console.html">参考这里</a>。</p>
+<h3 id="第一步-准备依赖">第一步. 准备依赖</h3>
+<ul>
+<li>安装java （推荐使用java 14）.</li>
+</ul>
+<pre><code class="language-bash"># ubuntu系统安装java
+sudo apt install -y default-jdk
+
+#centos系统安装java
+sudo yum install -y java java-devel
+</code></pre>
+<ul>
+<li>获取控制台并回到fisco目录</li>
+</ul>
+<pre><code class="language-bash">cd ~/fisco &amp;&amp; curl -LO https://github.com/FISCO-BCOS/console/releases/download/v2.9.1/download_console.sh &amp;&amp; bash download_console.sh
+</code></pre>
+<figure data-type="image" tabindex="7"><img src="https://raw.githubusercontent.com/CNZedChou/ForPicGo/master/202210061242542.png" alt="获取控制台" loading="lazy"></figure>
+<ul>
+<li>拷贝控制台配置文件</li>
+</ul>
+<p>若节点未采用默认端口，请将文件中的20200替换成节点对应的channel端口。</p>
+<pre><code class="language-bash"># 最新版本控制台使用如下命令拷贝配置文件
+cp -n console/conf/config-example.toml console/conf/config.toml
+</code></pre>
+<ul>
+<li>配置控制台证书</li>
+</ul>
+<p>注解</p>
+<ul>
+<li>
+<p>使用1.x版本控制台时：</p>
+<p>搭建国密版时，如果使用国密SSL请执行 <code>cp nodes/127.0.0.1/sdk/gm/* console/conf/</code>搭建国密版时，请修改 applicationContext.xml 中 encryptType 修改为1</p>
+</li>
+</ul>
+<pre><code class="language-bash">cp -r nodes/127.0.0.1/sdk/* console/conf/
+</code></pre>
+<h3 id="第二步-启动并使用控制台">第二步. 启动并使用控制台</h3>
+<ul>
+<li>启动</li>
+</ul>
+<pre><code class="language-bash">cd ~/fisco/console &amp;&amp; bash start.sh
+</code></pre>
+<p>输出下述信息表明启动成功 否则请检查conf/config.toml中节点端口配置是否正确</p>
+<figure data-type="image" tabindex="8"><img src="https://raw.githubusercontent.com/CNZedChou/ForPicGo/master/202210061312490.png" alt="控制台配置" loading="lazy"></figure>
+<ul>
+<li>用控制台获取信息：
+<ul>
+<li>获取客户端版本：getNodeVersion</li>
+<li>获取节点信息：getPeers</li>
+<li><img src="https://raw.githubusercontent.com/CNZedChou/ForPicGo/master/202210061314158.png" alt="用控制台获取信息" loading="lazy"></li>
+</ul>
+</li>
+</ul>
+<h2 id="3-部署及调用helloworld合约">3. 部署及调用HelloWorld合约</h2>
+<h3 id="第一步-编写helloworld合约">第一步. 编写HelloWorld合约</h3>
+<p>HelloWorld合约提供两个接口，分别是<code>get()</code>和<code>set()</code>，用于获取/设置合约变量<code>name</code>。合约内容如下:</p>
+<pre><code class="language-solidity">pragma solidity ^0.4.24;
+
+contract HelloWorld {
+    string name;
+
+    function HelloWorld() {
+        name = &quot;Hello, World!&quot;;
+    }
+
+    function get()constant returns(string) {
+        return name;
+    }
+
+    function set(string n) {
+        name = n;
+    }
+}
+</code></pre>
+<h3 id="第二步-部署helloworld合约">第二步. 部署HelloWorld合约</h3>
+<p>为了方便用户快速体验，HelloWorld合约已经内置于控制台中，位于控制台目录下<code>contracts/solidity/HelloWorld.sol</code>，参考下面命令部署即可。</p>
+<pre><code class="language-bash"># 在控制台输入以下指令 部署成功则返回合约地址
+[group:1]&gt; deploy HelloWorld
+</code></pre>
+<figure data-type="image" tabindex="10"><img src="https://raw.githubusercontent.com/CNZedChou/ForPicGo/master/202210061316410.png" alt="部署helloworld" loading="lazy"></figure>
+<h3 id="第三步-调用helloworld合约">第三步. 调用HelloWorld合约</h3>
+<ul>
+<li>查看当前块高：<code>getBlockNumber</code></li>
+<li>调用get接口获取name变量 此处的合约地址是deploy指令返回的地址：<code>call Helloworld 0x8cb02155a478cc8ea049819536c57490e18d9632 get</code></li>
+<li>调用set接口设置变量，<code>call HelloWorld 0x8cb02155a478cc8ea049819536c57490e18d9632 set &quot;Hello Fisco Bcos&quot;</code></li>
+</ul>
+<figure data-type="image" tabindex="11"><img src="https://raw.githubusercontent.com/CNZedChou/ForPicGo/master/202210061322034.png" alt="调用合约1" loading="lazy"></figure>
+<figure data-type="image" tabindex="12"><img src="https://raw.githubusercontent.com/CNZedChou/ForPicGo/master/202210061324563.png" alt="合约调用2" loading="lazy"></figure>
+<figure data-type="image" tabindex="13"><img src="https://raw.githubusercontent.com/CNZedChou/ForPicGo/master/202210061325429.png" alt="合约调用3" loading="lazy"></figure>
+<h2 id="区块链浏览器-一键部署">区块链浏览器 » 一键部署</h2>
+<h3 id="1前提条件">1.前提条件</h3>
+<table>
+<thead>
+<tr>
+<th>环境</th>
+<th>版本</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Java</td>
+<td>JDK8或以上版本</td>
+</tr>
+<tr>
+<td>MySQL</td>
+<td>MySQL-5.6或以上版本</td>
+</tr>
+<tr>
+<td>Python</td>
+<td>Python3.5+</td>
+</tr>
+<tr>
+<td>PyMySQL</td>
+<td>使用python3时需安装</td>
+</tr>
+</tbody>
+</table>
+<h3 id="配置java-home">配置Java home</h3>
+<p>最简单的方法是直接使用下面这条命令跟随符号链接来以获取实际的可执行文件：</p>
+<pre><code class="language-bash">readlink -f `which java`
+# /usr/lib/jvm/java-11-openjdk-amd64/bin/java
+</code></pre>
+<p>设置 <code>JAVA_HOME</code> 环境变量：</p>
+<pre><code class="language-bash">export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64/bin/java
+echo &quot;export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64/bin/java&quot; &gt;&gt; ~/.bashrc
+</code></pre>
+<pre><code class="language-bash">
+# 打开以后将下面三句输入到文件里面并保存退出
+export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64/  #这是一个文件目录，非文件
+export PATH=$JAVA_HOME/bin:$PATH
+export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
+————————————————
+版权声明：本文为CSDN博主「james1989vip」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
+原文链接：https://blog.csdn.net/james1989vip/article/details/122783426
+</code></pre>
+<h2 id="配置-webase">配置 WeBase</h2>
+<pre><code class="language-bash">cd ~/fisco/ &amp;&amp; wget https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/WeBASE/releases/download/v1.5.3/webase-deploy.zip
+</code></pre>
+<p>这里注意，解压等操作，应使用普通账户，不能 sudo</p>
+<pre><code class="language-bash">unzip webase-deploy.zip
+</code></pre>
+<p>修改 common.properties</p>
+<pre><code class="language-bash">vi ~/webase-deploy/common.properties
+# ----------common.properties内容如下：
+
+# WeBASE子系统的最新版本(v1.1.0或以上版本)
+webase.web.version=v1.5.3
+webase.mgr.version=v1.5.3
+webase.sign.version=v1.5.3
+webase.front.version=v1.5.3
+
+#####################################################################
+## 使用Docker启用Mysql服务，则需要配置以下值
+
+# 1: enable mysql in docker
+# 0: mysql run in host, required fill in the configuration of webase-node-mgr and webase-sign
+docker.mysql=1
+
+# if [docker.mysql=1], mysql run in host (only works in [installDockerAll])
+# run mysql 5.6 by docker
+docker.mysql.port=23306
+# default user [root]
+docker.mysql.password=123456
+
+#####################################################################
+## 不使用Docker启动Mysql，则需要配置以下值
+
+# 节点管理子系统mysql数据库配置
+mysql.ip=127.0.0.1
+mysql.port=3306
+mysql.user=root                  # &lt;-------这里要改
+mysql.password=123456            # &lt;-------这里要改
+mysql.database=webasenodemanager
+
+# 签名服务子系统mysql数据库配置
+sign.mysql.ip=localhost
+sign.mysql.port=3306
+sign.mysql.user=root                 #  &lt;-------这里要改
+sign.mysql.password=123456           #  &lt;-------这里要改
+sign.mysql.database=webasesign
+
+
+
+# 节点前置子系统h2数据库名和所属机构
+front.h2.name=webasefront
+front.org=fisco
+
+# WeBASE管理平台服务端口
+web.port=5000
+# 启用移动端管理平台 (0: disable, 1: enable)
+web.h5.enable=1
+
+# 节点管理子系统服务端口
+mgr.port=5001
+# 节点前置子系统端口
+front.port=5002
+# 签名服务子系统端口
+sign.port=5004
+
+
+# 节点监听Ip
+node.listenIp=127.0.0.1
+# 节点p2p端口
+node.p2pPort=30300
+# 节点链上链下端口
+node.channelPort=20200
+# 节点rpc端口
+node.rpcPort=8545
+
+# 加密类型 (0: ECDSA算法, 1: 国密算法)
+encrypt.type=0
+# SSL连接加密类型 (0: ECDSA SSL, 1: 国密SSL)
+# 只有国密链才能使用国密SSL
+encrypt.sslType=0
+
+# 是否使用已有的链（yes/no）
+if.exist.fisco=yes             #   &lt;-------这里要改
+
+# 使用已有链时需配置
+# 已有链的路径，start_all.sh脚本所在路径
+# 路径下要存在sdk目录（sdk目录中包含了SSL所需的证书，即ca.crt、sdk.crt、sdk.key和gm目录（包含国密SSL证书，gmca.crt、gmsdk.crt、gmsdk.key、gmensdk.crt和gmensdk.key）
+fisco.dir=/home/ubuntu/fisco/nodes/127.0.0.1           #  &lt;-------这里要改
+# 前置所连接节点，在127.0.0.1目录中的节点中的一个
+# 节点路径下要存在conf文件夹，conf里存放节点证书（ca.crt、node.crt和node.key）
+node.dir=node0
+
+# 搭建新链时需配置
+# FISCO-BCOS版本
+fisco.version=2.7.2
+# 搭建节点个数（默认两个）
+node.counts=nodeCounts
+————————————————
+版权声明：本文为CSDN博主「james1989vip」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
+原文链接：https://blog.csdn.net/james1989vip/article/details/122783426
+</code></pre>
+<h1 id="基于区块链hyperledger-fabric的房地产交易系统"><a href="https://github.com/togettoyou/fabric-realty">基于区块链（Hyperledger Fabric）的房地产交易系统</a></h1>
+<p>http://101.35.28.20:8000/web</p>
+<h2 id="停止或重启">停止或重启</h2>
+<p>注意，默认执行 <code>./start.sh</code> 脚本时都会调用 <code>./stop.sh</code> ，所以如果想持久化数据的情况下停止或重启本项目，请不要重新执行 <code>./start.sh</code> ，正确姿势参考：</p>
+<ol>
+<li>（如果启动了区块链浏览器）进入 <code>network/explorer</code> 目录，执行 <code>docker-compose stop</code> 停止区块链浏览器，执行 <code>docker-compose start</code> 启动区块链浏览器，执行 <code>docker-compose restart</code> 重启区块链浏览器</li>
+<li>进入 <code>network</code> 目录，执行 <code>docker-compose stop</code> 停止区块链网络，执行 <code>docker-compose start</code> 启动区块链网络，执行 <code>docker-compose restart</code> 重启区块链网络</li>
+<li>进入 <code>application</code> 目录，区块链应用是无状态的，可以直接执行 <code>./stop.sh</code> 关闭区块链应用，执行 <code>./start.sh</code> 启动区块链应用</li>
+</ol>
+<h1 id="smart-audit-system"><a href="https://github.com/roninx991/smart-audit-system">smart audit system</a></h1>
+<h2 id="prerequisites-before-using-the-application">Prerequisites before using the application:</h2>
+<h3 id="metamask">metamask</h3>
+<h3 id="truffle">truffle</h3>
+<p><a href="https://github.com/trufflesuite/truffle">truffle repo</a></p>
+<h4 id="truffle-install">truffle install</h4>
+<pre><code class="language-bash">npm install -g truffle
+</code></pre>
+<h3 id="ganache">ganache</h3>
+<h4 id="ganache-install">ganache install</h4>
+<pre><code class="language-bash">npm install ganache --global
+</code></pre>
+<h3 id="ifps">IFPS</h3>
+<h4 id="ifps-commandline-install">IFPS commandline install</h4>
+<ol>
+<li>
+<p>Download the Linux binary from <a href="https://dist.ipfs.tech/#kubo"><code>dist.ipfs.tech</code> (opens new window)</a>.</p>
+<pre><code class="language-bash">wget https://dist.ipfs.tech/kubo/v0.16.0/kubo_v0.16.0_linux-amd64.tar.gz
+</code></pre>
+</li>
+<li>
+<p>Unzip the file:</p>
+<pre><code class="language-bash">tar -xvzf kubo_v0.16.0_linux-amd64.tar.gz
+
+&gt; x kubo/install.sh
+&gt; x kubo/ipfs
+&gt; x kubo/LICENSE
+&gt; x kubo/LICENSE-APACHE
+&gt; x kubo/LICENSE-MIT
+&gt; x kubo/README.md
+</code></pre>
+</li>
+<li>
+<p>Move into the <code>kubo</code> folder and run the install script:</p>
+<pre><code class="language-bash">cd kubo
+sudo bash install.sh
+
+&gt; Moved ./ipfs to /usr/local/bin
+</code></pre>
+</li>
+<li>
+<p>Test that IPFS has installed correctly:</p>
+<pre><code class="language-bash">ipfs --version
+
+&gt; ipfs version 0.16.0
+</code></pre>
+</li>
+</ol>
+<pre><code class="language-bash">root@VM-12-3-ubuntu:~# npm init
+This utility will walk you through creating a package.json file.
+It only covers the most common items, and tries to guess sensible defaults.
+
+See `npm help init` for definitive documentation on these fields
+and exactly what they do.
+
+Use `npm install &lt;pkg&gt;` afterwards to install a package and
+save it as a dependency in the package.json file.
+
+Press ^C at any time to quit.
+package name: (root)
+version: (1.0.0)
+description:
+entry point: (index.js)
+test command:
+git repository:
+keywords:
+author:
+license: (ISC)
+About to write to /root/package.json:
+
+{
+  &quot;name&quot;: &quot;root&quot;,
+  &quot;version&quot;: &quot;1.0.0&quot;,
+  &quot;description&quot;: &quot;&quot;,
+  &quot;main&quot;: &quot;index.js&quot;,
+  &quot;dependencies&quot;: {},
+  &quot;devDependencies&quot;: {},
+  &quot;scripts&quot;: {
+    &quot;test&quot;: &quot;echo \&quot;Error: no test specified\&quot; &amp;&amp; exit 1&quot;
+  },
+  &quot;author&quot;: &quot;&quot;,
+  &quot;license&quot;: &quot;ISC&quot;
+}
+
+
+Is this OK? (yes)
+</code></pre>
+<h2 id="how-to-use">How to use</h2>
+<ol>
+<li>Clone the repo by typing the following: <code>git clone https://github.com/Sangatdas/smart-audit-system</code></li>
+<li>Start <a href="https://truffleframework.com/ganache">Ganache</a> application.</li>
+<li>Open Metamask and and click on the arrow on left-upper corner. Select custom RPC among the options.</li>
+<li>In the New RPC URL field type- <a href="http://127.0.0.1:7545/">http://127.0.0.1:7545</a>. Then click on save.</li>
+<li>Open Ganache and copy the seed words present on the top.</li>
+<li>Now open Metamask and select restore from seed words. Paste the seed words copied in the above step. Enter your password and then login.</li>
+<li>Now open the terminal in the folder that you have extracted after cloning the repo. Type the following: <code>npm install</code> See this [page] if there are any build issues. If not then we can move forward.</li>
+<li>Initialise local IPFS repository:</li>
+</ol>
+<pre><code>ipfs init
+ipfs config --json API.HTTPHeaders.Access-Control-Allow-Origin &quot;[\&quot;*\&quot;]&quot;
+ipfs config --json API.HTTPHeaders.Access-Control-Allow-Credentials &quot;[\&quot;true\&quot;]&quot;
+ipfs daemon
+</code></pre>
+<p><strong>Note: No other application should be running on port 8080 else IPFS won't start.</strong></p>
+<ol>
+<li>Now your local IPFS is up and running and hosted on port 8080. Now in another terminal at the same location type the following:</li>
+</ol>
+<pre><code>truffle migrate --reset
+npm run dev
+</code></pre>
+<p>Your application is up and running on port 8081(most probably).</p>
+<ol>
+<li>Now you can use the application. It contains of 3 pages.
+<ul>
+<li>index.html</li>
+<li>client.html</li>
+<li>accountant.html</li>
+</ul>
+</li>
+</ol>
+<p>Type the respective page name after the / in the browser to use that page. you can switch between accounts using metamask. Although you have to import all accounts from Ganache using their private key. Refer <a href="https://metamask.io/">Metamask official page</a> and <a href="https://truffleframework.com/ganache">Ganache</a> to learn how to do that.</p>
+<p>For usage details and demonstration watch the <a href="https://youtu.be/0o5oC16X-BA">video</a></p>
+<h1 id="wecross">WeCross</h1>
+<h2 id="环境要求">环境要求</h2>
+<h3 id="硬件">硬件</h3>
+<p>WeCross负责管理多个Stub并与多条链通讯，同时作为Web Server提供RPC调用服务，为了能保证服务的稳定性，尽量使用推荐配置。</p>
+<table>
+<thead>
+<tr>
+<th>配置</th>
+<th>最低配置</th>
+<th>推荐配置</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CPU</td>
+<td>1.5GHz</td>
+<td>2.4GHz</td>
+</tr>
+<tr>
+<td>内存</td>
+<td>4GB</td>
+<td>8GB</td>
+</tr>
+<tr>
+<td>核心</td>
+<td>4核</td>
+<td>8核</td>
+</tr>
+<tr>
+<td>带宽</td>
+<td>2Mb</td>
+<td>10Mb</td>
+</tr>
+</tbody>
+</table>
+<h3 id="支持的平台">支持的平台</h3>
+<ul>
+<li>Ubuntu 16.04及以上</li>
+<li>CentOS 7.2及以上</li>
+<li>macOS 10.14及以上</li>
+</ul>
+<h3 id="软件依赖">软件依赖</h3>
+<p>WeCross作为Java项目，需要安装Java环境包括：</p>
+<ul>
+<li>
+<p>JDK1.8.0_251以上，可参考<a href="https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/sdk/java_sdk.html#id1">链接</a></p>
+<h4 id="ubuntu环境安装java">Ubuntu环境安装Java</h4>
+<pre><code class="language-bash"># 安装默认Java版本(Java 8或以上)
+sudo apt install -y default-jdk
+# 查询Java版本
+java -version
+# /usr/lib/jvm/java-11-openjdk-amd64/bin/java
+# JAVA_HOME=&quot;/usr/lib/jvm/java-11-openjdk-amd64&quot;
+</code></pre>
+</li>
+</ul>
+<p>​		<img src="C:%5CUsers%5CCNZedChou%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20221025204601587.png" alt="image-20221025204601587" loading="lazy"></p>
+<p>目前已经覆盖测试的JDK版本：OracleJDK 1.8.0_251，OracleJDK 1.8.0_271，OracleJDK 14，OracleJDK 15，OpenJDK 1.8.0_282，OpenJDK 14，OpenJDK 15</p>
+<ul>
+<li>
+<p>Gradle 5.0及以上</p>
+<pre><code class="language-bash">wget https://downloads.gradle-dn.com/distributions/gradle-7.5.1-bin.zip /tmp
+sudo unzip -d /opt/gradle /tmp/gradle-7.5.1-bin.zip
+ls /opt/gradle/gradle-*
+</code></pre>
+<p>接下来，我们需要配置PATH环境变量以包含Gradle bin目录。使用你喜欢的文本编辑器，然后在<code>/etc/profile.d</code>目录中创建一个名为<code>gradle.sh</code>的新文件。</p>
+<p>在本教程中，我们将使用vim创建文件/etc/profile.d/gradle.sh，粘贴以下内容gradle.sh文件中。</p>
+<pre><code class="language-sh">export GRADLE_HOME=/opt/gradle/gradle-7.5.1
+export PATH=${GRADLE_HOME}/bin:${PATH}
+</code></pre>
+<p>完成后保存文件并退出vim。该脚本将在会在shell启动时运行。默认情况Linux创建文件不具有可执行权限，因此还需要<code>chmod</code><a href="https://www.myfreax.com/chmod-command-in-linux/">命令</a>使脚本可执行。</p>
+<p>如果你需要在当前终端的shell环境中可用，可以运行<a href="https://www.myfreax.com/bash-source-command/"><code>source</code>命令</a>加载环境变量到当前shell。</p>
+<p>要验证Gradle是否正确安装，请运行<code>gradle -v</code>命令，命令将会打印Gradle版本。</p>
+<pre><code class="language-bash">sudo vim /etc/profile.d/gradle.sh
+
+sudo chmod +x /etc/profile.d/gradle.sh
+
+source /etc/profile.d/gradle.sh
+
+gradle -v
+</code></pre>
+</li>
+<li>
+<p>MySQL 5.6及以上</p>
+<ul>
+<li><a href="https://dev.mysql.com/doc/mysql-installation-excerpt/5.7/en/">MySQL官方安装文档</a></li>
+<li><a href="https://www.runoob.com/mysql/mysql-install.html">安装教程</a></li>
+</ul>
+</li>
+</ul>
+<figure data-type="image" tabindex="14"><img src="C:%5CUsers%5CCNZedChou%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20221025205948804.png" alt="image-20221025205948804" loading="lazy"></figure>
+<p>WeCross提供了多种脚本帮助用户快速体验，这些脚本依赖<code>openssl, curl, expect</code>，使用下面的指令安装。</p>
+<pre><code class="language-bash"># Ubuntu
+sudo apt-get install -y openssl curl expect tree fontconfig
+
+# CentOS
+sudo yum install -y openssl curl expect tree
+
+# macOS
+brew install openssl curl expect tree md5sha1sum
+</code></pre>
+<p>运行WeCross Demo时，需安装</p>
+<ul>
+<li>Docker 17.06.2-ce 及以上
+<ul>
+<li><a href="https://docs.docker.com/engine/install/">Docker官方安装文档</a></li>
+<li><a href="https://www.runoob.com/docker/ubuntu-docker-install.html">Docker安装教程</a></li>
+</ul>
+</li>
+</ul>
+<p><a href="https://wecross.readthedocs.io/zh_CN/latest/docs/tutorial/demo/index.html">Next </a><a href="https://wecross.readthedocs.io/zh_CN/latest/docs/version/v1.0.0-rc1.html"> Previous</a></p>
+<h2 id="手动组网">手动组网</h2>
+<p>操作步骤分为以下4项：</p>
+<ul>
+<li><strong><a href="https://wecross.readthedocs.io/zh_CN/latest/docs/tutorial/deploy/basic_env.html">基础组件部署</a></strong>：部署WeCross基础组件，包括跨链路由、账户服务、控制台、网页管理台</li>
+<li><strong><a href="https://wecross.readthedocs.io/zh_CN/latest/docs/tutorial/deploy/chains_config.html">区块链接入与账户配置</a></strong>：将区块链接入WeCross跨链网络，并配置跨链账户</li>
+<li><strong><a href="https://wecross.readthedocs.io/zh_CN/latest/docs/tutorial/deploy/resources.html">资源部署与操作</a></strong>：基于搭建好的WeCross环境部署和操作跨链资源</li>
+<li><strong><a href="https://wecross.readthedocs.io/zh_CN/latest/docs/tutorial/deploy/security_config.html">区块头验证配置</a></strong>：配置区块头验证参数，完善跨链交易的验证逻辑</li>
+</ul>
+<p>手动组网教程以<code>~/wecross-networks/</code>目录下为例进行:</p>
+<pre><code class="language-bash"># 若已搭建WeCross Demo，请先关闭所有服务
+
+# 创建手动组网的操作目录
+mkdir -p ~/wecross-networks &amp;&amp; cd ~/wecross-networks
+</code></pre>
+<h3 id="基础组件部署">基础组件部署</h3>
+<p>本章节指导完成以下组件的部署，完成WeCross基础网络的搭建。</p>
+<ul>
+<li><strong><a href="https://wecross.readthedocs.io/zh_CN/latest/docs/introduction/introduction.html#id2">跨链路由</a>（router）</strong>：与区块链节点对接，并彼此互连，形成<a href="https://wecross.readthedocs.io/zh_CN/latest/docs/introduction/introduction.html#id2">跨链分区</a>，负责跨链请求的转发</li>
+<li><strong>账户服务（account manager）</strong>：为跨链系统提供账户管理</li>
+<li><strong>跨链控制台（console）</strong>：查询和发送交易的操作终端</li>
+</ul>
+<figure data-type="image" tabindex="15"><img src="https://wecross.readthedocs.io/zh_CN/latest/_images/routers.png" alt="../../../_images/routers.png" loading="lazy"></figure>
+<p>进入操作目录：</p>
+<pre><code class="language-bash">cd ~/wecross-networks
+</code></pre>
+<h4 id="下载wecross">下载WeCross</h4>
+<p>下载WeCross，用WeCross中的工具生成跨链路由，并启动跨链路由。</p>
+<p>WeCross中包含了生成跨链路由的工具，执行以下命令进行下载（提供<a href="https://wecross.readthedocs.io/zh_CN/latest/docs/version/download.html#wecross">三种下载方式</a>，可根据网络环境选择合适的方式进行下载），程序下载至<code>~/wecross-networks/WeCross/</code>中。</p>
+<pre><code class="language-bash">bash &lt;(curl -sL https://github.com/WeBankBlockchain/WeCross/releases/download/resources/download_wecross.sh)
+
+# 若出现长时间下载WeCross包失败，请尝试以下命令重新下载：
+bash &lt;(curl -sL https://gitee.com/WeBank/WeCross/raw/master/scripts/download_wecross.sh)
+</code></pre>
+<figure data-type="image" tabindex="16"><img src="C:%5CUsers%5CCNZedChou%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20221025210319694.png" alt="image-20221025210319694" loading="lazy"></figure>
+<h4 id="部署跨链路由">部署跨链路由</h4>
+<p>本例将构建两个跨链路由。首先创建一个<code>ipfile</code>配置文件，将需要构建的两个跨链路由信息（<code>ip:rpc_port:p2p_port</code>）按行分隔，保存到文件中。</p>
+<p><strong>注</strong>：请确保机器的<code>8250</code>，<code>8251</code>, <code>25500</code>，<code>25501</code>端口没有被占用。</p>
+<pre><code class="language-bash">cd ~/wecross-networks
+vim ipfile
+
+# 在文件中键入以下内容
+127.0.0.1:8250:25500
+127.0.0.1:8251:25501
+127.0.0.1:8252:25502
+</code></pre>
+<p>生成好<code>ipfile</code>文件后，使用脚本<a href="https://wecross.readthedocs.io/zh_CN/latest/docs/manual/scripts.html#wecross">build_wecross.sh</a>生成两个跨链路由。</p>
+<pre><code class="language-bash"># -f 表示以文件为输入
+bash ./WeCross/build_wecross.sh -n payment -o routers-payment -f ipfile
+
+# 成功输出如下信息
+[INFO] Create routers-payment/127.0.0.1-8250-25500 successfully
+[INFO] Create routers-payment/127.0.0.1-8251-25501 successfully
+[INFO] All completed. WeCross routers are generated in: routers-payment/
+</code></pre>
+<figure data-type="image" tabindex="17"><img src="C:%5CUsers%5CCNZedChou%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20221025211046402.png" alt="image-20221025211046402" loading="lazy"></figure>
+<p>注解</p>
+<ul>
+<li>-n 指定跨链分区标识符(zone id)，跨链分区通过zone id进行区分，可以理解为业务名称。</li>
+<li>-o 指定输出的目录，并在该目录下生成一个跨链路由。</li>
+<li>-f 指定需要生成的WeCross跨链路由的列表，包括ip地址，rpc端口，p2p端口，生成后的router已完成互联配置。</li>
+</ul>
+<p>在routers-payment目录下生成了两个跨链路由。</p>
+<pre><code class="language-bash">tree routers-payment/ -L 1
+routers-payment/
+├── 127.0.0.1-8251-25501
+├── 127.0.0.1-8252-25502
+└── cert
+</code></pre>
+<p>生成的跨链路由目录内容如下，以<code>127.0.0.1-8250-25500</code>为例。</p>
+<pre><code class="language-bash"># 已屏蔽lib和pages目录，该目录存放所有依赖的jar包
+tree routers-payment/127.0.0.1-8250-25500/
+routers-payment/127.0.0.1-8250-25500/
+├── add_chain.sh      # 区块链配置文件创建脚本
+├── apps
+│   └── WeCross.jar   # WeCross路由jar包
+├── build_wecross.sh
+├── conf              # 配置文件目录
+│   ├── accounts      # 账户配置目录
+│   ├── application.properties 
+│   ├── chains        # 区块链配置目录，要接入不同的链，在此目录下进行配置
+│   ├── log4j2.xml    
+│   ├── ca.crt        # 根证书
+│   ├── ssl.crt       # 跨链路由证书
+│   ├── ssl.key       # 跨链路由私钥
+│   ├── node.nodeid   # 跨链路由nodeid
+│   └── wecross.toml  # WeCross Router主配置文件
+├── create_cert.sh    # 证书生成脚本
+├── download_wecross.sh
+├── pages             # 网页管理平台页面文件
+├── plugin            # 插件目录，接入相应类型链的插件
+│   ├── bcos-stub-gm.jar
+│   ├── bcos-stub.jar
+│   └── fabric-stub.jar
+├── start.sh          # 启动脚本
+└── stop.sh           # 停止脚本
+</code></pre>
+<h4 id="部署账户服务">部署账户服务</h4>
+<ul>
+<li>下载</li>
+</ul>
+<p>执行过程中需输入相应数据库的配置。</p>
+<pre><code class="language-bash">cd ~/wecross-networks
+bash &lt;(curl -sL https://github.com/WeBankBlockchain/WeCross/releases/download/resources/download_account_manager.sh)
+
+# 若出现长时间下载WeCross-Account-Manager包失败，请尝试以下命令重新下载：
+bash &lt;(curl -sL https://gitee.com/WeBank/WeCross/raw/master/scripts/download_account_manager.sh)
+</code></pre>
+<pre><code class="language-bash"># Automatically generated for Debian scripts. DO NOT TOUCH!
+[client]
+host     = localhost
+user     = debian-sys-maint
+password = RFtWltI7zD50cuaR
+socket   = /var/run/mysqld/mysqld.sock
+[mysql_upgrade]
+host     = localhost
+user     = debian-sys-maint
+password = RFtWltI7zD50cuaR
+socket   = /var/run/mysqld/mysqld.sock
+</code></pre>
+<pre><code class="language-bash">mysql -u root --password=&quot;root&quot; -h 127.0.0.1 -P 3306 -e &quot;status;&quot;
+mysql -u debian-sys-maint --password=&quot;RFtWltI7zD50cuaR&quot; -h 127.0.0.1 -P 3306  -e &quot;status;&quot;
+</code></pre>
+<figure data-type="image" tabindex="18"><img src="C:%5CUsers%5CCNZedChou%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20221025213542912.png" alt="image-20221025213542912" loading="lazy"></figure>
+<ul>
+<li>拷贝证书</li>
+</ul>
+<pre><code class="language-bash">cd ~/wecross-networks/WeCross-Account-Manager/
+cp ~/wecross-networks/routers-payment/cert/sdk/* conf/
+</code></pre>
+<figure data-type="image" tabindex="19"><img src="C:%5CUsers%5CCNZedChou%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20221025213620429.png" alt="image-20221025213620429" loading="lazy"></figure>
+<ul>
+<li>生成私钥</li>
+</ul>
+<pre><code>bash create_rsa_keypair.sh -d conf/
+</code></pre>
+<figure data-type="image" tabindex="20"><img src="C:%5CUsers%5CCNZedChou%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20221025213639917.png" alt="image-20221025213639917" loading="lazy"></figure>
+<ul>
+<li>配置</li>
+</ul>
+<pre><code>cp conf/application-sample.toml conf/application.toml
+vim conf/application.toml
+</code></pre>
+<p>需配置内容包括：</p>
+<p><code>admin</code>：配置admin账户，此处可默认，router中的admin账户需与此处对应，用于登录账户服务</p>
+<p><code>db</code>：配置自己的数据库账号密码</p>
+<pre><code>[service]
+    address = '0.0.0.0'
+    port = 8340
+    sslKey = 'classpath:ssl.key'
+    sslCert = 'classpath:ssl.crt'
+    caCert = 'classpath:ca.crt'
+    sslOn = true
+
+[admin] 
+    # admin账户配置，第一次启动时写入db，之后作为启动校验字段
+    name = 'org1-admin' # admin账户名
+    password = '123456' # 密码
+
+[auth]
+    # for issuring token
+    name = 'org1'
+    expires = 18000 # 5 h
+    noActiveExpires = 600 # 10 min
+
+[db]
+    # for connect database
+    url = 'jdbc:mysql://localhost:3306/wecross_account_manager'
+    username = 'root' # 配置数据库账户
+    password = '123456' # 配置数据库密码，不支接受空密码
+[ext]
+    # for image auth code, allow image auth token empty
+    allowImageAuthCodeEmpty = true
+</code></pre>
+<figure data-type="image" tabindex="21"><img src="C:%5CUsers%5CCNZedChou%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20221025213917150.png" alt="image-20221025213917150" loading="lazy"></figure>
+<ul>
+<li>启动</li>
+</ul>
+<pre><code class="language-bash">bash start.sh
+# jdbc:mysql://localhost:3306/wecross_account_manager?allowPublicKeyRetrieval=true&amp;useSSL=false
+</code></pre>
+<figure data-type="image" tabindex="22"><img src="C:%5CUsers%5CCNZedChou%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20221025213951751.png" alt="image-20221025213951751" loading="lazy"></figure>
+<h4 id="启动跨链路由">启动跨链路由</h4>
+<pre><code class="language-bash"># 启动 router-8250
+cd ~/wecross-networks/routers-payment/127.0.0.1-8250-25500/
+bash start.sh
+
+# 启动 router-8251
+cd ~/wecross-networks/routers-payment/127.0.0.1-8251-25501/
+bash start.sh
+
+# 启动 router-8251
+cd ~/wecross-networks/routers-payment/127.0.0.1-8252-25502/
+bash start.sh
+</code></pre>
+<figure data-type="image" tabindex="23"><img src="C:%5CUsers%5CCNZedChou%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20221025214140252.png" alt="image-20221025214140252" loading="lazy"></figure>
+<p>启动成功，输出如下：</p>
+<pre><code class="language-bash">WeCross booting up .........
+WeCross start successfully
+</code></pre>
+<p>如果启动失败，检查<code>8250, 25500</code>端口是否被占用。</p>
+<pre><code class="language-bash">netstat -napl | grep 8250
+netstat -napl | grep 25500
+netstat -napl | grep 8251
+netstat -napl | grep 25501
+</code></pre>
+<h4 id="部署控制台">部署控制台</h4>
+<p>WeCross提供了控制台，方便用户进行跨链开发和调试。可通过脚本<code>build_console.sh</code>搭建控制台。</p>
+<ul>
+<li>下载</li>
+</ul>
+<p>执行如下命令进行下载（提供<a href="https://wecross.readthedocs.io/zh_CN/latest/docs/version/download.html#id2">三种下载方式</a>，可根据网络环境选择合适的方式进行下载），下载完成后在当前目录下生成<code>WeCross-Console</code>目录。</p>
+<pre><code class="language-bash">cd ~/wecross-networks
+bash &lt;(curl -sL https://github.com/WeBankBlockchain/WeCross/releases/download/resources/download_console.sh)
+
+# 若出现长时间下载WeCross-Console包失败，请尝试以下命令重新下载：
+bash &lt;(curl -sL https://gitee.com/WeBank/WeCross/raw/master/scripts/download_console.sh)
+</code></pre>
+<pre><code class="language-bash">wget https://osp-1257653870.cos.ap-guangzhou.myqcloud.com/WeCross/WeCross-Console/v1.2.1/WeCross-Console.tar.gz
+tar -zxvf WeCross-Console.tar.gz
+</code></pre>
+<ul>
+<li>配置</li>
+</ul>
+<pre><code class="language-bash">cd ~/wecross-networks/WeCross-Console
+
+# 拷贝连接router所需的TLS证书，从生成的routers-payment/cert/sdk目录下拷贝
+cp ~/wecross-networks/routers-payment/cert/sdk/* conf/ 
+
+# 拷贝配置文件，并配置跨链路由RPC服务地址以及端口。此处采用默认配置，默认连接至本地8250端口。
+cp conf/application-sample.toml conf/application.toml
+</code></pre>
+<p>重要</p>
+<ul>
+<li>
+<p>若搭建WeCross的IP和端口未使用默认配置，需自行更改WeCross-Console/conf/application.toml，详见 <a href="https://wecross.readthedocs.io/zh_CN/latest/docs/manual/console.html#id12">控制台配置</a>。</p>
+</li>
+<li>
+<p>启动</p>
+</li>
+</ul>
+<pre><code>bash start.sh
+</code></pre>
+<p>启动成功则输出如下信息，通过<code>help</code>可查看控制台帮助。</p>
+<pre><code>=================================================================================
+Welcome to WeCross console(v1.1.0)!
+Type 'help' or 'h' for help. Type 'quit' or 'q' to quit console.
+=================================================================================
+</code></pre>
+<ul>
+<li>测试功能</li>
+</ul>
+<pre><code># 正常进入，可先退出控制台，等待后续配置
+[WeCross]&gt; quit
+</code></pre>
+<figure data-type="image" tabindex="24"><img src="C:%5CUsers%5CCNZedChou%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20221025215211703.png" alt="image-20221025215211703" loading="lazy"></figure>
+<h3 id="区块链接入与账户配置">区块链接入与账户配置</h3>
+<p>完成WeCross基础组件的部署后，接下来就是接入区块链，配置跨链账户，构建一个真实的跨链网络！</p>
+<h4 id="接入区块链">接入区块链</h4>
+<ul>
+<li><strong>接入FISCO BCOS</strong>：接入至跨链路由<code>router-8250</code>，<a href="https://wecross.readthedocs.io/zh_CN/latest/docs/stubs/bcos.html">详细教程</a></li>
+</ul>
+<h5 id="接入fisco-bcos-20">接入FISCO BCOS 2.0</h5>
+<p><a href="https://github.com/WeBankBlockchain/WeCross-BCOS2-Stub">WeCross-BCOS2-Stub</a>作为WeCross的插件，让跨链路由具备接入FISCO-BCOS 2.0的能力。本章节将介绍如何基于BCOS插件接入FISCO BCOS链，内容包括：</p>
+<ul>
+<li>搭建区块链</li>
+<li>安装插件</li>
+<li>配置插件</li>
+<li>部署系统合约</li>
+</ul>
+<p>WeCross-BCOS2-Stub 源码访问链接： <a href="https://github.com/WeBankBlockchain/WeCross-BCOS2-Stub">GitHub访问链接</a>， <a href="https://gitee.com/WeBank/WeCross-BCOS2-Stub">Gitee访问链接</a></p>
+<p>重要</p>
+<ul>
+<li>FISCO-BCOS版本需要 &gt;= v2.1.0</li>
+<li>若还未完成WeCross搭建，请参考 <a href="https://wecross.readthedocs.io/zh_CN/latest/docs/tutorial/deploy/index.html">部署指南</a></li>
+<li>以下教程的目录结构基于 <a href="https://wecross.readthedocs.io/zh_CN/latest/docs/tutorial/deploy/index.tml">部署指南</a> 搭建的WeCross环境作介绍</li>
+</ul>
+<h6 id="1-搭建区块链">1. 搭建区块链</h6>
+<p>如果已存在FISCO BCOS链，不需搭建新链，可跳过本节内容。</p>
+<p>FISCO BCOS官方提供了一键搭链的教程，详见<a href="https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/installation.html">单群组FISCO BCOS联盟链的搭建</a></p>
+<p>详细步骤如下：</p>
+<ul>
+<li>脚本建链</li>
+</ul>
+<pre><code class="language-bash"># 创建操作目录
+mkdir -p ~/wecross-networks/bcos &amp;&amp; cd ~/wecross-networks/bcos
+
+# 下载build_chain.sh脚本
+curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.7.1/build_chain.sh &amp;&amp; chmod u+x build_chain.sh
+
+# 若因为网络原因出现长时间下载失败，请尝试以下命令：
+curl -LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/raw/v2.7.1/tools/build_chain.sh &amp;&amp; chmod u+x build_chain.sh
+
+# 搭建单群组4节点联盟链
+# 在fisco目录下执行下面的指令，生成一条单群组4节点的FISCO链。请确保机器的30300~30303，20200~20203，8545~8548端口没有被占用。
+# 命令执行成功会输出All completed。如果执行出错，请检查nodes/build.log文件中的错误信息。
+bash build_chain.sh -l &quot;127.0.0.1:4&quot; -p 30300,20200,8545
+</code></pre>
+<figure data-type="image" tabindex="25"><img src="C:%5CUsers%5CCNZedChou%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20221026094415394.png" alt="image-20221026094415394" loading="lazy"></figure>
+<ul>
+<li>启动所有节点</li>
+</ul>
+<pre><code>bash nodes/127.0.0.1/start_all.sh
+</code></pre>
+<p>启动成功会输出类似下面内容的响应。否则请使用<code>netstat -an | grep tcp</code>检查机器的<code>30300~30303，20200~20203，8545~8548</code>端口是否被占用。</p>
+<figure data-type="image" tabindex="26"><img src="C:%5CUsers%5CCNZedChou%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20221026094439360.png" alt="image-20221026094439360" loading="lazy"></figure>
+<pre><code class="language-bash">try to start node0
+try to start node1
+try to start node2
+try to start node3
+node1 start successfully
+node2 start successfully
+node0 start successfully
+node3 start successfully
+</code></pre>
+<figure data-type="image" tabindex="27"><img src="C:%5CUsers%5CCNZedChou%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20221026120229674.png" alt="image-20221026120229674" loading="lazy"></figure>
+<figure data-type="image" tabindex="28"><img src="C:%5CUsers%5CCNZedChou%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20221026120246273.png" alt="image-20221026120246273" loading="lazy"></figure>
+<figure data-type="image" tabindex="29"><img src="C:%5CUsers%5CCNZedChou%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20221026120305076.png" alt="image-20221026120305076" loading="lazy"></figure>
+<h6 id="2-安装插件">2. 安装插件</h6>
+<p>基于<a href="https://wecross.readthedocs.io/zh_CN/latest/docs/tutorial/deploy/index.html">部署指南</a>搭建的WeCross，已完成插件的安装，位于跨链路由的<code>plugin</code>目录，可跳过本节内容。</p>
+<pre><code>plugin/
+|-- bcos2-stub-gm-xxxx.jar    # 国密插件
+|-- bcos2-stub-xxxx.jar       # 非国密插件
+└-- fabric1-stub-xxxx.jar
+</code></pre>
+<p>用户如有特殊需求，可以自行编译，替换<code>plugin</code>目录下的插件。</p>
+<p><strong>2.1 下载编译</strong></p>
+<pre><code>git clone https://github.com/WeBankBlockchain/WeCross-BCOS2-Stub.git
+
+# 若因网络原因出现长时间下载失败，请尝试以下命令：
+git clone https://gitee.com/WeBank/WeCross-BCOS2-Stub.git
+
+cd WeCross-BCOS2-Stub
+bash gradlew assemble # 在 dist/apps/ 下生成 bcos2-stub-XXXXX.jar 和 bcos2-stub-gm-xxxx.jar
+</code></pre>
+<p>WeCross-BCOS2-Stub编译生成两个插件：</p>
+<ul>
+<li>国密插件</li>
+<li>非国密插件</li>
+</ul>
+<pre><code>dist/apps
+├── bcos2-stub-gm-xxxx.jar    # 国密插件
+└── bcos2-stub-xxxx.jar       # 非国密插件
+</code></pre>
+<p><strong>2.2 拷贝安装</strong></p>
+<p>在跨链路由的主目录下创建plugin目录，然后将插件拷贝到该目录下完成安装。</p>
+<pre><code>cp dist/apps/* ~/wecross-networks/routers-payment/127.0.0.1-8250-25500/plugin/
+</code></pre>
+<p><strong>注：若跨链路由中配置了两个相同的插件，插件冲突，会导致跨链路由启动失败。</strong></p>
+<figure data-type="image" tabindex="30"><img src="C:%5CUsers%5CCNZedChou%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20221026095019044.png" alt="image-20221026095019044" loading="lazy"></figure>
+<h6 id="3-配置插件">3. 配置插件</h6>
+<p><strong>3.1 生成配置框架</strong></p>
+<p>进入跨链路由的主目录，用<code>add_chain.sh</code>脚本在<code>conf</code>目录下生成BCOS链的配置框架。</p>
+<pre><code class="language-bash">cd ~/wecross-networks/routers-payment/127.0.0.1-8250-25500
+
+ # -t 链类型，-n 指定链名字，可根据-h查看使用说明
+bash add_chain.sh -t BCOS2.0 -n bcos1
+</code></pre>
+<p>执行成功，输出如下。如果执行出错，请查看屏幕打印提示。</p>
+<pre><code>Chain &quot;bcos&quot; config framework has been generated to &quot;conf/chains/bcos&quot;
+</code></pre>
+<figure data-type="image" tabindex="31"><img src="C:%5CUsers%5CCNZedChou%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20221026101722060.png" alt="image-20221026101722060" loading="lazy"></figure>
+<p>生成的目录结构如下：</p>
+<pre><code>tree conf/chains/bcos/
+conf/chains/bcos/
+├── WeCrossHub
+│   └── WeCrossHub.sol        # 桥接合约
+├── WeCrossProxy              # 代理合约
+│   └── WeCrossProxy.sol
+├── admin                     # stub内部内置账户，部署代理合约和桥接合约的默认账户
+│   ├── xxxxx_secp256k1.key
+│   └── account.toml
+└── stub.toml                 # 插件配置文件
+</code></pre>
+<p><strong>3.2 完成配置</strong></p>
+<p><strong>拷贝证书</strong></p>
+<p>为了能够连接BCOS链的节点，需要拷贝节点SDK的证书，证书位于节点的<code>nodes/127.0.0.1/sdk/</code>目录。</p>
+<pre><code class="language-bash"># 证书目录以实际情况为准
+cp -r ~/wecross-networks/bcos/nodes/127.0.0.1/sdk/*  ~/wecross-networks/routers-payment/127.0.0.1-8250-25500/conf/chains/bcos1/
+</code></pre>
+<pre><code class="language-bash">curl -LO https://github.com/FISCO-BCOS/console/releases/download/v2.7.1/download_console.sh &amp;&amp; bash download_console.sh
+</code></pre>
+<figure data-type="image" tabindex="32"><img src="C:%5CUsers%5CCNZedChou%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20221026104959981.png" alt="image-20221026104959981" loading="lazy"></figure>
+<p><strong>编辑配置文件</strong></p>
+<p>插件配置文件<code>stub.toml</code>配置项包括：</p>
+<ul>
+<li>配置资源信息</li>
+<li>配置SDK连接信息，与链进行交互</li>
+</ul>
+<p>根据实际情况编辑<code>[chain]</code>、<code>[channelService]</code>的各个配置项。</p>
+<pre><code>[common]                # 通用配置
+    name = 'bcos'       # stub配置名称，即 [stubName] = bcos
+    type = 'BCOS2.0'    # stub类型，`GM_BCOS2.0`或者`BCOS2.0`，`GM_BCOS2.0`国密类型，`BCOS2.0`非国密类型
+
+[chain]                 # FISCO-BCOS 链配置
+    groupId = 1         # 连接FISCO-BCOS群组id，默认为1
+    chainId = 1         # 连接FISCO-BCOS链id，默认为1
+
+[channelService]        # FISCO-BCOS 配置，以下文件在BCOS链的nodes/127.0.0.1/sdk目录下拷贝
+    caCert = 'ca.crt'   # 根证书
+    sslCert = 'sdk.crt' # SDK证书
+    sslKey = 'sdk.key'  # SDK私钥
+    gmConnect = false   # 国密连接开关，若为true则使用BCOS节点SDK的国密证书进行连接，反之则使用非国密证书连接
+    gmCaCert = 'gm/gmca.crt'        # 国密CA证书
+    gmSslCert = 'gm/gmsdk.crt'      # 国密SDK证书
+    gmSslKey = 'gm/gmsdk.key'       # 国密SDK密钥
+    gmEnSslCert = 'gm/gmensdk.crt'  # 国密加密证书
+    gmEnSslKey = 'gm/gmensdk.key'   # 国密加密密钥
+    timeout = 5000                  # SDK请求超时时间
+    connectionsStr = ['127.0.0.1:20200']    # 连接列表
+
+# [[resources]] 资源列表，配置链已有的资源
+# [[resources]]
+    #name = 'htlc'           # 资源名称
+    #type = 'BCOS_CONTRACT'  # 资源类型，BCOS_CONTRACT
+    #contractAddress = '0x7540601cce8b0802980f9ebf7aeee22bb4d73c22'  # 合约地址
+</code></pre>
+<figure data-type="image" tabindex="33"><img src="C:%5CUsers%5CCNZedChou%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20221026102127589.png" alt="image-20221026102127589" loading="lazy"></figure>
+<h6 id="4-部署系统合约">4. 部署系统合约</h6>
+<p>每个Stub需要部署两个系统合约，分别是代理合约和桥接合约，代理合约负责管理事务以及业务合约的调用，桥接合约用于记录合约跨链请求。在跨链路由主目录执行以下命令：</p>
+<p><strong>4.1 非国密链</strong></p>
+<pre><code class="language-bash"># 部署代理合约
+bash deploy_system_contract.sh -t BCOS2.0 -c chains/bcos1 -P
+
+# 部署桥接合约
+bash deploy_system_contract.sh -t BCOS2.0 -c chains/bcos1 -H
+
+# 若后续有更新系统合约的需求，首先更新conf/chains/bcos下的系统合约代码，在上述命令添加-u参数，执行并重启跨链路由
+</code></pre>
+<figure data-type="image" tabindex="34"><img src="C:%5CUsers%5CCNZedChou%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20221026105131998.png" alt="image-20221026105131998" loading="lazy"></figure>
+<figure data-type="image" tabindex="35"><img src="C:%5CUsers%5CCNZedChou%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20221026105243564.png" alt="image-20221026105243564" loading="lazy"></figure>
+<p>部署成功，则输出如下内容。若失败可查看提示信息和错误日志。</p>
+<pre><code>SUCCESS: WeCrossProxy:xxxxxxxx has been deployed! chain: chains/bcos
+SUCCESS: WeCrossHub:xxxxxxxx has been deployed! chain: chains/bcos
+</code></pre>
+<p><strong>4.2 国密链</strong></p>
+<pre><code># 部署代理合约
+bash deploy_system_contract.sh -t GM_BCOS2.0 -c chains/bcos -P
+
+# 部署桥接合约
+bash deploy_system_contract.sh -t GM_BCOS2.0 -c chains/bcos -H
+
+# 若后续有更新系统合约的需求，首先更新conf/chains/bcos下的系统合约代码，在上述命令添加-u参数，执行并重启跨链路由
+</code></pre>
+<p>部署成功，则输出如下内容。若失败可查看提示信息和错误日志。</p>
+<pre><code>SUCCESS: WeCrossProxy:xxxxxxxx has been deployed! chain: chains/bcos
+SUCCESS: WeCrossHub:xxxxxxxx has been deployed! chain: chains/bcos
+</code></pre>
+<h5 id="第二条链">第二条链</h5>
+<pre><code class="language-bash">bcos1
+# 在fisco目录下执行下面的指令，生成一条单群组4节点的FISCO链。请确保机器的30310~30313，20210~20213，8555~8558端口没有被占用。
+# 命令执行成功会输出All completed。如果执行出错，请检查nodes/build.log文件中的错误信息。
+bash build_chain.sh -l &quot;127.0.0.1:4&quot; -p 30310,20210,8555
+</code></pre>
+<figure data-type="image" tabindex="36"><img src="C:%5CUsers%5CCNZedChou%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20221026105835062.png" alt="image-20221026105835062" loading="lazy"></figure>
+<ul>
+<li>启动所有节点</li>
+</ul>
+<pre><code class="language-bash">bash nodes/127.0.0.1/start_all.sh
+</code></pre>
+<figure data-type="image" tabindex="37"><img src="C:%5CUsers%5CCNZedChou%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20221026105856568.png" alt="image-20221026105856568" loading="lazy"></figure>
+<p><strong>控制台</strong></p>
+<pre><code class="language-bash">curl -LO https://github.com/FISCO-BCOS/console/releases/download/v2.7.1/download_console.sh &amp;&amp; bash download_console.sh
+</code></pre>
+<ul>
+<li>拷贝控制台配置文件</li>
+</ul>
+<p><strong>注意修改config.toml文件</strong></p>
+<p>若节点未采用默认端口，请将文件中的20200替换成节点对应的channel端口。</p>
+<pre><code class="language-bash"># 最新版本控制台使用如下命令拷贝配置文件
+cp -n console/conf/config-example.toml console/conf/config.toml
+</code></pre>
+<ul>
+<li>配置控制台证书</li>
+</ul>
+<p>注解</p>
+<ul>
+<li>
+<p>使用1.x版本控制台时：</p>
+<p>搭建国密版时，如果使用国密SSL请执行 <code>cp nodes/127.0.0.1/sdk/gm/* console/conf/</code>搭建国密版时，请修改 applicationContext.xml 中 encryptType 修改为1</p>
+</li>
+</ul>
+<pre><code class="language-bash">cp -r nodes/127.0.0.1/sdk/* console/conf/
+</code></pre>
+<figure data-type="image" tabindex="38"><img src="C:%5CUsers%5CCNZedChou%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20221026115734744.png" alt="image-20221026115734744" loading="lazy"></figure>
+<figure data-type="image" tabindex="39"><img src="C:%5CUsers%5CCNZedChou%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20221026120103372.png" alt="image-20221026120103372" loading="lazy"></figure>
+<figure data-type="image" tabindex="40"><img src="C:%5CUsers%5CCNZedChou%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20221026120123769.png" alt="image-20221026120123769" loading="lazy"></figure>
+<figure data-type="image" tabindex="41"><img src="C:%5CUsers%5CCNZedChou%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20221026120146324.png" alt="image-20221026120146324" loading="lazy"></figure>
+<h6 id="3-配置插件-2">3. 配置插件</h6>
+<p><strong>3.1 生成配置框架</strong></p>
+<p>进入跨链路由的主目录，用<code>add_chain.sh</code>脚本在<code>conf</code>目录下生成BCOS链的配置框架。</p>
+<pre><code class="language-bash">cd ~/wecross-networks/routers-payment/127.0.0.1-8251-25501
+
+ # -t 链类型，-n 指定链名字，可根据-h查看使用说明
+bash add_chain.sh -t BCOS2.0 -n bcos2
+</code></pre>
+<figure data-type="image" tabindex="42"><img src="C:%5CUsers%5CCNZedChou%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20221026110052777.png" alt="image-20221026110052777" loading="lazy"></figure>
+<p>为了能够连接BCOS链的节点，需要拷贝节点SDK的证书，证书位于节点的<code>nodes/127.0.0.1/sdk/</code>目录。</p>
+<pre><code class="language-bash"># 证书目录以实际情况为准
+cp -r ~/wecross-networks/bcos2/nodes/127.0.0.1/sdk/*   ~/wecross-networks/routers-payment/127.0.0.1-8251-25501/conf/chains/bcos2/
+</code></pre>
+<figure data-type="image" tabindex="43"><img src="C:%5CUsers%5CCNZedChou%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20221026120353785.png" alt="image-20221026120353785" loading="lazy"></figure>
+<h6 id="4-部署系统合约-2">4. 部署系统合约</h6>
+<p>每个Stub需要部署两个系统合约，分别是代理合约和桥接合约，代理合约负责管理事务以及业务合约的调用，桥接合约用于记录合约跨链请求。在跨链路由主目录执行以下命令：</p>
+<p><strong>4.1 非国密链</strong></p>
+<pre><code class="language-bash"># 部署代理合约
+
+bash deploy_system_contract.sh -t BCOS2.0 -c chains/bcos2 -P
+
+# 部署桥接合约
+bash deploy_system_contract.sh -t BCOS2.0 -c chains/bcos2 -H
+
+# 若后续有更新系统合约的需求，首先更新conf/chains/bcos下的系统合约代码，在上述命令添加-u参数，执行并重启跨链路由部署成功，则输出如下内容。若失败可查看提示信息和错误日志。
+</code></pre>
+<figure data-type="image" tabindex="44"><img src="C:%5CUsers%5CCNZedChou%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20221026120753562.png" alt="image-20221026120753562" loading="lazy"></figure>
+<figure data-type="image" tabindex="45"><img src="C:%5CUsers%5CCNZedChou%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20221026120921942.png" alt="image-20221026120921942" loading="lazy"></figure>
+<pre><code>SUCCESS: WeCrossProxy:xxxxxxxx has been deployed! chain: chains/bcos
+SUCCESS: WeCrossHub:xxxxxxxx has been deployed! chain: chains/bcos
+</code></pre>
+<h5 id="第三条链">第三条链</h5>
+<pre><code class="language-bash">bcos1
+# 在fisco目录下执行下面的指令，生成一条单群组4节点的FISCO链。请确保机器的30320~30323，20220~20223，8565~8568端口没有被占用。
+
+# 下载build_chain.sh脚本
+curl -LO https://github.com/FISCO-BCOS/FISCO-BCOS/releases/download/v2.7.1/build_chain.sh &amp;&amp; chmod u+x build_chain.sh
+
+# 若因为网络原因出现长时间下载失败，请尝试以下命令：
+curl -LO https://gitee.com/FISCO-BCOS/FISCO-BCOS/raw/v2.7.1/tools/build_chain.sh &amp;&amp; chmod u+x build_chain.sh
+
+# 命令执行成功会输出All completed。如果执行出错，请检查nodes/build.log文件中的错误信息。
+bash build_chain.sh -l &quot;127.0.0.1:4&quot; -p 30320,20220,8565
+</code></pre>
+<figure data-type="image" tabindex="46"><img src="C:%5CUsers%5CCNZedChou%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20221026121508995.png" alt="image-20221026121508995" loading="lazy"></figure>
+<figure data-type="image" tabindex="47"><img src="C:%5CUsers%5CCNZedChou%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20221026121620291.png" alt="image-20221026121620291" loading="lazy"></figure>
+<p><strong>控制台</strong></p>
+<pre><code class="language-bash">curl -LO https://github.com/FISCO-BCOS/console/releases/download/v2.7.1/download_console.sh &amp;&amp; bash download_console.sh
+</code></pre>
+<ul>
+<li>拷贝控制台配置文件</li>
+</ul>
+<p><strong>注意修改config.toml文件</strong></p>
+<p>若节点未采用默认端口，请将文件中的20200替换成节点对应的channel端口。</p>
+<pre><code class="language-bash"># 最新版本控制台使用如下命令拷贝配置文件
+cp -n console/conf/config-example.toml console/conf/config.toml
+</code></pre>
+<ul>
+<li>配置控制台证书</li>
+</ul>
+<p>注解</p>
+<ul>
+<li>
+<p>使用1.x版本控制台时：</p>
+<p>搭建国密版时，如果使用国密SSL请执行 <code>cp nodes/127.0.0.1/sdk/gm/* console/conf/</code>搭建国密版时，请修改 applicationContext.xml 中 encryptType 修改为1</p>
+</li>
+</ul>
+<pre><code class="language-bash">cp -r nodes/127.0.0.1/sdk/* console/conf/
+</code></pre>
+<figure data-type="image" tabindex="48"><img src="C:%5CUsers%5CCNZedChou%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20221026115734744.png" alt="image-20221026115734744" loading="lazy"></figure>
+<figure data-type="image" tabindex="49"><img src="C:%5CUsers%5CCNZedChou%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20221026123804396.png" alt="image-20221026123804396" loading="lazy"></figure>
+<figure data-type="image" tabindex="50"><img src="C:%5CUsers%5CCNZedChou%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20221026123813342.png" alt="image-20221026123813342" loading="lazy"></figure>
+<figure data-type="image" tabindex="51"><img src="C:%5CUsers%5CCNZedChou%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20221026123831639.png" alt="image-20221026123831639" loading="lazy"></figure>
+<h6 id="3-配置插件-3">3. 配置插件</h6>
+<p><strong>3.1 生成配置框架</strong></p>
+<p>进入跨链路由的主目录，用<code>add_chain.sh</code>脚本在<code>conf</code>目录下生成BCOS链的配置框架。</p>
+<pre><code class="language-bash">cd ~/wecross-networks/routers-payment/127.0.0.1-8252-25502
+
+ # -t 链类型，-n 指定链名字，可根据-h查看使用说明
+bash add_chain.sh -t BCOS2.0 -n bcos3
+</code></pre>
+<figure data-type="image" tabindex="52"><img src="C:%5CUsers%5CCNZedChou%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20221026121733858.png" alt="image-20221026121733858" loading="lazy"></figure>
+<p>为了能够连接BCOS链的节点，需要拷贝节点SDK的证书，证书位于节点的<code>nodes/127.0.0.1/sdk/</code>目录。</p>
+<pre><code class="language-bash"># 证书目录以实际情况为准
+cp -r ~/wecross-networks/bcos3/nodes/127.0.0.1/sdk/*   ~/wecross-networks/routers-payment/127.0.0.1-8252-25502/conf/chains/bcos3/
+</code></pre>
+<figure data-type="image" tabindex="53"><img src="C:%5CUsers%5CCNZedChou%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20221026121901082.png" alt="image-20221026121901082" loading="lazy"></figure>
+<h6 id="4-部署系统合约-3">4. 部署系统合约</h6>
+<p>每个Stub需要部署两个系统合约，分别是代理合约和桥接合约，代理合约负责管理事务以及业务合约的调用，桥接合约用于记录合约跨链请求。在跨链路由主目录执行以下命令：</p>
+<p><strong>4.1 非国密链</strong></p>
+<pre><code class="language-bash"># 部署代理合约
+
+bash deploy_system_contract.sh -t BCOS2.0 -c chains/bcos3 -P
+
+# 部署桥接合约
+bash deploy_system_contract.sh -t BCOS2.0 -c chains/bcos3 -H
+
+# 若后续有更新系统合约的需求，首先更新conf/chains/bcos下的系统合约代码，在上述命令添加-u参数，执行并重启跨链路由部署成功，则输出如下内容。若失败可查看提示信息和错误日志。
+</code></pre>
+<figure data-type="image" tabindex="54"><img src="C:%5CUsers%5CCNZedChou%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20221026124111964.png" alt="image-20221026124111964" loading="lazy"></figure>
+<figure data-type="image" tabindex="55"><img src="C:%5CUsers%5CCNZedChou%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20221026124135368.png" alt="image-20221026124135368" loading="lazy"></figure>
+<ul>
+<li><strong>接入Hyperledger Fabric</strong>：接入至跨链路由<code>router-8251</code>，<a href="https://wecross.readthedocs.io/zh_CN/latest/docs/stubs/fabric.html">详细教程</a> <img src="https://wecross.readthedocs.io/zh_CN/latest/_images/demo1.png" alt="../../../_images/demo1.png" loading="lazy"></li>
+</ul>
+<p>完成区块链接入后，重启跨链路由加载已配置的跨链资源。</p>
+<pre><code class="language-bash"># 重启 router-8250
+cd ~/wecross-networks/routers-payment/127.0.0.1-8250-25500/
+bash stop.sh &amp;&amp; bash start.sh 
+
+# 重启 router-8251
+cd ~/wecross-networks/routers-payment/127.0.0.1-8251-25501/
+bash stop.sh &amp;&amp; bash start.sh 
+
+# 重启 router-8252
+cd ~/wecross-networks/routers-payment/127.0.0.1-8252-25502/
+bash stop.sh &amp;&amp; bash start.sh 
+</code></pre>
+<figure data-type="image" tabindex="56"><img src="C:%5CUsers%5CCNZedChou%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20221026124347939.png" alt="image-20221026124347939" loading="lazy"></figure>
+<p>检查日志，可看到刷出已加载的跨链资源，<code>ctrl + c</code> 退出。</p>
+<pre><code class="language-bash">tail -f logs/info.log |grep &quot;active resources&quot;
+
+2020-12-05 21:07:30.925 [Thread-3] INFO  WeCrossHost() - Current active resources: payment.bcos.WeCrossProxy(local), payment.bcos.WeCrossHub(local)
+2020-12-05 21:07:40.940 [Thread-3] INFO  WeCrossHost() - Current active resources: payment.bcos.WeCrossProxy(local), payment.bcos.WeCrossHub(local)
+2020-12-05 21:07:50.956 [Thread-3] INFO  WeCrossHost() - Current active resources: payment.bcos.WeCrossProxy(local), payment.bcos.WeCrossHub(local)
+</code></pre>
+<figure data-type="image" tabindex="57"><img src="C:%5CUsers%5CCNZedChou%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20221026124442136.png" alt="image-20221026124442136" loading="lazy"></figure>
+<h4 id="配置跨链账户">配置跨链账户</h4>
+<p>区块链接入后，必须配置相应的账户才能完成资源的调用。</p>
+<p>WeCross将各种类型的链账户进行了汇总，统一用跨链账户进行管理。在WeCross中，用户以跨链账户身份进行登陆，再操作各种资源。要往特定类型的链上发交易，只需要在跨链账户中添加相应类型的链账户即可。</p>
+<h5 id="添加bcos链账户">添加BCOS链账户</h5>
+<ul>
+<li>生成公私钥</li>
+</ul>
+<p>在控制台的目录中生成FISCO BCOS的账户公私钥，为添加链账户做准备。</p>
+<pre><code class="language-bash">cd ~/wecross-networks/WeCross-Console/conf/accounts/
+bash get_account.sh # 生成accounts目录
+</code></pre>
+<p>生成成功，输出账户地址（address），请记录，用于后续添加链账户。</p>
+<pre><code class="language-bash">[INFO] Account Address   : 0x5bbcd95b95062331e6cd5441251a28b82e59184d
+[INFO] Private Key (pem) : accounts/0x5bbcd95b95062331e6cd5441251a28b82e59184d.pem
+[INFO] Public  Key (pem) : accounts/0x5bbcd95b95062331e6cd5441251a28b82e59184d.pem.pub
+</code></pre>
+<figure data-type="image" tabindex="58"><img src="C:%5CUsers%5CCNZedChou%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20221026124602868.png" alt="image-20221026124602868" loading="lazy"></figure>
+<ul>
+<li>启动控制台</li>
+</ul>
+<pre><code>cd ~/wecross-networks/WeCross-Console/
+bash start.sh
+</code></pre>
+<ul>
+<li>登录</li>
+</ul>
+<p>用默认的跨链账户登录：org1-admin，密码：123456（默认账户在WeCross-Account-Manager/conf/application.toml配置）。</p>
+<pre><code>[WeCross]&gt; login org1-admin 123456
+Result: success
+=============================================================================================
+Universal Account:
+username: org1-admin
+pubKey  : 3059301306...
+uaID    : 3059301306...
+</code></pre>
+<ul>
+<li>添加链账户</li>
+</ul>
+<p>为当前登录的跨链账户添加用于发交易的链账户，示例如下（每次生成的账户地址有所不同，需按具体情况填入）。</p>
+<pre><code class="language-bash"># 参数： addChainAccount BCOS2.0 私钥位置 公钥位置 账户地址(address) 是否设置为发交易的默认链账户
+[WeCross.org1-admin]&gt; addChainAccount BCOS2.0 conf/accounts/accounts/0x5bbcd95b95062331e6cd5441251a28b82e59184d.pem.pub conf/accounts/accounts/0x5bbcd95b95062331e6cd5441251a28b82e59184d.pem 0x5bbcd95b95062331e6cd5441251a28b82e59184d true
+</code></pre>
+<p>添加成功，退出控制台。</p>
+<figure data-type="image" tabindex="59"><img src="C:%5CUsers%5CCNZedChou%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20221026124902321.png" alt="image-20221026124902321" loading="lazy"></figure>
+<pre><code>[WeCross.org1-admin]&gt; quit
+</code></pre>
+<h5 id="查看链账户">查看链账户</h5>
+<p>查看当前登录的跨链账户下的所有链账户，<code>isDefault</code>为<code>true</code>表示发交易的默认账户。</p>
+<pre><code class="language-bash">[WeCross.org1-admin]&gt; listAccount
+Universal Account:
+username: org1-admin
+pubKey  : 3059301306...
+uaID    : 3059301306...
+chainAccounts: [
+        BCOS2.0 Account:
+        keyID    : 0
+        type     : BCOS2.0
+        address  : 0x4e89af80184147fcddc391c64ad673512236af67
+        isDefault: true
+        ----------
+        Fabric1.4 Account:
+        keyID    : 2
+        type     : Fabric1.4
+        MembershipID : Org2MSP
+        isDefault: true
+        ----------
+        Fabric1.4 Account:
+        keyID    : 1
+        type     : Fabric1.4
+        MembershipID : Org1MSP
+        isDefault: false
+        ----------
+]
+</code></pre>
+<p>操作成功，退出控制台。</p>
+<figure data-type="image" tabindex="60"><img src="C:%5CUsers%5CCNZedChou%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20221026125041175.png" alt="image-20221026125041175" loading="lazy"></figure>
+<h3 id="资源部署与操作">资源部署与操作</h3>
+<p>整个跨链网络环境搭建完毕后，就可以基于WeCross控制台部署和操作跨链资源了。</p>
+<h4 id="部署fisco-bcos跨链资源">部署FISCO BCOS跨链资源</h4>
+<p>WeCross支持通过控制台向BCOS链上部署合约，部署步骤如下：</p>
+<ul>
+<li>准备合约代码（以HelloWorld为例）</li>
+</ul>
+<p>控制台的合约存放目录：<code>conf/contracts/solidity/</code>，目录下已有HelloWorld合约文件，若需部署其它合约，可将合约拷贝至相同位置。</p>
+<pre><code class="language-bash">tree conf/contracts/solidity/
+conf/contracts/solidity/
+└── HelloWorld.sol
+</code></pre>
+<ul>
+<li>启动控制台</li>
+</ul>
+<pre><code class="language-bash">cd ~/wecross-networks/WeCross-Console/
+bash start.sh
+</code></pre>
+<ul>
+<li>部署合约</li>
+</ul>
+<p>用<code>bcosDeploy</code>命令进行部署。</p>
+<blockquote>
+<p>参数：ipath，代码目录，合约名，设置一个版本号</p>
+</blockquote>
+<pre><code class="language-bash"># 登录
+[WeCross]&gt; login org1-admin 123456
+
+# 部署
+[WeCross.org1-admin]&gt; bcosDeploy payment.bcos1.HelloWorld contracts/solidity/HelloWorld.sol HelloWorld 1.0
+Result: 0x953c8f97f9ea5930e6ca8d5eabbd9dfdcb142e6c
+
+[WeCross.org1-admin]&gt; bcosDeploy payment.bcos2.HelloWorld contracts/solidity/HelloWorld.sol HelloWorld 1.0
+
+[WeCross.org1-admin]&gt; bcosDeploy payment.bcos3.HelloWorld contracts/solidity/HelloWorld.sol HelloWorld 1.0
+</code></pre>
+<figure data-type="image" tabindex="61"><img src="C:%5CUsers%5CCNZedChou%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20221026125725944.png" alt="image-20221026125725944" loading="lazy"></figure>
+<p>用<code>listResources</code>可查看此资源（<code>payment.bcos.HelloWorld</code>）已部署</p>
+<pre><code>[WeCross.org1-admin]&gt; listResources
+path: payment.bcos.HelloWorld, type: BCOS2.0, distance: 0
+path: payment.bcos.WeCrossHub, type: BCOS2.0, distance: 0
+path: payment.fabric.WeCrossHub, type: Fabric1.4, distance: 1
+total: 3
+</code></pre>
+<figure data-type="image" tabindex="62"><img src="C:%5CUsers%5CCNZedChou%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20221026125755952.png" alt="image-20221026125755952" loading="lazy"></figure>
+<figure data-type="image" tabindex="63"><img src="C:%5CUsers%5CCNZedChou%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20221026125914172.png" alt="image-20221026125914172" loading="lazy"></figure>
+<h4 id="操作跨链资源">操作跨链资源</h4>
+<h5 id="查看跨链资源">查看跨链资源</h5>
+<ul>
+<li>登录</li>
+</ul>
+<p>用默认的跨链账户登录：org1-admin，密码：123456。（默认账户在WeCross-Account-Manager/conf/application.toml配置）</p>
+<pre><code>[WeCross]&gt; login org1-admin 123456
+Result: success
+=============================================================================================
+Universal Account:
+username: org1-admin
+pubKey  : 3059301306...
+uaID    : 3059301306...
+</code></pre>
+<ul>
+<li>获取资源列表</li>
+</ul>
+<p>用<code>listResources</code>命令查看WeCross跨链网络中的所有资源。可看到有多个资源：</p>
+<p><code>payment.bcos.HelloWorld</code>：对应于FISCO BCOS链上的HelloWorld.sol合约。</p>
+<p><code>payment.fabric.sacc</code>：对应于Fabric链上的sacc.go合约。</p>
+<p><code>payment.xxxx.WeCrossHub</code>：每条链默认安装的Hub合约，用于接收链上合约发起的跨链调用。可参考<a href="https://wecross.readthedocs.io/zh_CN/latest/docs/dev/interchain.html">《合约跨链》</a></p>
+<pre><code class="language-bash">[WeCross.org1-admin]&gt; listResources
+path: payment.bcos.HelloWorld, type: BCOS2.0, distance: 0
+path: payment.fabric.WeCrossHub, type: Fabric1.4, distance: 1
+path: payment.bcos.WeCrossHub, type: BCOS2.0, distance: 0
+path: payment.fabric.sacc, type: Fabric1.4, distance: 1
+total: 4
+</code></pre>
+<h5 id="操作paymentbcoshelloworld">操作payment.bcos.HelloWorld</h5>
+<ul>
+<li>读资源
+<ul>
+<li>命令：<code>call path 接口名 [参数列表]</code></li>
+<li>示例：<code>call payment.bcos.HelloWorld get</code></li>
+</ul>
+</li>
+</ul>
+<pre><code class="language-bash"># 调用HelloWorld合约中的get接口
+[WeCross.org1-admin]&gt; call payment.bcos1.HelloWorld get
+Result: [Hello, World!]
+</code></pre>
+<ul>
+<li>写资源
+<ul>
+<li>命令：<code>sendTransaction path 接口名 [参数列表]</code></li>
+<li>示例：<code>sendTransaction payment.bcos.HelloWeCross set Tom</code></li>
+</ul>
+</li>
+</ul>
+<pre><code class="language-bash"># 调用HelloWeCross合约中的set接口
+[WeCross.org1-admin]&gt; sendTransaction payment.bcos1.HelloWorld set Tom
+Txhash  : 0xd9cefb8c3ba28084583ba340e1d73a37574e1661926c3116729b1ec029f59828
+BlockNum: 6
+Result  : []     // 将Tom给set进去
+
+[WeCross.org1-admin]&gt; call payment.bcos1.HelloWorld get
+Result: [Tom]    // 再次get，Tom已set
+</code></pre>
+<h2 id="网页管理平台">网页管理平台</h2>
+<h3 id="手动编译">手动编译</h3>
+<p>若您目前已经有跨链路由正在运行，请确认跨链路由的版本为<code>1.0.0</code>及以上，即可进行手动源码编译网页管理平台，进行跨链路由的访问。主要步骤如下：</p>
+<p>1.从远程仓库拉取代码到本地；</p>
+<pre><code class="language-bash">git clone https://github.com/WeBankBlockchain/WeCross-WebApp.git
+
+# 若因为网络原因出现长时间拉取代码失败，请尝试以下命令：
+git clone https://gitee.com/WeBank/WeCross-WebApp.git
+</code></pre>
+<p>2.<code>npm</code>安装相关依赖，请注意<a href="https://wecross.readthedocs.io/zh_CN/latest/docs/manual/webApp.html#id2">编译环境要求</a>；</p>
+<pre><code class="language-bash">cd WeCross-WebApp
+npm install
+</code></pre>
+<p>3.安装完依赖以后，进行<code>npm</code>编译源代码，编译好的静态文件在<code>dist</code>文件夹中；</p>
+<pre><code class="language-bash">npm run build:prod
+cd dist
+</code></pre>
+<figure data-type="image" tabindex="64"><img src="C:%5CUsers%5CCNZedChou%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20221026131613732.png" alt="image-20221026131613732" loading="lazy"></figure>
+<p>4.在跨链路由所在文件中，创建<code>pages</code>文件夹，<strong>注意：</strong> 这里以<code>routers-payment/127.0.0.1-8250-25500</code>作为网页管理平台访问的跨链路由所在文件夹，实际操作请以实际情况为准；</p>
+<pre><code class="language-bash">cd routers-payment/127.0.0.1-8250-25500
+mkdir -p pages
+</code></pre>
+<p>5.将<code>dist</code>文件夹中编译好的静态文件全部拷贝至刚创建的<code>pages</code>文件夹中；</p>
+<pre><code>cp -r ~/wecross-networks/WeCross-WebApp/dist/* ~/wecross-networks/routers-payment/127.0.0.1-8250-25500/pages/
+</code></pre>
+<p>6.在浏览器中输入<code>[跨链路由IP]:[跨链路由端口]/s/index.html</code>访问WeCross网页管理平台，请注意<a href="https://wecross.readthedocs.io/zh_CN/latest/docs/manual/webApp.html#id2">浏览器版本要求</a>。</p>
+<h4 id="13-远程访问">1.3 远程访问</h4>
+<p>若需要网页管理平台进行远程访问跨链路由，请将跨链路由所在目录的 <code>conf/wecross.toml</code> 文件，修改<code>[rpc]</code>标签下的<code>address</code>字段为所需IP（如：0.0.0.0），再通过以下命令重启当前的路由模块，在浏览器输入远程IP进行访问。</p>
+<pre><code class="language-bash">bash stop.sh &amp;&amp; bash start.sh
+</code></pre>
+<figure data-type="image" tabindex="65"><img src="C:%5CUsers%5CCNZedChou%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20221026191405222.png" alt="image-20221026191405222" loading="lazy"></figure>
+<figure data-type="image" tabindex="66"><img src="C:%5CUsers%5CCNZedChou%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20221026134018290.png" alt="image-20221026134018290" loading="lazy"></figure>
+<figure data-type="image" tabindex="67"><img src="C:%5CUsers%5CCNZedChou%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20221026191415118.png" alt="image-20221026191415118" loading="lazy"></figure>
+<figure data-type="image" tabindex="68"><img src="C:%5CUsers%5CCNZedChou%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20221026191440282.png" alt="image-20221026191440282" loading="lazy"></figure>
+<p><img src="C:%5CUsers%5CCNZedChou%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20221026191451506.png" alt="image-20221026191451506" loading="lazy"><img src="C:%5CUsers%5CCNZedChou%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20221026191510944.png" alt="image-20221026191510944" loading="lazy"></p>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li><a href="#fisco-bcos">FISCO BCOS</a>
+<ul>
+<li><a href="#1-%E6%90%AD%E5%BB%BA%E5%8D%95%E7%BE%A4%E7%BB%84fisco-bcos%E8%81%94%E7%9B%9F%E9%93%BE">1. 搭建单群组FISCO BCOS联盟链</a>
+<ul>
+<li><a href="#%E7%AC%AC%E4%B8%80%E6%AD%A5-%E5%AE%89%E8%A3%85%E4%BE%9D%E8%B5%96">第一步. 安装依赖</a></li>
+<li><a href="#%E7%AC%AC%E4%BA%8C%E6%AD%A5-%E5%88%9B%E5%BB%BA%E6%93%8D%E4%BD%9C%E7%9B%AE%E5%BD%95-%E4%B8%8B%E8%BD%BD%E5%AE%89%E8%A3%85%E8%84%9A%E6%9C%AC">第二步. 创建操作目录, 下载安装脚本</a></li>
+<li><a href="#%E7%AC%AC%E4%B8%89%E6%AD%A5-%E6%90%AD%E5%BB%BA%E5%8D%95%E7%BE%A4%E7%BB%844%E8%8A%82%E7%82%B9%E8%81%94%E7%9B%9F%E9%93%BE">第三步. 搭建单群组4节点联盟链</a></li>
+<li><a href="#%E7%AC%AC%E5%9B%9B%E6%AD%A5-%E5%90%AF%E5%8A%A8fisco-bcos%E9%93%BE">第四步. 启动FISCO BCOS链</a></li>
+<li><a href="#%E7%AC%AC%E4%BA%94%E6%AD%A5-%E6%A3%80%E6%9F%A5%E8%BF%9B%E7%A8%8B">第五步. 检查进程</a></li>
+<li><a href="#%E7%AC%AC%E5%85%AD%E6%AD%A5-%E6%A3%80%E6%9F%A5%E6%97%A5%E5%BF%97%E8%BE%93%E5%87%BA">第六步. 检查日志输出</a></li>
+</ul>
+</li>
+<li><a href="#2-%E9%85%8D%E7%BD%AE%E5%8F%8A%E4%BD%BF%E7%94%A8%E6%8E%A7%E5%88%B6%E5%8F%B0">2. 配置及使用控制台</a>
+<ul>
+<li><a href="#%E7%AC%AC%E4%B8%80%E6%AD%A5-%E5%87%86%E5%A4%87%E4%BE%9D%E8%B5%96">第一步. 准备依赖</a></li>
+<li><a href="#%E7%AC%AC%E4%BA%8C%E6%AD%A5-%E5%90%AF%E5%8A%A8%E5%B9%B6%E4%BD%BF%E7%94%A8%E6%8E%A7%E5%88%B6%E5%8F%B0">第二步. 启动并使用控制台</a></li>
+</ul>
+</li>
+<li><a href="#3-%E9%83%A8%E7%BD%B2%E5%8F%8A%E8%B0%83%E7%94%A8helloworld%E5%90%88%E7%BA%A6">3. 部署及调用HelloWorld合约</a>
+<ul>
+<li><a href="#%E7%AC%AC%E4%B8%80%E6%AD%A5-%E7%BC%96%E5%86%99helloworld%E5%90%88%E7%BA%A6">第一步. 编写HelloWorld合约</a></li>
+<li><a href="#%E7%AC%AC%E4%BA%8C%E6%AD%A5-%E9%83%A8%E7%BD%B2helloworld%E5%90%88%E7%BA%A6">第二步. 部署HelloWorld合约</a></li>
+<li><a href="#%E7%AC%AC%E4%B8%89%E6%AD%A5-%E8%B0%83%E7%94%A8helloworld%E5%90%88%E7%BA%A6">第三步. 调用HelloWorld合约</a></li>
+</ul>
+</li>
+<li><a href="#%E5%8C%BA%E5%9D%97%E9%93%BE%E6%B5%8F%E8%A7%88%E5%99%A8-%E4%B8%80%E9%94%AE%E9%83%A8%E7%BD%B2">区块链浏览器 » 一键部署</a>
+<ul>
+<li><a href="#1%E5%89%8D%E6%8F%90%E6%9D%A1%E4%BB%B6">1.前提条件</a></li>
+<li><a href="#%E9%85%8D%E7%BD%AEjava-home">配置Java home</a></li>
+</ul>
+</li>
+<li><a href="#%E9%85%8D%E7%BD%AE-webase">配置 WeBase</a></li>
+</ul>
+</li>
+<li><a href="#%E5%9F%BA%E4%BA%8E%E5%8C%BA%E5%9D%97%E9%93%BEhyperledger-fabric%E7%9A%84%E6%88%BF%E5%9C%B0%E4%BA%A7%E4%BA%A4%E6%98%93%E7%B3%BB%E7%BB%9F">基于区块链（Hyperledger Fabric）的房地产交易系统</a>
+<ul>
+<li><a href="#%E5%81%9C%E6%AD%A2%E6%88%96%E9%87%8D%E5%90%AF">停止或重启</a></li>
+</ul>
+</li>
+<li><a href="#smart-audit-system">smart audit system</a>
+<ul>
+<li><a href="#prerequisites-before-using-the-application">Prerequisites before using the application:</a>
+<ul>
+<li><a href="#metamask">metamask</a></li>
+<li><a href="#truffle">truffle</a>
+<ul>
+<li><a href="#truffle-install">truffle install</a></li>
+</ul>
+</li>
+<li><a href="#ganache">ganache</a>
+<ul>
+<li><a href="#ganache-install">ganache install</a></li>
+</ul>
+</li>
+<li><a href="#ifps">IFPS</a>
+<ul>
+<li><a href="#ifps-commandline-install">IFPS commandline install</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#how-to-use">How to use</a></li>
+</ul>
+</li>
+<li><a href="#wecross">WeCross</a>
+<ul>
+<li><a href="#%E7%8E%AF%E5%A2%83%E8%A6%81%E6%B1%82">环境要求</a>
+<ul>
+<li><a href="#%E7%A1%AC%E4%BB%B6">硬件</a></li>
+<li><a href="#%E6%94%AF%E6%8C%81%E7%9A%84%E5%B9%B3%E5%8F%B0">支持的平台</a></li>
+<li><a href="#%E8%BD%AF%E4%BB%B6%E4%BE%9D%E8%B5%96">软件依赖</a>
+<ul>
+<li><a href="#ubuntu%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85java">Ubuntu环境安装Java</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#%E6%89%8B%E5%8A%A8%E7%BB%84%E7%BD%91">手动组网</a>
+<ul>
+<li><a href="#%E5%9F%BA%E7%A1%80%E7%BB%84%E4%BB%B6%E9%83%A8%E7%BD%B2">基础组件部署</a>
+<ul>
+<li><a href="#%E4%B8%8B%E8%BD%BDwecross">下载WeCross</a></li>
+<li><a href="#%E9%83%A8%E7%BD%B2%E8%B7%A8%E9%93%BE%E8%B7%AF%E7%94%B1">部署跨链路由</a></li>
+<li><a href="#%E9%83%A8%E7%BD%B2%E8%B4%A6%E6%88%B7%E6%9C%8D%E5%8A%A1">部署账户服务</a></li>
+<li><a href="#%E5%90%AF%E5%8A%A8%E8%B7%A8%E9%93%BE%E8%B7%AF%E7%94%B1">启动跨链路由</a></li>
+<li><a href="#%E9%83%A8%E7%BD%B2%E6%8E%A7%E5%88%B6%E5%8F%B0">部署控制台</a></li>
+</ul>
+</li>
+<li><a href="#%E5%8C%BA%E5%9D%97%E9%93%BE%E6%8E%A5%E5%85%A5%E4%B8%8E%E8%B4%A6%E6%88%B7%E9%85%8D%E7%BD%AE">区块链接入与账户配置</a>
+<ul>
+<li><a href="#%E6%8E%A5%E5%85%A5%E5%8C%BA%E5%9D%97%E9%93%BE">接入区块链</a>
+<ul>
+<li><a href="#%E6%8E%A5%E5%85%A5fisco-bcos-20">接入FISCO BCOS 2.0</a>
+<ul>
+<li><a href="#1-%E6%90%AD%E5%BB%BA%E5%8C%BA%E5%9D%97%E9%93%BE">1. 搭建区块链</a></li>
+<li><a href="#2-%E5%AE%89%E8%A3%85%E6%8F%92%E4%BB%B6">2. 安装插件</a></li>
+<li><a href="#3-%E9%85%8D%E7%BD%AE%E6%8F%92%E4%BB%B6">3. 配置插件</a></li>
+<li><a href="#4-%E9%83%A8%E7%BD%B2%E7%B3%BB%E7%BB%9F%E5%90%88%E7%BA%A6">4. 部署系统合约</a></li>
+</ul>
+</li>
+<li><a href="#%E7%AC%AC%E4%BA%8C%E6%9D%A1%E9%93%BE">第二条链</a>
+<ul>
+<li><a href="#3-%E9%85%8D%E7%BD%AE%E6%8F%92%E4%BB%B6-2">3. 配置插件</a></li>
+<li><a href="#4-%E9%83%A8%E7%BD%B2%E7%B3%BB%E7%BB%9F%E5%90%88%E7%BA%A6-2">4. 部署系统合约</a></li>
+</ul>
+</li>
+<li><a href="#%E7%AC%AC%E4%B8%89%E6%9D%A1%E9%93%BE">第三条链</a>
+<ul>
+<li><a href="#3-%E9%85%8D%E7%BD%AE%E6%8F%92%E4%BB%B6-3">3. 配置插件</a></li>
+<li><a href="#4-%E9%83%A8%E7%BD%B2%E7%B3%BB%E7%BB%9F%E5%90%88%E7%BA%A6-3">4. 部署系统合约</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#%E9%85%8D%E7%BD%AE%E8%B7%A8%E9%93%BE%E8%B4%A6%E6%88%B7">配置跨链账户</a>
+<ul>
+<li><a href="#%E6%B7%BB%E5%8A%A0bcos%E9%93%BE%E8%B4%A6%E6%88%B7">添加BCOS链账户</a></li>
+<li><a href="#%E6%9F%A5%E7%9C%8B%E9%93%BE%E8%B4%A6%E6%88%B7">查看链账户</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#%E8%B5%84%E6%BA%90%E9%83%A8%E7%BD%B2%E4%B8%8E%E6%93%8D%E4%BD%9C">资源部署与操作</a>
+<ul>
+<li><a href="#%E9%83%A8%E7%BD%B2fisco-bcos%E8%B7%A8%E9%93%BE%E8%B5%84%E6%BA%90">部署FISCO BCOS跨链资源</a></li>
+<li><a href="#%E6%93%8D%E4%BD%9C%E8%B7%A8%E9%93%BE%E8%B5%84%E6%BA%90">操作跨链资源</a>
+<ul>
+<li><a href="#%E6%9F%A5%E7%9C%8B%E8%B7%A8%E9%93%BE%E8%B5%84%E6%BA%90">查看跨链资源</a></li>
+<li><a href="#%E6%93%8D%E4%BD%9Cpaymentbcoshelloworld">操作payment.bcos.HelloWorld</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#%E7%BD%91%E9%A1%B5%E7%AE%A1%E7%90%86%E5%B9%B3%E5%8F%B0">网页管理平台</a>
+<ul>
+<li><a href="#%E6%89%8B%E5%8A%A8%E7%BC%96%E8%AF%91">手动编译</a>
+<ul>
+<li><a href="#13-%E8%BF%9C%E7%A8%8B%E8%AE%BF%E9%97%AE">1.3 远程访问</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank"> Gridea </a>
+  <a class="rss" href="https://CNZedChou.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

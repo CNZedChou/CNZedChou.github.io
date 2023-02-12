@@ -1,0 +1,823 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Unix Networking Programming | ZedChou&#39;s Blog</title>
+<link rel="shortcut icon" href="https://CNZedChou.github.io/favicon.ico?v=1676222959031">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://CNZedChou.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="Unix Networking Programming | ZedChou&#39;s Blog - Atom Feed" href="https://CNZedChou.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="@Description:   用于记录Unix 网络编程 学习过程
+@Author:    Zed Chou
+@LastModified:    Mon 14 Nov 2022
+
+课程学习内容
+
+计算机网络概念  七层模型和四层模型 协议..." />
+    <meta name="keywords" content="Coding" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://CNZedChou.github.io">
+  <img class="avatar" src="https://CNZedChou.github.io/images/avatar.png?v=1676222959031" alt="">
+  </a>
+  <h1 class="site-title">
+    ZedChou&#39;s Blog
+  </h1>
+  <p class="site-description">
+    温故而知新
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              Unix Networking Programming
+            </h2>
+            <div class="post-info">
+              <span>
+                2022-11-14
+              </span>
+              <span>
+                20 min read
+              </span>
+              
+                <a href="https://CNZedChou.github.io/tag/yx9d52T4r/" class="post-tag">
+                  # Coding
+                </a>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content" v-pre>
+                <p>@Description:   用于记录Unix 网络编程 学习过程<br>
+@Author:    Zed Chou<br>
+@LastModified:    Mon 14 Nov 2022</p>
+<!-- more -->
+<h1 id="课程学习内容">课程学习内容</h1>
+<ol>
+<li>计算机网络概念  七层模型和四层模型 协议(tcp/ip)  mac地址 ip地址 port 子网掩码 ,,,</li>
+<li>数据包的一个组包和拆包流程 tcp/udp特点</li>
+<li>udp编程 编程准备(字节序 端口,ip大小端转换的函数)  udpAPI  发送接收数据</li>
+<li>udp-tftp编程  udp广播</li>
+<li>tcp 编程  客户端和服务器编写流程 三次握手和四次挥手</li>
+<li>tcp 高并发服务器  多进程多线程服务器 select,poll,epoll实现的tcp服务器    epoll+线程池</li>
+<li>网络通信过程(了解)</li>
+<li>原始套接字 自己组底层的数据包 收一帧完整的数据包</li>
+<li>http协议 web-html 编写web服务器</li>
+</ol>
+<h1 id="一-计算机网络概述">一、计算机网络概述</h1>
+<h2 id="1-计算机网络发展简史">1. 计算机网络发展简史</h2>
+<p>在通信双方或多方之间，通过电路交换建立电路连接的网络</p>
+<figure data-type="image" tabindex="1"><img src="https://raw.githubusercontent.com/CNZedChou/ForPicGo/master/image-20221114194147041.png" alt="电路连接网络" loading="lazy"></figure>
+<h3 id="电路交换网特点">电路交换网特点</h3>
+<p>1、建立链接-&gt;使用链接-&gt;释放链接</p>
+<p>2、物理通路被通信双方独占</p>
+<p>计算机数据是突发式出现在数据链路上的,而电路交换网的建立链接、使用链接、释放链接的三个过程使得传输效率太低，故电路交换不适合传输计算机数据。</p>
+<h3 id="分组交换">分组交换</h3>
+<p>通过标有地址的分组进行路由选择传送数据，使通信通道仅在传送期间被占用的一种交换方式</p>
+<p>分组的组成：</p>
+<p>每个分组都由首部和数据段组成；为什么？</p>
+<figure data-type="image" tabindex="2"><img src="https://raw.githubusercontent.com/CNZedChou/ForPicGo/master/image-20221114194342575.png" alt="分组交换" loading="lazy"></figure>
+<h3 id="交换方式">交换方式</h3>
+<p>交换方式—<strong>存储转发</strong></p>
+<p>节点收到分组，先暂时存储下来，再检查其首部，按</p>
+<p>照首部中的目的地址，找到合适的节点转发出去</p>
+<p>特点：</p>
+<ol>
+<li>以分组作为传输单位</li>
+<li>独立的选择转发路由</li>
+<li>逐段占用，动态分配传输带宽</li>
+</ol>
+<figure data-type="image" tabindex="3"><img src="https://raw.githubusercontent.com/CNZedChou/ForPicGo/master/image-20221114194440514.png" alt="存储转发" loading="lazy"></figure>
+<h2 id="2-tcpip协议简介">2. TCP/IP协议简介</h2>
+<p>为了使各种不同的计算机之间可以互联,ARPANet指定了一套计算机通信协议，即TCP/IP协议(族)</p>
+<p>为了减少协议设计的复杂性，大多数网络模型均采用<strong>分层</strong>的方式来组织</p>
+<p>每一层<strong>利用下一层提供的服务</strong>来<strong>为上一层提供服务</strong></p>
+<p>本层服务的<strong>实现细节对上层屏蔽</strong></p>
+<h3 id="分层结构">分层结构</h3>
+<figure data-type="image" tabindex="4"><img src="https://raw.githubusercontent.com/CNZedChou/ForPicGo/master/clip_image002.jpg" alt="img" loading="lazy"></figure>
+<h4 id="osi-7层模型">OSI 7层模型</h4>
+<p>物理层: 各种网络接口(双绞线)的类型,传输速率 等等的一些物理特性</p>
+<p>数据链路层: 负责对数据帧的收发</p>
+<p>网络层: 使数据包能够最大可能的达到目的主机</p>
+<p>传输层: 数据包和程序通信的桥梁</p>
+<p>会话层: 保持连接的</p>
+<p>表示层: 数据解压缩解码等等</p>
+<p>应用层: 应用程序</p>
+<h4 id="tcpip的4层模型">tcp/ip的4层模型</h4>
+<p>**应用层：**应用程序间沟通的层</p>
+<p>例如：FTP、Telnet、HTTP等</p>
+<p>**传输层：**提供进程间的数据传送服务</p>
+<p>负责传送数据，提供应用程序端到端的逻辑通信 。例如：TCP、UDP</p>
+<p>**网络层：**提供基本的数据封包传送功能</p>
+<p>最大可能的让每个数据包都能够到达目的主机。例如：IP、ICMP等</p>
+<p>**链路层：**负责数据帧的发送和接收</p>
+<h5 id="协议">协议:</h5>
+<p><strong>应用层协议:</strong></p>
+<p>FTP : 文件传输协议</p>
+<p>TFTP: 简单文件传输协议</p>
+<p>HTTP: 超文本传输协议</p>
+<p>SSH:</p>
+<p>TELNET:....</p>
+<p><strong>传输层协议:</strong></p>
+<p>TCP: 传输控制协议</p>
+<p>UDP: 用户数据报协议</p>
+<p>网络层协议:</p>
+<p>IP: 英特网互联协议</p>
+<p>ICMP: 特网网控制报文协议</p>
+<p>IGMP: 特网网组管理协议</p>
+<p><strong>链路层协议:</strong></p>
+<p>ARP: 地址解析协议  作用: 通过ip找mac地址</p>
+<p>RARP: 反向地址解析协议 作用: 通过mac地址找IP</p>
+<figure data-type="image" tabindex="5"><img src="https://raw.githubusercontent.com/CNZedChou/ForPicGo/master/image-20221114194650410.png" alt="分层结构" loading="lazy"></figure>
+<p>每层完成自己的任务，最终通过不同层次的处理完成数据的收发</p>
+<h3 id="ip协议简介">IP协议简介</h3>
+<p>特指为实现在一个相互连接的网络系统上从源地址到目的地传输数据包（互联网数据包）所提供必要功能的协议</p>
+<p><strong>特点：</strong></p>
+<p><strong>不可靠</strong>：它不能保证IP数据包能成功地到达它的目的地，仅提供<strong>尽力而为</strong>的传输服务</p>
+<p><strong>无连接</strong>：IP并不维护任何关于<strong>后续数据包的状态信息</strong>。每个数据包的处理是相互独立的。IP数据包可以不按发送顺序接收</p>
+<p>IP数据包中含有发送它主机的IP地址（源地址）和接收它主机的IP地址（目的地址）</p>
+<h3 id="tcp协议简介">TCP协议简介</h3>
+<p><strong>TCP</strong> <strong>是一种面向连接的,可靠的传输层通信协议</strong></p>
+<p><strong>功能：</strong></p>
+<p>提供不同主机上的进程间通信</p>
+<p><strong>特点</strong></p>
+<p>1、建立链接-&gt;使用链接-&gt;释放链接（虚电路）</p>
+<p>2、TCP数据包中包含序号和确认序号</p>
+<p>3、对包进行排序并检错，而损坏的包可以被重传</p>
+<p><strong>服务对象</strong></p>
+<p>需要高度可靠性且面向连接的服务</p>
+<p>如HTTP、FTP、SMTP等</p>
+<h3 id="udp协议简介">UDP协议简介</h3>
+<p><strong>UDP</strong> 是<strong>一种面向无连接的传输层通信协议</strong></p>
+<p><strong>功能：</strong></p>
+<p>提供不同主机上的进程间通信</p>
+<p><strong>特点</strong></p>
+<p>1、发送数据之前不需要建立链接</p>
+<p>2、不对数据包的顺序进行检查</p>
+<p>3、没有错误检测和重传机制</p>
+<p><strong>服务对象</strong></p>
+<p>主要用于“查询—应答”的服务</p>
+<p>如：NFS、NTP、DNS等</p>
+<h2 id="3-mac地址-ip地址-netmask-端口">3. MAC地址、IP地址、Netmask、端口</h2>
+<h3 id="网卡">网卡</h3>
+<p>又称为网络适配器或网络接口卡NIC，但是现在更多的人愿意使用更为简单的名称“网卡”</p>
+<p>作用:通过网卡能够使不同的计算机之间连接，从而完成数据通信等功能，用来<strong>发送接收数据</strong>的,将<strong>模拟信号转成数字信号</strong></p>
+<h3 id="mac地址">MAC地址</h3>
+<p>MAC地址,用于标识网络设备,类似于身份证号，且理论上全球唯一，这个全球唯一的标识id号就是我们所说的mac地址</p>
+<p><strong>组成：<strong>以太网内的MAC地址是一个</strong>48bit</strong>（6个字节）的值</p>
+<p>mac地址是用来标识网卡的一个物理地址，<strong>物理地址不能改变</strong></p>
+<h3 id="ip地址">IP地址</h3>
+<p>IP地址是一种Internet上的主机编址方式，也称为网际协议地址。用于屏蔽不同数据链锯介质造成的数据帧差异而抽象的互联网同一地址</p>
+<p>用来标识主机或网卡的一个虚拟ip</p>
+<p>使用32bit,由{网络ID，主机ID}两部分组成</p>
+<figure data-type="image" tabindex="6"><img src="https://raw.githubusercontent.com/CNZedChou/ForPicGo/master/image-20221114203916696.png" alt="ip地址" loading="lazy"></figure>
+<p>子网ID:IP地址中<strong>由子网掩码中1覆盖的连续位</strong></p>
+<p>主机ID:IP地址中由子网掩码中0覆盖的连续位</p>
+<h4 id="ip地址特点">ip地址特点</h4>
+<p>子网ID不同的网络不能直接通信，如果要通信则需要路由器转发</p>
+<p>主机ID全为0的IP地址表示网段地址</p>
+<p>主机ID全为1的IP地址表示该网段的广播地址</p>
+<h4 id="ip地址分类">ip地址分类:</h4>
+<figure data-type="image" tabindex="7"><img src="https://raw.githubusercontent.com/CNZedChou/ForPicGo/master/image-20221114203609391.png" alt="ip地址分类" loading="lazy"></figure>
+<p>A类地址：默认8bit子网ID,第一位为0</p>
+<p>B类地址：默认16bit子网ID,前两位为10</p>
+<p>C类地址：默认24bit子网ID,前三位为110</p>
+<p>D类地址：前四位为1110,多播地址</p>
+<p>E类地址: 前五位为11110,保留为今后使用</p>
+<p>A,B,C三类地址是最常用的</p>
+<p><strong>公有IP（可直接连接Internet）</strong>：经由InterNIC所统一规划的IP</p>
+<p><strong>私有IP（不可直接连接Internet ）</strong>：主要用于局域网络内的主机联机规划</p>
+<h4 id="回环ip地址">回环ip地址</h4>
+<p>通常 127.0.0.1 称为回环地址</p>
+<p>127.0.0.1~127.255.255.254中的任何地址都将回环到本地主机中，不属于任何一个有类别地址类,它代表设备的本地虚拟接口</p>
+<h3 id="子网掩码">子网掩码</h3>
+<p>子网掩码（subnet mask）又叫网络掩码、地址掩码是一个32bit由1和0组成的数值，并且1和0分别连续</p>
+<p><strong>作用</strong></p>
+<p>指明IP地址中<strong>哪些位标识的是主机所在的子网</strong>以及哪些位标识的是<strong>主机号</strong></p>
+<p><strong>特点</strong></p>
+<p>必须<strong>结合IP地址一起使用</strong>，不能单独存在</p>
+<p>IP地址中由子网掩码中1覆盖的连续位为子网ID,其余为主机ID</p>
+<h3 id="端口">端口</h3>
+<h4 id="端口概述">端口概述</h4>
+<p>TCP/IP协议采用端口标识通信的进程</p>
+<p>用于区分一个系统里的多个进程</p>
+<p><strong>特点</strong></p>
+<p>1、对于<strong>同一个端口</strong>，在不同系统中对应着不同的进程</p>
+<p>2、对于<strong>同一个系统</strong>，一个端口<strong>只能被一个进程拥有</strong></p>
+<p>3、一个进程拥有一个端口后，传输层送到该端口的数据<strong>全部被该进程接收</strong>，同样，进程送交传输层的数据也<strong>通过该端口被送出</strong></p>
+<h4 id="端口号">端口号</h4>
+<p>类似pid标识一个进程；在网络程序中，用端口号（port）来标识一个<strong>运行的网络程序</strong>，底层用来标识缓冲区</p>
+<figure data-type="image" tabindex="8"><img src="https://raw.githubusercontent.com/CNZedChou/ForPicGo/master/image-20221114204733141.png" alt="端口解释" loading="lazy"></figure>
+<p><strong>特点</strong></p>
+<p>1、端口号是无符号短整型的类型</p>
+<p>2、每个端口都拥有一个端口号</p>
+<p>3、TCP、UDP维护各自独立的端口号</p>
+<p>4、网络应用程序,至少要占用一个端口号,也可以占有多个端口号</p>
+<p><strong>知名端口（1~1023）</strong>：由互联网数字分配机构(IANA)根据用户需要进行统一分配</p>
+<p>例如：FTP—21，HTTP—80等</p>
+<p>服务器通常使用的范围;<strong>若强制使用,须加root特权</strong></p>
+<p><strong>动态端口（1024~65535）</strong>：应用程序通常使用的范围</p>
+<p><strong>注意</strong>：端口号类似于进程号，<strong>同一时刻只能标志一个进程</strong>；可以重复使用</p>
+<h2 id="4-数据包的组装-拆解">4. 数据包的组装、拆解</h2>
+<h3 id="数据包在各个层之间的传输">数据包在各个层之间的传输</h3>
+<figure data-type="image" tabindex="9"><img src="https://raw.githubusercontent.com/CNZedChou/ForPicGo/master/image-20221114205622235.png" alt="组包拆包" loading="lazy"></figure>
+<h3 id="链路层封包格式">链路层封包格式</h3>
+<p><strong>注意</strong></p>
+<p>1、IEEE802.2/802.3封装常用在无线</p>
+<p>2、以太网封装常用在有线局域网</p>
+<figure data-type="image" tabindex="10"><img src="https://raw.githubusercontent.com/CNZedChou/ForPicGo/master/image-20221114210458306.png" alt="封包格式" loading="lazy"></figure>
+<h3 id="网络层-传输层封包格式">网络层、传输层封包格式</h3>
+<figure data-type="image" tabindex="11"><img src="https://raw.githubusercontent.com/CNZedChou/ForPicGo/master/image-20221114210540867.png" alt="网络层、传输层风暴格式" loading="lazy"></figure>
+<h2 id="5-网络开发模型-浏览器和服务器">5. 网络开发模型 浏览器和服务器</h2>
+<h3 id="bs-browserserver">B/S  browser/server</h3>
+<p><strong>特点:</strong></p>
+<p>缺点：不能用于对性能要求高的程序</p>
+<p>优点:     不容易偷数据,比较安全</p>
+<p>​			移植性高,不依赖平台</p>
+<p>​			开发周期相对短</p>
+<h3 id="cs-clientserver-客户端和服务器">C/S client/server 客户端和服务器</h3>
+<p><strong>server</strong></p>
+<p>打开一通信通道并告知本地主机,它愿意在一特定端口(如80)上接收客户请求</p>
+<p>等待客户请求到达该端口</p>
+<p>接收客户请求，并发送应答信号,激活一新的线程处理这个客户请求</p>
+<p>服务完成后,关闭新线程与客户的通信链路</p>
+<p><strong>client</strong></p>
+<p>打开一通信通道并连接到服务器特定端口</p>
+<p>向服务器发出服务请求,等待并接收应答</p>
+<p>根据需要继续提出请求</p>
+<p>请求结束后关闭通信通道并终止</p>
+<p><strong>特点</strong>:</p>
+<p>缺点: 不是特别安全,依赖平台,开发周期较长</p>
+<p>优点: 可运行对性能要求较高的程序</p>
+<h4 id="tcp"><strong>tcp</strong>:</h4>
+<p><strong>电话系统服务模式的抽象</strong></p>
+<p>每一次完整的数据传输都要经过<strong>建立连接、使用连接、终止连接</strong>的过程</p>
+<p>本质上,连接是一个管道,收发数据不但顺序一致,而且内容相同，保证数据传输的可靠性</p>
+<p><strong>出错重传</strong>,比较<strong>安全可靠</strong>,每次收到数据都会给到<strong>回应ACK</strong>。</p>
+<h4 id="udp">UDP</h4>
+<p><strong>邮件系统服务模式的抽象</strong></p>
+<p>每个分组都携带完整的目的地址，不能保证分组的先后顺序，不进行分组出错的恢复和重传，不保证数据传输的可靠性。</p>
+<p>在局域网中效率比较高</p>
+<h1 id="二-udp编程">二、UDP编程</h1>
+<h2 id="1-字节序-地址转换">1. 字节序、地址转换</h2>
+<h3 id="字节序概述">字节序概述</h3>
+<p><strong>字节序概念</strong></p>
+<p>是指多字节数据的存储顺序</p>
+<p><strong>分类</strong></p>
+<p>小端格式:将<strong>低位</strong>字节数据存储在<strong>低地址</strong></p>
+<p>大端格式:将<strong>高位</strong>字节数据存储在<strong>低地址</strong></p>
+<figure data-type="image" tabindex="12"><img src="https://raw.githubusercontent.com/CNZedChou/ForPicGo/master/image-20221114215354539.png" alt="大小端" loading="lazy"></figure>
+<p><strong>注意</strong></p>
+<p>LSB：低地址</p>
+<p>MSB：高地址</p>
+<figure data-type="image" tabindex="13"><img src="https://raw.githubusercontent.com/CNZedChou/ForPicGo/master/image-20221114215321018.png" alt="字节序" loading="lazy"></figure>
+<h4 id="大小端识别">大小端识别</h4>
+<p>代码</p>
+<pre><code class="language-c">#include &lt;stdio.h&gt;
+typedef union  std
+{
+	unsigned short a; 
+	unsigned char b[2];
+
+}STD;
+int main(int argc, char *argv[])
+{
+	STD tmp;
+	tmp.a=0x0102;
+	if(tmp.b[0]== 0x01){
+		printf(&quot;大端\n&quot;);
+		
+	}
+	else{
+        printf(&quot;小端\n&quot;);
+    }
+	return 0;
+}
+</code></pre>
+<figure data-type="image" tabindex="14"><img src="https://raw.githubusercontent.com/CNZedChou/ForPicGo/master/image-20221116184221521.png" alt="大小端识别" loading="lazy"></figure>
+<h3 id="字节序转换api">字节序转换API</h3>
+<h4 id="htonl函数32位转大端-ip">htonl函数（32位转大端-ip）</h4>
+<p>uint32_t htonl(uint32_t hostint32);</p>
+<p><strong>功能:</strong></p>
+<p>将32位<strong>主机（host）字节序</strong>数据转换成<strong>网络（n-大端）字节序</strong>数据</p>
+<p><strong>参数：</strong></p>
+<p>hostint32：待转换的32位主机字节序数据</p>
+<p><strong>返回值：</strong></p>
+<p>成功：返回网络字节序的值</p>
+<p><strong>头文件：</strong></p>
+<p>#include &lt;arpa/inet.h&gt;</p>
+<pre><code class="language-c">/*************************************************************************
+        &gt; File Name: htonl_test.c
+        &gt; Author: Zhihao Zhou
+        &gt; Mail: cnzedchou@gmail.com
+        &gt; Created Time: 2022年11月16日 星期三 18时52分04秒
+ ************************************************************************/
+
+#include &lt;stdio.h&gt;
+#include &lt;arpa/inet.h&gt;
+int main(int argc, char *argv[]){
+    int num = 0x01020304; // little endian
+    int s = htonl(num);
+    printf(&quot;%x\n&quot;, s);
+    return 0;
+}
+</code></pre>
+<figure data-type="image" tabindex="15"><img src="https://raw.githubusercontent.com/CNZedChou/ForPicGo/master/image-20221116185514621.png" alt="htonl函数" loading="lazy"></figure>
+<h4 id="htons函数16位转大端-端口">htons函数（16位转大端-端口）</h4>
+<p>uint16_t htons(uint16_t hostint16);</p>
+<p><strong>功能：</strong></p>
+<p>将16位主机字节序数据转换成网络字节序数据</p>
+<p><strong>参数：</strong></p>
+<p>uint16_t：unsigned short int</p>
+<p>hostint16：待转换的16位主机字节序数据</p>
+<p><strong>返回值：</strong></p>
+<p>成功：返回网络字节序的值</p>
+<p><strong>头文件：</strong></p>
+<p>#include &lt;arpa/inet.h&gt;</p>
+<pre><code class="language-c">/*************************************************************************
+        &gt; File Name: htonl_test.c
+        &gt; Author: Zhihao Zhou
+        &gt; Mail: cnzedchou@gmail.com
+        &gt; Created Time: 2022年11月16日 星期三 18时52分04秒
+ ************************************************************************/
+
+#include &lt;stdio.h&gt;
+#include &lt;arpa/inet.h&gt;
+int main(int argc, char *argv[]){
+    int num = 0x0102; // little endian
+    int s = htons(num);
+    printf(&quot;%x\n&quot;, s);
+    return 0;
+}
+</code></pre>
+<figure data-type="image" tabindex="16"><img src="https://raw.githubusercontent.com/CNZedChou/ForPicGo/master/image-20221116185953286.png" alt="16位转大端" loading="lazy"></figure>
+<h4 id="ntohl函数">ntohl函数（）</h4>
+<p>uint32_t ntohl(uint32_t netint32);</p>
+<p><strong>功能：</strong></p>
+<p>将32位网络字节序数据转换成主机字节序数据</p>
+<p><strong>参数：</strong></p>
+<p>uint32_t： unsigned int</p>
+<p>netint32：待转换的32位网络字节序数据</p>
+<p><strong>返回值：</strong></p>
+<p>成功：返回主机字节序的值</p>
+<p><strong>头文件：</strong></p>
+<p>#include &lt;arpa/inet.h&gt;</p>
+<pre><code class="language-c">/*************************************************************************
+        &gt; File Name: htonl_test.c
+        &gt; Author: Zhihao Zhou
+        &gt; Mail: cnzedchou@gmail.com
+        &gt; Created Time: 2022年11月16日 星期三 18时52分04秒
+ ************************************************************************/
+
+#include &lt;stdio.h&gt;
+#include &lt;arpa/inet.h&gt;
+int main(int argc, char *argv[]){
+    int num = 0x01020304; // little endian
+    int s = htonl(num);
+    printf(&quot;%x\n&quot;, s);
+    int n = ntohl(s);
+    printf(&quot;%x\n&quot;, n);
+    return 0;
+}
+</code></pre>
+<figure data-type="image" tabindex="17"><img src="https://raw.githubusercontent.com/CNZedChou/ForPicGo/master/image-20221116190353474.png" alt="ntohl函数" loading="lazy"></figure>
+<h4 id="ntohs函数">ntohs函数</h4>
+<p>uint16_t ntohs(uint16_t netint16);</p>
+<p><strong>功能：</strong></p>
+<p>将16位网络字节序数据转换成主机字节序数据</p>
+<p><strong>参数：</strong></p>
+<p>uint16_t： unsigned short int</p>
+<p>netint16：待转换的16位网络字节序数据</p>
+<p><strong>返回值：</strong></p>
+<p>成功：返回主机字节序的值</p>
+<p><strong>头文件：</strong></p>
+<p>#include &lt;arpa/inet.h&gt;</p>
+<pre><code class="language-c">/*************************************************************************
+        &gt; File Name: htonl_test.c
+        &gt; Author: Zhihao Zhou
+        &gt; Mail: cnzedchou@gmail.com
+        &gt; Created Time: 2022年11月16日 星期三 18时52分04秒
+ ************************************************************************/
+
+#include &lt;stdio.h&gt;
+#include &lt;arpa/inet.h&gt;
+int main(int argc, char *argv[]){
+    int num = 0x0102; // little endian
+    int s = htons(num);
+    printf(&quot;%x\n&quot;, s);
+    int n = ntohs(s);
+    printf(&quot;%x\n&quot;, n);
+    return 0;
+}
+</code></pre>
+<figure data-type="image" tabindex="18"><img src="https://raw.githubusercontent.com/CNZedChou/ForPicGo/master/image-20221116190525927.png" alt="ntohs函数" loading="lazy"></figure>
+<h3 id="地址转换函数">地址转换函数</h3>
+<h4 id="inet_pton函数点分十进制转换">inet_pton函数（点分十进制转换）</h4>
+<p>#include &lt;arpa/inet.h&gt;</p>
+<p>int inet_pton(int af, const char *src, void *dst);</p>
+<p>函数功能:  将一个点分十进制串转成一个<strong>32位大端的整数</strong><br>
+参数:   <strong>af: AF_INET ipv4写这个</strong><br>
+<strong>src:待转换字符串的首元素地址</strong><br>
+<strong>dst: 32为整数的地址</strong><br>
+返回值:  成功返回1 失败返回其他</p>
+<pre><code class="language-c">/*************************************************************************
+        &gt; File Name: htonl_test.c
+        &gt; Author: Zhihao Zhou
+        &gt; Mail: cnzedchou@gmail.com
+        &gt; Created Time: 2022年11月16日 星期三 18时52分04秒
+ ************************************************************************/
+
+#include &lt;stdio.h&gt;
+#include &lt;arpa/inet.h&gt;
+int main(int argc, char *argv[]){
+    char buf_ip[] = &quot;192.168.1.2&quot;;
+    int num = 0;
+    inet_pton(AF_INET, buf_ip, &amp;num);
+    unsigned char *p = (char *)&amp;num;
+    printf(&quot;%d %d %d %d\n&quot;, *p, *(p + 1), *(p + 2), *(p + 3));
+    return 0;
+}
+</code></pre>
+<figure data-type="image" tabindex="19"><img src="https://raw.githubusercontent.com/CNZedChou/ForPicGo/master/image-20221116191736337.png" alt="inet_pton" loading="lazy"></figure>
+<h4 id="inet_ntop函数">inet_ntop函数</h4>
+<p>include &lt;arpa/inet.h&gt;const char *inet_ntop(int af, const void *src,<br>
+char *dst, socklen_t size);<br>
+功能: 将一个<strong>网络大端的32位数据转成一个点分十进制串</strong></p>
+<p>参数:   af: AF_INET</p>
+<p>​			src: 32位网络大端的数据地址<br>
+dst: 存储点分十进制串数组的地址</p>
+<p>​			size: 存储点分十进制串数组的大小</p>
+<p>返回值:  成功返回1 失败返回其他</p>
+<pre><code class="language-c">/*************************************************************************
+        &gt; File Name: htonl_test.c
+        &gt; Author: Zhihao Zhou
+        &gt; Mail: cnzedchou@gmail.com
+        &gt; Created Time: 2022年11月16日 星期三 18时52分04秒
+ ************************************************************************/
+
+#include &lt;stdio.h&gt;
+#include &lt;arpa/inet.h&gt;
+int main(int argc, char *argv[]){
+    char buf_ip[] = &quot;192.168.1.2&quot;;
+    int num = 0;
+    inet_pton(AF_INET, buf_ip, &amp;num);
+    unsigned char *p = (char *)&amp;num;
+    // printf(&quot;%d %d %d %d\n&quot;, *p, *(p + 1), *(p + 2), *(p + 3));
+    char ip[INET_ADDRSTRLEN]; // ip数组，16； 宏 INET_ADDRSTRLEN = 16 
+    inet_ntop(AF_INET, &amp;num, ip, INET_ADDRSTRLEN);
+    printf(&quot;ip=%s\n&quot;, ip);
+    return 0;
+}
+</code></pre>
+<figure data-type="image" tabindex="20"><img src="https://raw.githubusercontent.com/CNZedChou/ForPicGo/master/image-20221116192601398.png" alt="inet_ntop" loading="lazy"></figure>
+<h2 id="2-socket介绍">2. socket介绍</h2>
+<p>网络通信解决什么问题?</p>
+<p>​	为了解决<strong>不同主机的进程间通信</strong>的问题</p>
+<p>​	socket套接字用来解决不同主机进程间通信的问题</p>
+<p>​	每一台主机必须要有和对方主机成对出现的一个socket</p>
+<figure data-type="image" tabindex="21"><img src="https://raw.githubusercontent.com/CNZedChou/ForPicGo/master/image-20221116192928120.png" alt="socket 图示" loading="lazy"></figure>
+<h3 id="3-udp-编程">3. UDP 编程</h3>
+<p><strong>UDP</strong></p>
+<p>面向无连接的用户数据报协议，在传输数据前不需要先建立连接；目地主机的运输层收到UDP报文后，不需要给出任何确认</p>
+<p><strong>UDP特点</strong></p>
+<p>1、相比TCP速度稍快些</p>
+<p>2、简单的请求/应答应用程序可以使用UDP</p>
+<p>3、对于海量数据传输不应该使用UDP</p>
+<p>4、广播和多播应用必须使用UDP</p>
+<p><strong>UDP应用</strong></p>
+<p>DNS(域名解析)、NFS(网络文件系统)、RTP(流媒体)等</p>
+<h4 id="通信流程">通信流程</h4>
+<p>对于udp来讲,可以没有服务器,服务器只是认为规定的一种 主动发送的一方为客户端,被动接受的一方为服务器</p>
+<p>如果作为服务器被动等待别人发送数据,这个服务器需要绑定上固定的ip和端口</p>
+<p>流程: 创建套接字 -&gt; 绑定(非必须的) -&gt;读写 -&gt; 关闭</p>
+<figure data-type="image" tabindex="22"><img src="https://raw.githubusercontent.com/CNZedChou/ForPicGo/master/image-20221116194014544.png" alt="udp通信流程" loading="lazy"></figure>
+<h4 id="创建socket套接字">创建socket套接字</h4>
+<p>`#include &lt;sys/socket.h&gt;`</p>
+<p><code>int socket(int domain, int type, int protocol);</code></p>
+<p>功能: 创建一个socket套接字</p>
+<p>参数:</p>
+<p>​			domain:  AF_INET</p>
+<p>​			type:</p>
+<p>​					SOCK_STREAM : 流式套接字 用于tcp通信</p>
+<p>​					SOCK_DGRAM  : 报式套接字  用于udp通信</p>
+<p>​			protocol: 协议 0 自动指定</p>
+<p>返回值: 返回一个套接字 (文件描述符)</p>
+<h4 id="绑定套接字">绑定套接字</h4>
+<p><code>#include &lt;sys/socket.h&gt;</code></p>
+<p><code>int bind(int sockfd, const struct sockaddr *addr,        socklen_t addrlen);</code></p>
+<p>功能:  给套接字绑定一个固定的ip和端口</p>
+<p>参数:</p>
+<p>​			sockfd: 套接字</p>
+<p>​			addr: ipv4套接字结构体地址 转成 通用套接字结构体地址</p>
+<p>​			addrlen: 结构体的大小</p>
+<p><strong>网络通信 需要解决三大问题: 协议 ip port协议，ip port封装在一个结构体中</strong></p>
+<h4 id="ipv4-结构体">IPV4 结构体</h4>
+<pre><code class="language-c">ipv4套接字结构体:
+
+struct sockaddr_in {
+    sa_family_t    sin_family; /* address family: AF_INET */
+    in_port_t      sin_port;   /* port in network byte order*/
+    struct in_addr sin_addr;   /* internet address */
+};
+/* Internet address. */
+struct in_addr {
+    uint32_t       s_addr;     /* address in network byte order */
+};
+</code></pre>
+<h4 id="ipv6结构体">IPV6结构体</h4>
+<pre><code class="language-c">vipv6套接字结构体:
+struct sockaddr_in6 {
+    unsigned short int sin6_family;        /* AF_INET6 */
+    __be16 sin6_port;                  /* Transport layer port # */
+    __be32 sin6_flowinfo;              /* IPv6 flow information */
+    struct in6_addr sin6_addr;         /* IPv6 address */
+    __u32 sin6_scope_id;               /* scope id (new in RFC2553) */
+};
+struct in6_addr {
+    union {
+        __u8 u6_addr8[16];
+        __be16 u6_addr16[8];
+        __be32 u6_addr32[4];
+    } in6_u;
+    #define s6_addr        in6_u.u6_addr8
+    #define s6_addr16      in6_u.u6_addr16
+    #define s6_addr32     in6_u.u6_addr32
+};
+</code></pre>
+<h4 id="本地套接字结构体">本地套接字结构体</h4>
+<pre><code class="language-c">本地套接字结构体
+#define UNIX_PATH_MAX 108
+struct sockaddr_un {
+    __kernel_sa_family_t sun_family;   /* AF_UNIX */
+    char sun_path[UNIX_PATH_MAX]; /* pathname */
+};
+</code></pre>
+<h4 id="通用套接字结构体">通用套接字结构体</h4>
+<pre><code class="language-c">struct sockaddr *
+struct sockaddr
+{
+sa_family_t sa_family; // 2字节
+char sa_data[14] //14字节
+};
+</code></pre>
+<h4 id="udp-客户端编写">UDP 客户端编写</h4>
+<pre><code class="language-c">ssize_t sendto(int sockfd, const void *buf, size_t len, int flags,const struct sockaddr *dest_addr, socklen_t addrlen);
+功能: 发送数据
+参数：
+    sockfd: 套接字
+    buf: 发送的内容地址
+    len: 发送内容的大小
+    flags: 0 
+    dest_addr: ipv4套接字结构体(目的地的地址信息)   
+     addrlen: 结构体大小
+返回值: 发送的字节数
+</code></pre>
+<pre><code class="language-c">ssize_t recvfrom(int sockfd, void *buf, size_t len, int flags,
+                        struct sockaddr *src_addr, socklen_t *addrlen);
+功能:收数据
+参数:
+    sockfd: 套接字
+    buf:  存储数据数据区的地址
+    len: 存储数据数据区大小
+    flags: 0
+    src_addr:  ipv4套接字结构体(存储对方的地址信息)
+    addrlen:  ipv4套接字结构体大小的地址
+返回值L接收数据的字节数
+</code></pre>
+<p><strong>客户端代码：</strong></p>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li><a href="#%E8%AF%BE%E7%A8%8B%E5%AD%A6%E4%B9%A0%E5%86%85%E5%AE%B9">课程学习内容</a></li>
+<li><a href="#%E4%B8%80-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E6%A6%82%E8%BF%B0">一、计算机网络概述</a>
+<ul>
+<li><a href="#1-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%8F%91%E5%B1%95%E7%AE%80%E5%8F%B2">1. 计算机网络发展简史</a>
+<ul>
+<li><a href="#%E7%94%B5%E8%B7%AF%E4%BA%A4%E6%8D%A2%E7%BD%91%E7%89%B9%E7%82%B9">电路交换网特点</a></li>
+<li><a href="#%E5%88%86%E7%BB%84%E4%BA%A4%E6%8D%A2">分组交换</a></li>
+<li><a href="#%E4%BA%A4%E6%8D%A2%E6%96%B9%E5%BC%8F">交换方式</a></li>
+</ul>
+</li>
+<li><a href="#2-tcpip%E5%8D%8F%E8%AE%AE%E7%AE%80%E4%BB%8B">2. TCP/IP协议简介</a>
+<ul>
+<li><a href="#%E5%88%86%E5%B1%82%E7%BB%93%E6%9E%84">分层结构</a>
+<ul>
+<li><a href="#osi-7%E5%B1%82%E6%A8%A1%E5%9E%8B">OSI 7层模型</a></li>
+<li><a href="#tcpip%E7%9A%844%E5%B1%82%E6%A8%A1%E5%9E%8B">tcp/ip的4层模型</a>
+<ul>
+<li><a href="#%E5%8D%8F%E8%AE%AE">协议:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#ip%E5%8D%8F%E8%AE%AE%E7%AE%80%E4%BB%8B">IP协议简介</a></li>
+<li><a href="#tcp%E5%8D%8F%E8%AE%AE%E7%AE%80%E4%BB%8B">TCP协议简介</a></li>
+<li><a href="#udp%E5%8D%8F%E8%AE%AE%E7%AE%80%E4%BB%8B">UDP协议简介</a></li>
+</ul>
+</li>
+<li><a href="#3-mac%E5%9C%B0%E5%9D%80-ip%E5%9C%B0%E5%9D%80-netmask-%E7%AB%AF%E5%8F%A3">3. MAC地址、IP地址、Netmask、端口</a>
+<ul>
+<li><a href="#%E7%BD%91%E5%8D%A1">网卡</a></li>
+<li><a href="#mac%E5%9C%B0%E5%9D%80">MAC地址</a></li>
+<li><a href="#ip%E5%9C%B0%E5%9D%80">IP地址</a>
+<ul>
+<li><a href="#ip%E5%9C%B0%E5%9D%80%E7%89%B9%E7%82%B9">ip地址特点</a></li>
+<li><a href="#ip%E5%9C%B0%E5%9D%80%E5%88%86%E7%B1%BB">ip地址分类:</a></li>
+<li><a href="#%E5%9B%9E%E7%8E%AFip%E5%9C%B0%E5%9D%80">回环ip地址</a></li>
+</ul>
+</li>
+<li><a href="#%E5%AD%90%E7%BD%91%E6%8E%A9%E7%A0%81">子网掩码</a></li>
+<li><a href="#%E7%AB%AF%E5%8F%A3">端口</a>
+<ul>
+<li><a href="#%E7%AB%AF%E5%8F%A3%E6%A6%82%E8%BF%B0">端口概述</a></li>
+<li><a href="#%E7%AB%AF%E5%8F%A3%E5%8F%B7">端口号</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#4-%E6%95%B0%E6%8D%AE%E5%8C%85%E7%9A%84%E7%BB%84%E8%A3%85-%E6%8B%86%E8%A7%A3">4. 数据包的组装、拆解</a>
+<ul>
+<li><a href="#%E6%95%B0%E6%8D%AE%E5%8C%85%E5%9C%A8%E5%90%84%E4%B8%AA%E5%B1%82%E4%B9%8B%E9%97%B4%E7%9A%84%E4%BC%A0%E8%BE%93">数据包在各个层之间的传输</a></li>
+<li><a href="#%E9%93%BE%E8%B7%AF%E5%B1%82%E5%B0%81%E5%8C%85%E6%A0%BC%E5%BC%8F">链路层封包格式</a></li>
+<li><a href="#%E7%BD%91%E7%BB%9C%E5%B1%82-%E4%BC%A0%E8%BE%93%E5%B1%82%E5%B0%81%E5%8C%85%E6%A0%BC%E5%BC%8F">网络层、传输层封包格式</a></li>
+</ul>
+</li>
+<li><a href="#5-%E7%BD%91%E7%BB%9C%E5%BC%80%E5%8F%91%E6%A8%A1%E5%9E%8B-%E6%B5%8F%E8%A7%88%E5%99%A8%E5%92%8C%E6%9C%8D%E5%8A%A1%E5%99%A8">5. 网络开发模型 浏览器和服务器</a>
+<ul>
+<li><a href="#bs-browserserver">B/S  browser/server</a></li>
+<li><a href="#cs-clientserver-%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%92%8C%E6%9C%8D%E5%8A%A1%E5%99%A8">C/S client/server 客户端和服务器</a>
+<ul>
+<li><a href="#tcp"><strong>tcp</strong>:</a></li>
+<li><a href="#udp">UDP</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#%E4%BA%8C-udp%E7%BC%96%E7%A8%8B">二、UDP编程</a>
+<ul>
+<li><a href="#1-%E5%AD%97%E8%8A%82%E5%BA%8F-%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2">1. 字节序、地址转换</a>
+<ul>
+<li><a href="#%E5%AD%97%E8%8A%82%E5%BA%8F%E6%A6%82%E8%BF%B0">字节序概述</a>
+<ul>
+<li><a href="#%E5%A4%A7%E5%B0%8F%E7%AB%AF%E8%AF%86%E5%88%AB">大小端识别</a></li>
+</ul>
+</li>
+<li><a href="#%E5%AD%97%E8%8A%82%E5%BA%8F%E8%BD%AC%E6%8D%A2api">字节序转换API</a>
+<ul>
+<li><a href="#htonl%E5%87%BD%E6%95%B032%E4%BD%8D%E8%BD%AC%E5%A4%A7%E7%AB%AF-ip">htonl函数（32位转大端-ip）</a></li>
+<li><a href="#htons%E5%87%BD%E6%95%B016%E4%BD%8D%E8%BD%AC%E5%A4%A7%E7%AB%AF-%E7%AB%AF%E5%8F%A3">htons函数（16位转大端-端口）</a></li>
+<li><a href="#ntohl%E5%87%BD%E6%95%B0">ntohl函数（）</a></li>
+<li><a href="#ntohs%E5%87%BD%E6%95%B0">ntohs函数</a></li>
+</ul>
+</li>
+<li><a href="#%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2%E5%87%BD%E6%95%B0">地址转换函数</a>
+<ul>
+<li><a href="#inet_pton%E5%87%BD%E6%95%B0%E7%82%B9%E5%88%86%E5%8D%81%E8%BF%9B%E5%88%B6%E8%BD%AC%E6%8D%A2">inet_pton函数（点分十进制转换）</a></li>
+<li><a href="#inet_ntop%E5%87%BD%E6%95%B0">inet_ntop函数</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#2-socket%E4%BB%8B%E7%BB%8D">2. socket介绍</a>
+<ul>
+<li><a href="#3-udp-%E7%BC%96%E7%A8%8B">3. UDP 编程</a>
+<ul>
+<li><a href="#%E9%80%9A%E4%BF%A1%E6%B5%81%E7%A8%8B">通信流程</a></li>
+<li><a href="#%E5%88%9B%E5%BB%BAsocket%E5%A5%97%E6%8E%A5%E5%AD%97">创建socket套接字</a></li>
+<li><a href="#%E7%BB%91%E5%AE%9A%E5%A5%97%E6%8E%A5%E5%AD%97">绑定套接字</a></li>
+<li><a href="#ipv4-%E7%BB%93%E6%9E%84%E4%BD%93">IPV4 结构体</a></li>
+<li><a href="#ipv6%E7%BB%93%E6%9E%84%E4%BD%93">IPV6结构体</a></li>
+<li><a href="#%E6%9C%AC%E5%9C%B0%E5%A5%97%E6%8E%A5%E5%AD%97%E7%BB%93%E6%9E%84%E4%BD%93">本地套接字结构体</a></li>
+<li><a href="#%E9%80%9A%E7%94%A8%E5%A5%97%E6%8E%A5%E5%AD%97%E7%BB%93%E6%9E%84%E4%BD%93">通用套接字结构体</a></li>
+<li><a href="#udp-%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%BC%96%E5%86%99">UDP 客户端编写</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://CNZedChou.github.io/post/obsidian-yu-zotero/">
+              <h3 class="post-title">
+                Obsidian 与 Zotero
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank"> Gridea </a>
+  <a class="rss" href="https://CNZedChou.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>
